@@ -151,6 +151,12 @@ The [source-labelled combat condition register](COMBAT_CONDITIONS.md) and its [m
 
 The previous `Snapshot` includes only global tri-state `can_counter/can_attack/can_takedown` flags, **without enemy archetype, attack type, prompt state, vaulting or interruptions**. It is thus *structurally insufficient* as a complete original/Resynced gameplay description; it must remain an offline hypothesis. No consuming game hook is permitted until the required state is verifiably available.
 
+## Automatically enumerate physical-button blast radius
+
+The [input impact analyzer](INPUT_IMPACT.md) now derives **all currently catalogued actions sharing X/Y/A/B/LB/RB/LT/RT/L3/R3/D-pad/Menu/View** for either game, preserving gestures, source identifiers and unmatched unknown bindings. This is a **read-only audit** of what a future physical-button hook could block, not a game control API. The CI suite tests high-risk collisions across on-foot, ship, swim, tools, traversal, counter follow-up and menus.
+
+**It never grants permission to consume a button.** Every query returns `DENIED_UNVERIFIED_GAME_CONTEXT`, because full mode/cancel and engine-priority evidence is absent. An action not in the source catalog is not automatically safe.
+
 ## 5. What remains to make this a trustworthy, complete model
 
 The audit ledger deliberately lists P0 unknowns instead of filling them with guesswork:

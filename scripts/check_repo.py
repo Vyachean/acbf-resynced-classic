@@ -16,6 +16,8 @@ REQUIRED = [
     "research/control_system_ledger.json",
     "docs/COMBAT_CONDITIONS.md",
     "research/combat_conditions.json",
+    "docs/INPUT_IMPACT.md",
+    "scripts/control_impact.py",
     "docs/ARCHITECTURE.md",
     "docs/TESTING.md",
     "docs/TEST_STRATEGY.md",

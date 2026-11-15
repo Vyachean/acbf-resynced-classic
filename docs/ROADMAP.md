@@ -14,6 +14,7 @@ The roadmap is ordered by **uncertainty reduction and observable gameplay value*
 - [x] Identify Resynced LB Observe hold vs parry press, RB attack/heavy vs perch hang, and R3 gesture overlap from July controller documentation.
 - [x] Extract original enemy archetype × move matchups (5 classes × 10 moves), including Brute counter-to-dodge and source-conflicted Captain guard break, into [research/combat_conditions.json](../research/combat_conditions.json).
 - [x] Inventory TU1.0.6 action-state fixes and separate TU1.0.7/1.0.8 changes with official Ubisoft source links and tests.
+- [x] Build a read-only [physical-button impact analyzer](INPUT_IMPACT.md) and CI tests that enumerate all documented uses and unresolved bindings for candidate overrides across the whole control catalog.
 - [ ] Verify archetype/target cues, game-state transitions, exact counter timing, buffering/cancellation and native action dispatch; do not infer from the guide matchup table.
 - [ ] Reconstruct the Resynced control graph for TU 1.0.6: input gestures, modifiers, combat states, parkour configuration and collision precedence.
 - [ ] Cover missing tools, interaction prompts, special mission/minigame modes and transitions, or make those modes explicit passthrough.
