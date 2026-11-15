@@ -31,7 +31,7 @@ CRITICAL_HAZARDS = {
     "BFR_PARKOUR_SETTINGS", "BFR_VERSION_PROFILE",
 }
 CRITICAL_UNKNOWN_IDS = {
-    "AC4_SECOND_STAGE_BUTTONS", "AC4_X_PRIORITY",
+    "AC4_COUNTER_TIMING_INTERRUPTS", "AC4_X_PRIORITY",
     "BFR_NATIVE_ELIGIBILITY", "BFR_NATIVE_DISPATCH",
     "BFR_MANUAL_JUMP_MODES", "BFR_TOOL_MODIFIERS",
     "GAMEPAD_VERSION_OPTIONS",
@@ -144,6 +144,22 @@ class ControlSystemAuditContract(unittest.TestCase):
             self.assertEqual(entry["priority"], "P0")
             self.assertTrue(entry["blocked_features"])
             self.assertTrue(entry["needs"])
+
+    def test_counter_followup_buttons_are_documented_but_not_engine_verified(self):
+        surfaces = {s["id"]: s for s in self.ledger["surfaces"]}
+        actions = {
+            a["action"]: a
+            for a in surfaces["combat_counter_followup"]["AC4"]["actions"]
+        }
+        for name, button in {
+            "counter_kill": "X", "counter_throw": "B",
+            "counter_disarm": "A", "tool_counter": "Y",
+        }.items():
+            with self.subTest(name=name):
+                self.assertEqual(actions[name]["input"], button)
+                self.assertEqual(actions[name]["evidence"],
+                                 "source_described_not_runtime_verified")
+                self.assertIn("ac4_prima_advanced_tips", actions[name]["sources"])
 
     def test_original_counter_and_profiles_not_equated_to_new_system(self):
         l = self.ledger
