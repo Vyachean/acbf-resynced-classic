@@ -37,7 +37,8 @@ The roadmap is ordered by **uncertainty reduction and observable gameplay value*
 
 - [x] Document baseline AC4 and Resynced controller mapping and **desired** attack, finisher, assassination cases (not yet verified in game).
 - [x] Document a controlled one-launch comparison of native Y takedown and shared-X mapping, with explicit pass/fail/inconclusive decision gates (not yet executed).
-- [ ] If native shared-X fails under controlled conditions, find a verified action-level dispatch mechanism (or document infeasibility).
+- [x] Implement an **offline-only** two-phase X action bridge contract with six evidence gates, physical input claim, single-shot dispatch and synthetic CTest coverage.
+- [ ] Identify a game-verified eligibility source and native action dispatcher for Resynced (or document infeasibility).
 - [ ] Implement priority rules only for contexts that can actually be detected.
 - [ ] Verify X attack + finisher + assassination scenarios and non-context behavior.
 - [ ] Validate no double-actions, stuck inputs or regressions after context transitions.
@@ -83,3 +84,7 @@ The roadmap is ordered by **uncertainty reduction and observable gameplay value*
 - [x] Reuse the same read-only diagnostic worker under Puppet Native ABI v1 and standalone ASI without duplicating the game observer.
 - [x] Add separate, CI-generated packaging for two mutually exclusive diagnostic hosts.
 - [ ] Confirm the actual target loader/executable and collect native *pre-action eligibility* evidence before any controller override.
+
+## Confirmed same-button collision and research priority
+
+The maintainer previously assigned **Attack and Takedown to the same physical button**; the game performed only ordinary Attack. This already-observed collision should not be retested without new, concrete evidence. The visibility of a Takedown prompt and separate Y baseline during that experiment are **unknown**, so do not generalize to all contexts. [X-001](X_INPUT_EXPERIMENT.md) is **deferred**. The next real capability gap is a verified *pre-action eligibility* signal and independent game action dispatch. No native bridge implementation currently satisfies these requirements.

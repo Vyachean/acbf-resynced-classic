@@ -65,12 +65,13 @@ No DRM bypass or unauthorized game redistribution is part of this project. Users
 - [Puppet Native ABI](docs/PUPPET_NATIVE.md) — public plugin API and CI-tested lifecycle bridge, not a gameplay hook
 - [Reference cases](research/reference_scenarios.json) — machine-readable design cases (**not tested in game**)
 - [C++ control core](include/acbf/classic_control.h) — pure, provisional action resolver (no game integration)
+- [Gated X action bridge](include/acbf/action_bridge.h) — single-shot native command contract, fully **offline** with a test fake, **no game hook**
 - [Diagnostic ASI](docs/DIAGNOSTICS.md) — experimental read-only Windows observer, built by Actions and tested only with a synthetic host
 - [Contributing](CONTRIBUTING.md) — issue reports and contribution rules
 
 ## Immediate validation task
 
-**[X-001: one-session native X comparison](docs/X_INPUT_EXPERIMENT.md)** is now the shortest proof to pursue. It tests whether the game's own Attack/Takedown arbitration works under a published complete remapping profile. **No project ASI/DLL, loader changes, scripts, or uploads are required.** Only a visible in-game Takedown outcome can settle the observation. If the exact same profile was already tested, report that earlier result instead of repeating it. The protocol does **not** establish a playable mod or game-hook compatibility.
+**[X-001](docs/X_INPUT_EXPERIMENT.md) is deferred.** The maintainer already observed the same-button Attack/Takedown collision, and repeating it is not useful without a materially different hypothesis. It tests whether the game's own Attack/Takedown arbitration works under a published complete remapping profile. **No project ASI/DLL, loader changes, scripts, or uploads are required.** Only a visible in-game Takedown outcome can settle the observation. If the exact same profile was already tested, report that earlier result instead of repeating it. The protocol does **not** establish a playable mod or game-hook compatibility.
 
 ## Getting started
 

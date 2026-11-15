@@ -1,9 +1,9 @@
 # X-001: native remapping feasibility, one game session
 
-**Status: READY TO EXECUTE / NOT YET RUN ON THE TARGET GAME.**
+**Status: DEFERRED — the maintainer already observed Attack winning over Takedown with a shared physical button. Do not ask to repeat the same binding.**
 **Target:** the owner's **existing** Resynced 1.0.6 installation and Xbox-style controller. Do **not** update to 1.0.8 or install a new game build for this test.
 
-**Question:** does Resynced itself prioritize a valid **Takedown** over **Attack** when both are assigned to the **same X press**, if conflicting crouch/sprint controls are configured as in a publicly demonstrated profile?
+**Historical question (now deferred):** does Resynced itself prioritize a valid **Takedown** over **Attack** when both are assigned to the **same X press**, if conflicting crouch/sprint controls are configured as in a publicly demonstrated profile?
 
 A July 19, 2026 video describes working `Attack = X` and `Takedown = X`, but the owner previously observed X only swinging in 1.0.6. This is an **unresolved contradiction**, not an established bug fix.
 
