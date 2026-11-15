@@ -86,9 +86,9 @@ int wmain(int argc, wchar_t** argv) {
     expect(init(&api), "accept ABI v1 game module/base");
     expect(log_calls == 1, "log successful init once");
     expect(!init(&api), "reject double initialization");
-    // The fake XInput provider emits 8 down/up transitions in its first
-    // 32 poll iterations; no real game/controller is required.
-    Sleep(1800);
+    // The fake XInput provider emits 16 down/up transitions in its first
+    // 64 poll iterations; no real game/controller is required.
+    Sleep(3000);
     shutdown();
     expect(log_calls == 2, "log shutdown");
     const auto path = dir + L"\\diagnostics.json";
@@ -102,7 +102,7 @@ int wmain(int argc, wchar_t** argv) {
                 "\"complete\": true",
                 "\"gameplay_modifications\": false",
                 "\"exe_sha256_status\": \"OK\"",
-                "\"total_edges\": 8",
+                "\"total_edges\": 16",
                 "\"xinput_api\": true",
                 "\"game_semantics\": \"NOT_OBSERVABLE\"",
                 "\"native_game_action_dispatch\": \"NOT_IMPLEMENTED\""}) {

@@ -7,7 +7,7 @@ namespace acbf::classic {
 
 // These are abstract controller inputs and verified/unknown game-context signals.
 // They are NOT native game event IDs, offsets, hooks, or an ACBFR SDK.
-enum class Button { X, B, A, RT, Other };
+enum class Button { X, Y, B, A, LB, RB, LT, RT, Other };
 enum class Edge { Pressed, Held, Released, Idle };
 enum class Zone { Unknown, Combat, Stealth, Traversal, Naval, Swimming, Menu };
 enum class Availability { Unknown, No, Yes };
@@ -52,7 +52,7 @@ public:
     void reset() noexcept;
 
 private:
-    std::array<bool, 4> down_{};
+    std::array<bool, 8> down_{};
 };
 
 }  // namespace acbf::classic

@@ -8,7 +8,7 @@
   "capabilities": [
     "process_executable_sha256",
     "local_asi_and_proxy_inventory",
-    "xinput_button_edge_observation",
+    "xinput_combat_buttons_X_Y_A_B_LB_RB_LT_RT",
     "bounded_local_report",
     "puppet_native_v1_host_report_generation"
   ],

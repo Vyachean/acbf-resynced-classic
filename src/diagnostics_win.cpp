@@ -34,7 +34,7 @@ using acbf::classic::EdgeTracker;
 
 constexpr unsigned kIntervalMs = 25;
 constexpr unsigned kFlushIntervalMs = 2000;
-constexpr size_t kMaxEvents = 256;
+constexpr size_t kMaxEvents = 512;
 constexpr size_t kMaxModules = 48;
 
 struct ButtonEvent {
@@ -256,8 +256,12 @@ void collect_local_modules(ProbeState& state, const std::wstring& exe_path) {
 const char* button_name(Button button) {
     switch (button) {
     case Button::X: return "X";
+    case Button::Y: return "Y";
     case Button::B: return "B";
     case Button::A: return "A";
+    case Button::LB: return "LB";
+    case Button::RB: return "RB";
+    case Button::LT: return "LT";
     case Button::RT: return "RT";
     default: return "?";
     }
@@ -314,14 +318,22 @@ void sample_xinput(ProbeState& state, XInputGetStateFn fn, uint64_t elapsed) {
             state.trackers[slot].reset();
         }
         const WORD bits = input.Gamepad.wButtons;
+        // Eight buttons/analogue-trigger thresholds are sufficient to
+        // contrast original and classic remaps without recording unrelated
+        // keys, guide buttons, D-pad or arbitrary keyboard input.
         const bool active[] = {
             (bits & XINPUT_GAMEPAD_X) != 0,
+            (bits & XINPUT_GAMEPAD_Y) != 0,
             (bits & XINPUT_GAMEPAD_B) != 0,
             (bits & XINPUT_GAMEPAD_A) != 0,
+            (bits & XINPUT_GAMEPAD_LEFT_SHOULDER) != 0,
+            (bits & XINPUT_GAMEPAD_RIGHT_SHOULDER) != 0,
+            input.Gamepad.bLeftTrigger >= XINPUT_GAMEPAD_TRIGGER_THRESHOLD,
             input.Gamepad.bRightTrigger >= XINPUT_GAMEPAD_TRIGGER_THRESHOLD
         };
-        constexpr Button buttons[] = {Button::X, Button::B, Button::A, Button::RT};
-        for (size_t j = 0; j < 4; ++j) {
+        constexpr Button buttons[] = {Button::X, Button::Y, Button::B, Button::A,
+                                       Button::LB, Button::RB, Button::LT, Button::RT};
+        for (size_t j = 0; j < 8; ++j) {
             const Edge edge = state.trackers[slot].observe(buttons[j], active[j]);
             record(state, elapsed, slot, buttons[j], edge);
         }

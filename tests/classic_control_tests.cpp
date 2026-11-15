@@ -52,6 +52,14 @@ int main() {
     tracker.reset();
     check(tracker.observe(Button::X, true) == Edge::Pressed, "reset clears held state");
     check(tracker.observe(Button::Other, true) == Edge::Idle, "unknown physical button ignored");
+    for (Button button : {Button::Y, Button::LB, Button::RB, Button::LT}) {
+        tracker.reset();
+        check(tracker.observe(button, true) == Edge::Pressed, "new combat input press");
+        check(tracker.observe(button, true) == Edge::Held, "new combat input hold");
+        check(tracker.observe(button, false) == Edge::Released, "new combat input release");
+        check_result(resolve(button, Edge::Pressed, Snapshot{}),
+                     Status::PassThrough, Intent::None, "unknown mapping passthrough");
+    }
 
     // X-01/X-02. Contextual finisher is the candidate preferred action.
     check_result(resolve(Button::X, Edge::Pressed, combat(Availability::Yes, Availability::No)),
