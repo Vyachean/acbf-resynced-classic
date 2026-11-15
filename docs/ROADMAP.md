@@ -16,8 +16,9 @@ The roadmap is ordered by **uncertainty reduction and observable gameplay value*
 
 ## Phase 1 — Minimal instrumentation and control core
 
-- [ ] Establish a reproducible Windows mod build toolchain (CI Windows job already exists but cannot compile a mod before CMake source exists).
-- [ ] Introduce an isolated, deterministic contextual-action resolver with synthetic test cases.
+- [x] Establish a reproducible **Windows offline core** build and `ctest` in GitHub Actions (not an installable mod).
+- [ ] Establish and validate the actual **ASI/DLL game integration build**.
+- [x] Introduce an isolated, deterministic **candidate** contextual-action resolver and press edge tracker with synthetic test cases (not connected to a game).
 - [ ] Add version-safe integration and disabled-by-default diagnostics.
 - [ ] Observe raw controller input, confirmed player context, and resolved actions.
 - [ ] Make instrumentation opt-in and log only necessary, sanitizable data.
