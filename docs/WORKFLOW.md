@@ -39,7 +39,9 @@ The repository was initialized by two direct documentation commits **before** th
 
 **Default: zero game launches for research and development.** First exhaust public documentation, source code, static analysis of legally obtained materials, synthetic test fixtures, and CI tests.
 
-When a real game launch is unavoidable, prepare **a comprehensive, version-safe, opt-in diagnostic build**:
+For a **pure built-in control experiment** that needs no mod (see [X-001](X_INPUT_EXPERIMENT.md)), first attempt one controlled, single-session comparison **without** installing diagnostic binaries. This can prove or disprove the user's observed behavior without loader interference. It cannot observe engine eligibility or verify a mod. Do not require a CI artifact for a test that installs no mod.
+
+When a **mod-based** real game launch is unavoidable, prepare **a comprehensive, version-safe, opt-in diagnostic build**:
 
 1. One CI-generated archive containing everything legally distributable; no manual compilation or configuration.
 2. User copies files into the documented location and launches the game **once**. Any unavoidable gameplay interactions are grouped into the same session.

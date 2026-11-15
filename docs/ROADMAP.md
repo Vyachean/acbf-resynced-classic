@@ -26,15 +26,18 @@ The roadmap is ordered by **uncertainty reduction and observable gameplay value*
 - [x] Observe XInput button transitions in an external read-only observer (tested in a synthetic host and deterministic fake XInput provider).
 - [x] Implement a **read-only PE import and pre-probe loaded DLL inventory** for input-backend hypotheses; test malformed synthetic PE fixtures in Windows Actions.
 - [ ] Observe **verified in-game** player context/action eligibility and actual action dispatch.
-- [x] Cap local JSON diagnostics (only X/B/A/RT edges, no paths or network), and require explicit installation of the ASI.
+- [x] Cap local JSON diagnostics (X/Y/A/B/LB/RB/LT/RT edges, no paths or network), and require explicit installation of a diagnostic host.
 - [ ] Add validated semantic event telemetry for the **single comprehensive game test**; no game launch before that.
 
 **Exit:** a harmless diagnostic build and testable action resolver (not necessarily playable gameplay changes).
 
 ## Phase 2 — First playable milestone: X
 
+**Immediate decision gate:** run the single-session, no-mod [X-001 native remapping comparison](X_INPUT_EXPERIMENT.md) (or reuse the existing observation if the complete published profile was already tested). Its result determines whether invasive game hooks are needed at all for Attack/Takedown. **Do not expand generic diagnostic instrumentation until this question is answered.**
+
 - [x] Document baseline AC4 and Resynced controller mapping and **desired** attack, finisher, assassination cases (not yet verified in game).
-- [ ] Find an action-level dispatch mechanism instead of mapping multiple actions to X.
+- [x] Document a controlled one-launch comparison of native Y takedown and shared-X mapping, with explicit pass/fail/inconclusive decision gates (not yet executed).
+- [ ] If native shared-X fails under controlled conditions, find a verified action-level dispatch mechanism (or document infeasibility).
 - [ ] Implement priority rules only for contexts that can actually be detected.
 - [ ] Verify X attack + finisher + assassination scenarios and non-context behavior.
 - [ ] Validate no double-actions, stuck inputs or regressions after context transitions.
