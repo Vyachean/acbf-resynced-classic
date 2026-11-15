@@ -44,7 +44,7 @@ Original documented combat has several distinct phases:
 
 1. **Neutral combat:** X attack, A break defense; target is selected by stick direction. Holding B blocks/parries incoming melee.
 2. **Incoming enemy attack:** **tap B**, during a visible opponent attack warning, to initiate a counter. **Do not hold**, because hold produces ordinary guard.
-3. **Counter-selection phase:** a successful counter opens a brief slow-motion state with **four different face-button follow-up choices**: Counter Kill, Counter Throw, Counter Disarm, Special/Tool Counter. The public Prima text shows these roles, but the exact button icons are not machine-readable in that copy. **Do not assert a specific A/B/X/Y assignment without additional evidence.**
+3. **Counter-selection phase:** a successful counter opens a brief slow-motion state with **four face-button follow-ups**. A separate 2013 Prima [advanced tips article](https://primagames.com/tips/assassins-creed-4-black-flag-advanced-tips) states the Xbox mapping explicitly: **X = counter kill, B = throw, A = disarm/stun, Y = use selected tool**. The control names are documented, but **the exact engine timing window, input buffering, cancellation and second-press suppression are NOT established**.
 4. **Kill streak:** after a combo kill or Counter Kill, direction plus an attack timed during the previous killing animation can continue the chain. It terminates on damage, target out of range, or other interrupt.
 5. **Disengage:** High Profile can release the combat targeting stance and restore normal directional movement.
 
@@ -136,7 +136,7 @@ User **already observed** Attack and Takedown assigned to the same button produc
 
 The audit ledger deliberately lists P0 unknowns instead of filling them with guesswork:
 
-1. Exact AC4 four-button counter follow-up mapping, animation cancel windows and how hold-B guard interacts with counter selection.
+1. AC4 follow-up button identities **are documented (X kill, B throw, A disarm/stun, Y tool)**; exact timing window, animation cancellation, interaction with hold-B guard, and priority on any simultaneous input remain unknown.
 2. Original X precedence among combat hit, kill streak, high/low assassination, target geometry and nonlethal takedown.
 3. Actual Resynced 1.0.6 configuration, input mode options, ability chords, parkour toggles, and target recognition.
 4. Native pre-action eligibility and independent action dispatch for every desired new behavior, **not just Takedown**.
@@ -148,7 +148,7 @@ Use [Prima original combat](https://primagames.com/eguides/assassins-creed-iv-bl
 ### Completion gate (issue #18)
 
 - [ ] Every single-player gameplay surface and action in scope enumerated (or intentionally bypassed with explicit reason)
-- [ ] Every overlapping physical input/chord audited for cross-surface priority, press/hold/release and multi-stage sequences
+- [ ] Every overlapping physical input/chord audited for cross-surface priority, press/hold/release and multi-stage sequences (button mapping for AC4 counter established; timing/priority still unverified)
 - [ ] Per-action evidence and version scope distinguish authoritative documentation, secondary references, user observations and engine-unknown behavior
 - [ ] No original AC4 mechanic incorrectly equated to a similarly named Resynced action
 - [ ] Independent target-build (1.0.6) behavior evidence sufficient for the exact **first intended override**

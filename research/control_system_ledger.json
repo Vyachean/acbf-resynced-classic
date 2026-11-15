@@ -83,6 +83,11 @@
       "kind": "secondary_reference",
       "url": "https://gamefaqs.gamespot.com/xbox360/705969-assassins-creed-iv-black-flag/faqs/68114?page=2",
       "scope": "2013 Xbox ship helm, naval combat controls, brace, swivel, spyglass, mortar, shanties"
+    },
+    "ac4_prima_advanced_tips": {
+      "kind": "original_game_guide",
+      "url": "https://primagames.com/tips/assassins-creed-4-black-flag-advanced-tips",
+      "scope": "2013 Prima Xbox counter follow-ups: X kill, Y tool, A disarm/stun, B throw; button names corroborated by 2013-era guide"
     }
   },
   "surfaces": [
@@ -602,41 +607,45 @@
           },
           {
             "action": "counter_kill",
-            "input": "followup_button_unverified",
-            "gesture": "tap",
-            "when": "after successful B counter",
+            "input": "X",
+            "gesture": "tap_after_successful_counter",
+            "when": "after successful B counter (temporary counter-menu phase)",
             "sources": [
-              "ac4_prima_combat"
+              "ac4_prima_combat",
+              "ac4_prima_advanced_tips"
             ],
             "evidence": "source_described_not_runtime_verified"
           },
           {
             "action": "counter_throw",
-            "input": "followup_button_unverified",
-            "gesture": "tap",
-            "when": "after successful B counter",
+            "input": "B",
+            "gesture": "tap_after_successful_counter",
+            "when": "after successful B counter (temporary counter-menu phase)",
             "sources": [
-              "ac4_prima_combat"
+              "ac4_prima_combat",
+              "ac4_prima_advanced_tips"
             ],
             "evidence": "source_described_not_runtime_verified"
           },
           {
             "action": "counter_disarm",
-            "input": "followup_button_unverified",
-            "gesture": "tap",
-            "when": "after successful B counter",
+            "input": "A",
+            "gesture": "tap_after_successful_counter",
+            "when": "after successful B counter (temporary counter-menu phase)",
             "sources": [
-              "ac4_prima_combat"
+              "ac4_prima_combat",
+              "ac4_prima_advanced_tips"
             ],
             "evidence": "source_described_not_runtime_verified"
           },
           {
             "action": "tool_counter",
-            "input": "followup_button_unverified",
-            "gesture": "tap",
-            "when": "after successful B counter with equipped tool",
+            "input": "Y",
+            "gesture": "tap_after_successful_counter",
+            "when": "after successful B counter with equipped tool (temporary counter-menu phase)",
             "sources": [
-              "ac4_prima_combat"
+              "ac4_prima_combat",
+              "ac4_prima_advanced_tips"
             ],
             "evidence": "source_described_not_runtime_verified"
           }
@@ -2378,14 +2387,14 @@
   ],
   "critical_unknowns": [
     {
-      "id": "AC4_SECOND_STAGE_BUTTONS",
+      "id": "AC4_COUNTER_TIMING_INTERRUPTS",
       "priority": "P0",
-      "statement": "Precisely map B-counter submenu four outcomes to face buttons, timing and follow-up action blocking",
+      "statement": "Exact timing, eligible target selection, cancellation and input ownership during B tap counter menu and follow-up",
       "blocked_features": [
         "B_counter",
         "X_counter_followup"
       ],
-      "needs": "original manual in-game cues, corroborated footage or authoritative button table"
+      "needs": "the four button roles X kill / B throw / A disarm / Y tool are documented; timing and interrupts remain unverified by engine evidence"
     },
     {
       "id": "AC4_B_DODGE",
@@ -2489,6 +2498,7 @@
     "Do not require owner to repeat already observed dual-binding conflict"
   ],
   "research_notes": [
+    "AC4 counter follow-up Xbox inputs established from 2013 Prima advanced tips: X kill; B throw; A disarm/stun; Y selected tool. This is 2013 gameplay-guide evidence, not an engine-state API.",
     "Original AC4 B is NOT just a generic context-based counter/dodge. Holding B guards; tapping B on a prompted incoming melee opens a separate timed counter menu with four face-button follow-ups.",
     "Original AC4 High Profile RT modifies stealth assassination range/animation and traversal, and influences combat disengagement and aimed firing. High Profile must not be treated as a plain sprint key.",
     "Resynced Takedown after defense break/perfect parry, normal/perfect dodge and enemy archetype limits are separate systems from original AC4 kill streaks.",

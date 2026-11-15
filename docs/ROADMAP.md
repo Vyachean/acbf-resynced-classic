@@ -9,7 +9,8 @@ The roadmap is ordered by **uncertainty reduction and observable gameplay value*
 - [x] Build a source-labelled [control-system audit](CONTROL_SYSTEM_AUDIT.md) that distinguishes documented functions from runtime priority.
 - [x] Inventory 25 control surfaces across AC4 and Resynced, including combat phases, stealth, traversal, water, helm/gunnery, UI and special modes.
 - [x] Inventory cross-surface collision hazards, explicit unknowns and source-backed/hypothesized transitions in a [CI-validated control ledger](../research/control_system_ledger.json).
-- [ ] Independently resolve actual AC4 second-stage counter button mappings, guard hold vs counter tap, and original contextual X priorities.
+- [x] Establish original AC4 counter follow-up buttons from 2013 Prima: **X kill, B throw, A disarm/stun, Y tool**; separate from B hold guard / B tap entry.
+- [ ] Reconstruct exact counter timing, input buffering/cancellation, guard-versus-counter transition and original contextual X priority.
 - [ ] Reconstruct the Resynced control graph for TU 1.0.6: input gestures, modifiers, combat states, parkour configuration and collision precedence.
 - [ ] Cover missing tools, interaction prompts, special mission/minigame modes and transitions, or make those modes explicit passthrough.
 - [ ] Verify that existing mock policies for X/B/A do not eliminate original AC4 counter, finishing or traversal actions.

@@ -18,7 +18,7 @@ This document compares Xbox-style inputs and separates three things:
 | Ordinary melee attack | **X**: melee weapon / primary attack | **RB**, hold RB for heavy attack | **X** should perform exactly one ordinary attack when that is the relevant action. |
 | Stealth assassination | **X**: assassinate | **Hold Y**: assassination | **X** should select assassination when eligible, without issuing a stray normal swing. Exact eligibility/API unknown. |
 | Combat finisher / takedown | User's AC4 reference: **X** can resolve a finishing action; not separately established by a button table | **Y**: takedown | **X** should choose finisher when eligible; determine what the game calls microkill/softkill/takedown. Priority unknown. |
-| Counter / block | **Hold B**: guard/parry; **tap B** at enemy-attack warning: enter a **temporary four-way counter follow-up** (face-button choice) | **LB**: parry/perfect parry | **B cannot safely be represented by one immediate Counter-or-Dodge decision.** AC4's second action stage must be reconstructed. |
+| Counter / block | **Hold B**: guard/parry; **tap B** at enemy-attack warning: enter a **temporary counter follow-up** (**X kill; B throw; A disarm; Y tool**) | **LB**: parry/perfect parry | **B cannot safely be represented by one immediate Counter-or-Dodge decision.** AC4's second action stage must be reconstructed. |
 | Dodge / roll | Original AC4 dodge/evade control is not established by the available source tables; original B counter does **not** imply a dodge command | **B** dodge, double-B roll | Combining AC4 counter with Resynced dodge on one B press is **not yet justified** and may block counter follow-up/guard. |
 | Defense break | **A**: break defense in combat; also movement/jump context | **RT + A** is a **Sweep** shortcut in launch mapping, not necessarily equivalent to AC4 guard break | Investigate which Resynced move, if any, reproduces AC4 guard break. Do not map A to Sweep without testing semantics. |
 | High-profile traversal | **RT**: high profile / free run | **L3**: sprint; **A**: jump/parkour up; **B**: parkour down | **RT** as a high-profile modifier is desired, not simply RT = L3; avoid breaking A/B parkour or quick abilities. |
@@ -28,6 +28,7 @@ This document compares Xbox-style inputs and separates three things:
 **References**
 - Original AC4 Xbox e-manual: https://dlassets-ssl.xboxlive.com/public/content/0044aef3-bd7e-4478-8782-6191546dcd9a/GameManual/240e30c4-b40a-4f93-9ae2-1c52ded445f7/en-US/index.html
 - AC4 Xbox control comparison: https://gamefaqs.gamespot.com/xbox360/705969-assassins-creed-iv-black-flag/faqs/68114
+- AC4 2013 counter follow-up mapping: https://primagames.com/tips/assassins-creed-4-black-flag-advanced-tips
 - Resynced controller guide (July 9, 2026 launch mappings): https://www.shacknews.com/article/149927/assassins-creed-black-flag-resynced-controls (or https://canary.shacknews.com/article/149927/assassins-creed-black-flag-resynced-controls)
 - Official remapping capabilities: https://www.ubisoft.com/en-gb/help/assassins-creed-black-flag-resynced/gameplay/article/customising-controls-in-assassin-s-creed-black-flag-resynced/000116769
 - Official combat/takedown design: https://www.ubisoft.com/en-gb/game/assassins-creed/news/1A8XkbnvONciecEZm9my1C/assassins-creed-black-flag-resynced-combat-system-breakdown
