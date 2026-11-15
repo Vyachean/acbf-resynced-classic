@@ -31,3 +31,9 @@ Do not copy code from other projects solely because it is visible on GitHub. Res
 Our immediate target is contextual input behavior, not a wholesale restoration of AC4 gameplay. Development priorities and acceptance criteria are in [ROADMAP](docs/ROADMAP.md) and [TESTING](docs/TESTING.md).
 
 See [LICENSE](LICENSE.md) for reuse conditions.
+
+## Branch and delivery process
+
+All source changes go through a feature branch and pull request; **squash merge into `main` only**. Every merge must be a completed increment and becomes a distinct version tag after passing GitHub Actions checks. No local builds or local automation are part of the operator workflow. See [Development policy](docs/WORKFLOW.md).
+
+For any work requiring the real game, follow the [Single-session test strategy](docs/TEST_STRATEGY.md). Do not request multiple launches when a combined diagnostic build can answer the same questions in one session.
