@@ -51,7 +51,7 @@ For the first playable feature, **first test whether the game's own input dispat
 
 ## Decision
 
-**Next: one controlled, native-remapping-only X-001 game session (if not already covered by prior testing).** It requires no newly installed mod or CI artifact because the observable result is a Takedown animation, not an internal engine signal. If the native dispatcher fails under a validated Y baseline, continue with evidence-led game-action integration; do not ship speculative offsets or replace the user's loader. Any later *mod-based* test still requires the comprehensive CI-built single-session diagnostic.
+**Next: verified internal eligibility and native dispatch research.** The maintainer has already observed Attack overriding Takedown when the two actions share a button. Do not repeat the same binding experiment. It requires no newly installed mod or CI artifact because the observable result is a Takedown animation, not an internal engine signal. If the native dispatcher fails under a validated Y baseline, continue with evidence-led game-action integration; do not ship speculative offsets or replace the user's loader. Any later *mod-based* test still requires the comprehensive CI-built single-session diagnostic.
 
 ## Source and copyright policy
 
@@ -60,3 +60,9 @@ For every new source note, include URL, target version, claim, and confidence. S
 ## Additional primary-source warning (2026-11-15)
 
 Ubisoft's [ACBFR-641](https://www.ubisoft.com/en-us/game/assassins-creed/black-flag-resynced/bug-reporter/issues/ACBFR-641) reports that some **assassinations** on game version **1.0.2** require three or four button presses despite an on-screen prompt. The report is marked `Deprioritized`. **Do not** extrapolate that to all Takedowns or version 1.0.6, but explicitly check the unmodified Y Takedown baseline before judging a shared-X remap. A July 19 [video](https://www.youtube.com/watch?v=q4r1P2Q2bsE) documents Attack=X and Takedown=X under a wider layout, but does not establish the exact Press/Hold method or success on 1.0.6. These sources support testing, not a compatibility claim.
+
+## Data/animation alternative investigated, 2026-11-15
+
+The independent [Unrestricted Combat Finishers](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/635) mod, uploaded 2026-11-02, says it enables **MicroKill/SoftKill finishing animations from normal lethal attacks**, using modified contents of `Edward_Default.data` inside a BFR patch forge. The author supports **1.0.8**, not the maintainer's 1.0.6, and forbids modification/redistribution without permission. [AnvilToolkit 1.3.7](https://www.nexusmods.com/site/mods/455) supports Resynced Forge/Data editing. **This proves only that an animation/data modification path exists**, not the desired choice of a genuine pre-attack Takedown via X. Do not redistribute any Nexus author file, assume 1.0.6 support, or confuse kill animations with game action dispatch.
+
+The project now has [a two-phase, synthetic-only X action bridge](../include/acbf/action_bridge.h) so that a future *verified* eligibility/dispatch seam can be connected without changing the control resolver. It sends no game commands; all compatibility gates default to false. Do not call it a playable mod.

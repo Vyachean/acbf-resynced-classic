@@ -82,3 +82,7 @@ The project now builds **two alternative diagnostic delivery hosts** using the s
 ### Combat input trace completeness
 
 Before an eventual one-session game check, the reporter now observes Xbox X/Y/A/B, shoulder LB/RB and thresholded triggers LT/RT. This explicitly covers Resynced's default attack/takedown buttons and the proposed shared-X layout. No keyboard keys, unrelated controller inputs or gameplay state are captured. GitHub Actions verifies **16 press/release edges** through a synthetic provider in both ASI and Puppet Native hosts. **Button events alone cannot prove a takedown was eligible or executed.**
+
+### Research pivot: owner already confirmed the dual-binding collision
+
+The owner tested binding Attack and Takedown to one button; ordinary Attack won. X-001 is **deferred**, not a requirement to repeat that binding. The recorded prompt/eligibility condition is unknown, but extending raw XInput logs does not resolve it. The immediate engineering effort is identification of game action availability and a callable native dispatcher. A new [offline two-phase X bridge](../include/acbf/action_bridge.h) now has unit-tested safety gates, but **no corresponding game APIs exist in this repo**.

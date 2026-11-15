@@ -13,6 +13,7 @@ add_test(NAME pe_imports_parser COMMAND acbf_pe_imports_tests)
 # Portable, pure contextual decision engine: never invokes game actions.
 add_library(acbf_control_core STATIC
     src/classic_control.cpp
+    src/action_bridge.cpp
 )
 target_include_directories(acbf_control_core
     PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include"
@@ -31,6 +32,12 @@ enable_testing()
 add_executable(acbf_control_core_tests tests/classic_control_tests.cpp)
 target_link_libraries(acbf_control_core_tests PRIVATE acbf_control_core)
 add_test(NAME classic_control_core COMMAND acbf_control_core_tests)
+
+# Transactional X bridge is tested exclusively against a synthetic native
+# command sink. No real game action handlers or memory hooks are linked.
+add_executable(acbf_action_bridge_tests tests/action_bridge_tests.cpp)
+target_link_libraries(acbf_action_bridge_tests PRIVATE acbf_control_core)
+add_test(NAME action_bridge_offline COMMAND acbf_action_bridge_tests)
 
 if(WIN32)
     # Two separate distribution hosts use the SAME read-only observer source.

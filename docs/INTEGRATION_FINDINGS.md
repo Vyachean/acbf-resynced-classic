@@ -102,3 +102,10 @@ Public HapticsBridge source also distinguishes GameInput and XInput input backen
 ## Confirmed Puppet Native plugin ABI (2026-11-15)
 
 Earlier research understated the public availability of Puppet Native's plugin interface. The **public MIT-licensed repository** publishes a C ABI v1; our source-only compatibility plugin compiles and is checked with a synthetic host in Windows Actions. See [Puppet Native integration assessment](PUPPET_NATIVE.md) for exact signature, loader path and limitations. This is a meaningful integration seam; **it is not a game action dispatcher**.
+
+## 2026-11-15: native action feasibility, not generic telemetry
+
+- Maintainer-confirmed: mapping Attack and Takedown to one button produced **Attack only**. This observation should not be asked again; whether the HUD actually exposed Takedown on that attempt was not supplied.
+- [AnvilToolkit 1.3.7](https://www.nexusmods.com/site/mods/455) lists Black Flag Resynced Forge/Data format support. The independent [Unrestricted Combat Finishers](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/635) alters MicroKill/SoftKill animation behavior from **lethal basic attacks** through `Edward_Default.data`. The mod claims **1.0.8 only**; its author prohibits modification/reuse. This is a promising **data-driven animation avenue** but **not evidence** of 1.0.6 classic button dispatch, a pre-action eligibility signal, or a callable native command.
+- MIT-licensed Puppet Native PluginLoader ABI v1 provides a process base and lifecycle but **not** an action execution API. Public HapticsBridge event observation is retrospective for combat sound events; it does not prove pre-press selection.
+- Implemented a **two-phase, fail-closed X action command contract**, with independent evidence gates and mock-only native sink, under [`action_bridge.h`](../include/acbf/action_bridge.h). No game-specific address or fake native action API is introduced. It can prevent duplicate speculative dispatch **once** real, verified game-side input ownership and native command interfaces are available. Until then, it never intercepts X.

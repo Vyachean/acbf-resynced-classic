@@ -1,6 +1,6 @@
-# Architecture: offline resolver implemented; game integration not implemented
+# Architecture: offline resolver and native action bridge contract; game integration not implemented
 
-> The **pure C++ decision core and sampled-input edge tracker** are now implemented and tested offline. **No ACBFR input API, hook target, memory layout, action invocation, compatible loader, or runtime integration has been verified.**
+> The **pure C++ decision core, sampled-input edge tracker, and gated native action-bridge contract** are now implemented and tested offline. **No ACBFR input API, hook target, memory layout, action invocation, compatible loader, or runtime integration has been verified.**
 
 ## Design objective
 
@@ -19,7 +19,10 @@ Controller / input events
  Pure contextual action resolver
           |
           v
- Game action adapter (unknown)
+ Fail-closed action bridge (offline-only)
+          |
+          v
+ Native input claim + game action adapter (unknown)
           |
           v
      Game behavior
@@ -37,7 +40,9 @@ Supporting modules: per-build compatibility policy, configuration, sanitized dia
 
 **Decision states:** `Selected` = candidate intent, **not** executed; `NoAction` = complete negative eligibility for the handled context; `PassThrough` = leave native game handling alone; `Unresolved` = insufficient trusted data, **do not install/enable a consuming override**; `Ignored` = not a new press. Input-release propagation and safety remain the adapter's responsibility. No game adapter exists yet.
 
-**Game action adapter:** perform an action through the safest validated integration available, without fake key combinations when action-level dispatch is necessary. Integration feasibility is a milestone, not an assumption.
+**Action bridge (implemented OFFLINE ONLY):** [`XActionBridge`](../include/acbf/action_bridge.h) requires six independent integration proofs, a supported X intent, and a verified pre-action eligibility snapshot before proposing any interception. A prepared ticket does **not** call the game or suppress input. Only an independently confirmed physical input claim allows a single dispatch; failed or ambiguous delivery must not replay X (to avoid duplicate actions). The original X hold/release cycle remains claimed until the release is observed. **Only a synthetic fake NativeActionSink exists**; no game API, hook or engine-specific offsets have been implemented.
+
+**Game action adapter (not implemented):** identify the native game's eligibility/state and a verified action dispatcher. Puppet Native's public plugin ABI provides game base/log/config but **no combat action API**. Do not treat PostEvent sounds as pre-action eligibility.
 
 **Compatibility guard:** identify the specific supported build before enabling invasive operations. Fail closed for mismatched/unknown versions.
 
@@ -47,7 +52,7 @@ Supporting modules: per-build compatibility policy, configuration, sanitized dia
 
 The pure module is built with C++17/CMake in GitHub Actions on Windows. `ctest` exercises synthetic combat, stealth, B/A decisions, unknown eligibility, button holds, releases, repeat suppression, menus, swimming and naval passthrough. **A green test does not imply game integration or safety inside Resynced.**
 
-There is no `install()` target and no packaging manifest: **the CI must not offer the static library as an installable game mod.** The CI packaging stage requires an explicit future `packaging/installable.json` plus a staged `.asi` file.
+The Windows build packages **diagnostic-only** ASI/Puppet Native host alternatives, not the native action bridge. The action bridge links with the pure core; its fake native sink is compiled only into its CTest executable. No playable mod is currently packaged.
 
 ## Risk register
 
@@ -68,3 +73,7 @@ There is no `install()` target and no packaging manifest: **the CI must not offe
 4. **Can hooks be limited to verified game builds and disabled cleanly?**
 
 If answers 2–3 are no, do not advertise AC4-like contextual behavior as implemented. Re-evaluate scope rather than disguising key remapping as a finished solution.
+
+## Action bridge safety contract
+
+All gates default to false: exact executable profile, verified input interception, ability to consume the original input, release handling, verified pre-action context, and verified native command dispatch. Only X is eligible for interception; B/A/RT are untouched. The off-game test suite validates each missing gate, unknown contexts, native pass-through, pending ticket cancellation, no dispatch without input ownership, one submission per claimed press, claimed held/release events, and no double replay after rejected or ambiguous submission. **These synthetic tests do not establish any in-game functionality.**
