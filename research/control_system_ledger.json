@@ -1,0 +1,3089 @@
+{
+  "schema_version": 1,
+  "updated": "2026-11-15",
+  "audit_status": "INCOMPLETE_NO_GAME_HOOKS",
+  "scope": "Xbox-style single-player input behavior; original AC4 2013 documentation versus Resynced July 2026 published defaults; owner-specific TU 1.0.6 not validated",
+  "source_registry": {
+    "ac4_manual": {
+      "kind": "official_manual",
+      "url": "https://dlassets-ssl.xboxlive.com/public/content/0044aef3-bd7e-4478-8782-6191546dcd9a/GameManual/240e30c4-b40a-4f93-9ae2-1c52ded445f7/en-US/index.html",
+      "scope": "2013 console single-player; original controller icons on page not all machine-readable"
+    },
+    "ac4_guide_controls": {
+      "kind": "secondary_reference",
+      "url": "https://gamefaqs.gamespot.com/xbox360/705969-assassins-creed-iv-black-flag/faqs/68114",
+      "scope": "Xbox 360/One default button names, not runtime priority"
+    },
+    "ac4_prima_movement": {
+      "kind": "original_game_guide",
+      "url": "https://primagames.com/eguides/assassins-creed-iv-black-flag-eguide/primer/on-foot-movement",
+      "scope": "AC4 movement, high profile, free run, jumps, climb, surface swimming"
+    },
+    "ac4_prima_combat": {
+      "kind": "original_game_guide",
+      "url": "https://primagames.com/eguides/assassins-creed-iv-black-flag-eguide/primer/combat",
+      "scope": "AC4 counter tap/hold, four counter follow-ups, break defense and kill streak"
+    },
+    "ac4_prima_stealth": {
+      "kind": "original_game_guide",
+      "url": "https://primagames.com/eguides/assassins-creed-iv-black-flag-eguide/primer/stealth",
+      "scope": "AC4 high/low profile, blending and detection"
+    },
+    "ac4_prima_assassinations": {
+      "kind": "original_game_guide",
+      "url": "https://primagames.com/eguides/assassins-creed-iv-black-flag-eguide/primer/assassinations",
+      "scope": "AC4 assassinations depend on position, profile and target"
+    },
+    "ac4_prima_moves": {
+      "kind": "original_game_guide",
+      "url": "https://primagames.com/eguides/assassins-creed-iv-black-flag-eguide/reference-analysis/moves-overview",
+      "scope": "AC4 single-player moves; icons sometimes not readable"
+    },
+    "bfr_shacknews": {
+      "kind": "secondary_launch_keymap",
+      "url": "https://canary.shacknews.com/article/149927/assassins-creed-black-flag-resynced-controls",
+      "scope": "Resynced controller mapping on launch July 9 2026; NOT verified on owner's 1.0.6"
+    },
+    "bfr_prima": {
+      "kind": "secondary_launch_keymap",
+      "url": "https://primagames.com/tips/assassins-creed-black-flag-resynced-complete-controls-pc-controllers",
+      "scope": "Resynced controller mapping July 2026; overlapping entries sometimes omit input mode"
+    },
+    "bfr_ubisoft_combat": {
+      "kind": "official_design_document",
+      "url": "https://www.ubisoft.com/en-gb/game/assassins-creed/news/1A8XkbnvONciecEZm9my1C/assassins-creed-black-flag-resynced-combat-system-breakdown",
+      "scope": "July 7 2026 combat design; no native engine/API semantics"
+    },
+    "bfr_ubisoft_parkour": {
+      "kind": "official_design_document",
+      "url": "https://www.ubisoft.com/pl-pl/game/assassins-creed/news/2ud7PoyA7ctjHKKEtnH4Tf/assassins-creed-black-flag-resynced-road-to-launch",
+      "scope": "July 2 2026 Advanced Parkour, Manual Jump, stealth, naval additions"
+    },
+    "bfr_ubisoft_access": {
+      "kind": "official_features",
+      "url": "https://news.ubisoft.com/en-us/article/759plQmVmAvQySTmxx0r09/assassins-creed-black-flag-resynced-accessibility-spotlight",
+      "scope": "May 7 2026 controls split by contexts, modes, remapping, devices"
+    },
+    "bfr_ubisoft_custom": {
+      "kind": "official_controls_help",
+      "url": "https://www.ubisoft.com/en-gb/help/assassins-creed-black-flag-resynced/gameplay/article/customising-controls-in-assassin-s-creed-black-flag-resynced/000116769",
+      "scope": "July 9 2026 supported controller remap and Press/Hold/Double Tap/Toggle choices"
+    },
+    "bfr_ubisoft_naval": {
+      "kind": "official_design_document",
+      "url": "https://www.ubisoft.com/en-us/game/assassins-creed/news/1QoM4qTIi9ERlzDOrxeRgK",
+      "scope": "Resynced ship traversal and control expansions"
+    },
+    "community_collision": {
+      "kind": "community_report",
+      "url": "https://www.reddit.com/r/ACBFResynced/comments/1usa1zu/best_legacy_control_scheme_for_black_flag_resynced/",
+      "scope": "A/B parkour collisions with RT ability chords reported by players; not all builds"
+    },
+    "ac4_guide_naval": {
+      "kind": "secondary_reference",
+      "url": "https://gamefaqs.gamespot.com/xbox360/705969-assassins-creed-iv-black-flag/faqs/68114?page=2",
+      "scope": "2013 Xbox ship helm, naval combat controls, brace, swivel, spyglass, mortar, shanties"
+    }
+  },
+  "surfaces": [
+    {
+      "id": "ground_idle",
+      "label": "Ground / low-profile locomotion",
+      "critical": true,
+      "AC4": {
+        "actions": [
+          {
+            "action": "move",
+            "input": "left_stick",
+            "gesture": "analog",
+            "when": "ground, not attached to ship",
+            "sources": [
+              "ac4_guide_controls"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "fast_walk",
+            "input": "A + left_stick",
+            "gesture": "hold",
+            "when": "moving at low profile",
+            "sources": [
+              "ac4_prima_movement"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "interact",
+            "input": "B",
+            "gesture": "tap",
+            "when": "contextual object/NPC nearby",
+            "sources": [
+              "ac4_manual",
+              "ac4_guide_controls"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN"
+      },
+      "ACBFR": {
+        "actions": [
+          {
+            "action": "move",
+            "input": "left_stick",
+            "gesture": "analog",
+            "when": "character ground control",
+            "sources": [
+              "bfr_prima"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "crouch",
+            "input": "X",
+            "gesture": "press",
+            "when": "on-foot; can crouch anywhere",
+            "sources": [
+              "bfr_prima"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "interact",
+            "input": "Y",
+            "gesture": "press",
+            "when": "on-foot interactive target",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "sprint",
+            "input": "L3",
+            "gesture": "press",
+            "when": "moving on foot",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN",
+        "version_specific_priority": "UNKNOWN"
+      },
+      "unresolved": [
+        "AC4 B interact vs counter priority",
+        "ACBFR Y interact vs takedown/assassinate priority",
+        "walk vs sprint and configurable auto movement"
+      ]
+    },
+    {
+      "id": "high_profile_travel",
+      "label": "High-profile running and free run",
+      "critical": true,
+      "AC4": {
+        "actions": [
+          {
+            "action": "sprint_free_run",
+            "input": "RT + left_stick",
+            "gesture": "hold+analog",
+            "when": "high-profile locomotion",
+            "sources": [
+              "ac4_prima_movement"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "vault",
+            "input": "RT + contextual additional action",
+            "gesture": "hold+contextual",
+            "when": "obstacle or fence near",
+            "sources": [
+              "ac4_prima_movement"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "free_run_swing",
+            "input": "RT + left_stick",
+            "gesture": "hold+analog",
+            "when": "suitable pole/branch",
+            "sources": [
+              "ac4_prima_movement"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN"
+      },
+      "ACBFR": {
+        "actions": [
+          {
+            "action": "sprint",
+            "input": "L3",
+            "gesture": "press",
+            "when": "foot traversal",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "parkour_up",
+            "input": "A",
+            "gesture": "hold",
+            "when": "traversal/height gain",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "parkour_down",
+            "input": "B",
+            "gesture": "hold",
+            "when": "traversal/descend",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN",
+        "version_specific_priority": "UNKNOWN"
+      },
+      "unresolved": [
+        "Whether high-profile modifier changes other AC4 face actions",
+        "Advanced Parkour toggle influences precise traversal in Resynced",
+        "RT+A/RT+B conflicting quick abilities on remap"
+      ]
+    },
+    {
+      "id": "manual_jump",
+      "label": "Manual jump, roof-to-roof and leap of faith",
+      "critical": true,
+      "AC4": {
+        "actions": [
+          {
+            "action": "manual_jump",
+            "input": "RT + A + left_stick",
+            "gesture": "hold+tap+direction",
+            "when": "at edge; intended dangerous jump",
+            "sources": [
+              "ac4_prima_movement"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "leap_of_faith",
+            "input": "RT + A + left_stick",
+            "gesture": "hold+tap+direction",
+            "when": "valid leap destination",
+            "sources": [
+              "ac4_prima_movement"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN"
+      },
+      "ACBFR": {
+        "actions": [
+          {
+            "action": "manual_jump",
+            "input": "unverified",
+            "gesture": "unknown",
+            "when": "optional Manual Jump configuration",
+            "sources": [
+              "bfr_ubisoft_parkour"
+            ],
+            "evidence": "feature_described_binding_unverified"
+          },
+          {
+            "action": "parkour_jump",
+            "input": "A",
+            "gesture": "press",
+            "when": "jump or ascend selected by context",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "drop_dive",
+            "input": "B",
+            "gesture": "hold",
+            "when": "standing at edge / interacting with water",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN",
+        "version_specific_priority": "UNKNOWN"
+      },
+      "unresolved": [
+        "AC4 manual jump vs leap of faith dispatch given same chord",
+        "ACBFR dive into water vs intended forward jump",
+        "Exact Resynced Manual Jump binding and setting on target 1.0.6"
+      ]
+    },
+    {
+      "id": "climb_and_ledge",
+      "label": "Climbing, hanging and back/side eject",
+      "critical": true,
+      "AC4": {
+        "actions": [
+          {
+            "action": "climb",
+            "input": "RT + left_stick",
+            "gesture": "hold+analog",
+            "when": "handhold in range",
+            "sources": [
+              "ac4_prima_movement"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "back_eject",
+            "input": "RT + A",
+            "gesture": "hold+tap",
+            "when": "hanging/climbing state",
+            "sources": [
+              "ac4_prima_movement"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "side_eject",
+            "input": "RT + A + left_stick_left_or_right",
+            "gesture": "hold+tap+direction",
+            "when": "climbing on wall",
+            "sources": [
+              "ac4_prima_movement"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "drop",
+            "input": "B",
+            "gesture": "press",
+            "when": "hanging from ledge",
+            "sources": [
+              "ac4_prima_movement"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN"
+      },
+      "ACBFR": {
+        "actions": [
+          {
+            "action": "parkour_up",
+            "input": "A",
+            "gesture": "hold",
+            "when": "climbing/height gain",
+            "sources": [
+              "bfr_ubisoft_parkour"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "parkour_down",
+            "input": "B",
+            "gesture": "hold",
+            "when": "advanced parkour descent / eject",
+            "sources": [
+              "bfr_ubisoft_parkour"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "side_eject",
+            "input": "contextual",
+            "gesture": "unspecified",
+            "when": "Advanced Parkour enabled",
+            "sources": [
+              "bfr_ubisoft_parkour"
+            ],
+            "evidence": "feature_described_binding_unverified"
+          }
+        ],
+        "engine_priority": "UNKNOWN",
+        "version_specific_priority": "UNKNOWN"
+      },
+      "unresolved": [
+        "AC4 B hanging drop vs low-profile interaction",
+        "ACBFR A/B mapping varies with Advanced Parkour",
+        "Back/side eject timing, attach/ledge transitions"
+      ]
+    },
+    {
+      "id": "combat_neutral",
+      "label": "On-foot combat: base attacks",
+      "critical": true,
+      "AC4": {
+        "actions": [
+          {
+            "action": "primary_attack",
+            "input": "X",
+            "gesture": "tap",
+            "when": "target in melee range",
+            "sources": [
+              "ac4_guide_controls"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "break_defense",
+            "input": "A",
+            "gesture": "press",
+            "when": "guarded enemy in combat",
+            "sources": [
+              "ac4_prima_combat"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "target_selection",
+            "input": "left_stick",
+            "gesture": "analog",
+            "when": "combat targeting direction",
+            "sources": [
+              "ac4_prima_combat"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN"
+      },
+      "ACBFR": {
+        "actions": [
+          {
+            "action": "basic_attack",
+            "input": "RB",
+            "gesture": "press",
+            "when": "on-foot enemy in combat",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "heavy_strike",
+            "input": "RB",
+            "gesture": "hold",
+            "when": "weapon-equipped combat",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "defense_bar_depletion",
+            "input": "attacks/abilities",
+            "gesture": "game_mechanic",
+            "when": "enemy with defense bar",
+            "sources": [
+              "bfr_ubisoft_combat"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN",
+        "version_specific_priority": "UNKNOWN"
+      },
+      "unresolved": [
+        "AC4 X finishing blow vs kill streak attack",
+        "ACBFR RB press/hold arbitration",
+        "Target selection and retargeting under partial input"
+      ]
+    },
+    {
+      "id": "combat_incoming_attack",
+      "label": "Incoming melee/ranged attack and defense",
+      "critical": true,
+      "AC4": {
+        "actions": [
+          {
+            "action": "guard_block",
+            "input": "B",
+            "gesture": "hold",
+            "when": "incoming melee",
+            "sources": [
+              "ac4_prima_combat"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "counter_entry",
+            "input": "B",
+            "gesture": "tap",
+            "when": "enemy attack indicator active",
+            "sources": [
+              "ac4_prima_combat"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN"
+      },
+      "ACBFR": {
+        "actions": [
+          {
+            "action": "parry",
+            "input": "LB",
+            "gesture": "press",
+            "when": "parryable incoming melee",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "dodge",
+            "input": "B",
+            "gesture": "press",
+            "when": "incoming melee / unparryable attack",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "perfect_dodge_attack",
+            "input": "RB",
+            "gesture": "press",
+            "when": "immediately following perfect dodge",
+            "sources": [
+              "bfr_ubisoft_combat"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "human_shield",
+            "input": "Y",
+            "gesture": "press",
+            "when": "incoming ranged threat",
+            "sources": [
+              "bfr_ubisoft_combat"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN",
+        "version_specific_priority": "UNKNOWN"
+      },
+      "unresolved": [
+        "AC4 hold B block versus tap B opens counter follow-up",
+        "AC4 counter timing / counter animation state",
+        "Resynced normal/perfect parry frame windows and unparryable attacks",
+        "Resynced B dodge vs parkour down, input mode not verified per build"
+      ]
+    },
+    {
+      "id": "combat_counter_followup",
+      "label": "Multi-step counter choice and defense break",
+      "critical": true,
+      "AC4": {
+        "actions": [
+          {
+            "action": "counter_followup",
+            "input": "one_of_four_face_buttons",
+            "gesture": "tap",
+            "when": "after successful tap-B counter in brief slow-motion selection state",
+            "sources": [
+              "ac4_prima_combat"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "counter_kill",
+            "input": "followup_button_unverified",
+            "gesture": "tap",
+            "when": "after successful B counter",
+            "sources": [
+              "ac4_prima_combat"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "counter_throw",
+            "input": "followup_button_unverified",
+            "gesture": "tap",
+            "when": "after successful B counter",
+            "sources": [
+              "ac4_prima_combat"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "counter_disarm",
+            "input": "followup_button_unverified",
+            "gesture": "tap",
+            "when": "after successful B counter",
+            "sources": [
+              "ac4_prima_combat"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "tool_counter",
+            "input": "followup_button_unverified",
+            "gesture": "tap",
+            "when": "after successful B counter with equipped tool",
+            "sources": [
+              "ac4_prima_combat"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN"
+      },
+      "ACBFR": {
+        "actions": [
+          {
+            "action": "perfect_parry",
+            "input": "LB",
+            "gesture": "timed_press",
+            "when": "timed parry",
+            "sources": [
+              "bfr_ubisoft_combat"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "perfect_dodge",
+            "input": "B",
+            "gesture": "timed_press",
+            "when": "timed dodge",
+            "sources": [
+              "bfr_ubisoft_combat"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "sweep",
+            "input": "RT + A",
+            "gesture": "hold+press",
+            "when": "enemy guard / ground move",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "kick",
+            "input": "RT + X",
+            "gesture": "hold+press",
+            "when": "enemy near wall/ledge",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN",
+        "version_specific_priority": "UNKNOWN"
+      },
+      "unresolved": [
+        "No direct equivalence AC4 counter submenu to Resynced parry/dodge",
+        "Face-button followup mapping not reliably legible in public text",
+        "Resynced RT chord actions may obstruct parkour if remapped"
+      ]
+    },
+    {
+      "id": "combat_finisher",
+      "label": "Kill streaks versus takedown / chain",
+      "critical": true,
+      "AC4": {
+        "actions": [
+          {
+            "action": "kill_streak",
+            "input": "X + left_stick_direction",
+            "gesture": "timed_press+direction",
+            "when": "after combo kill or counter kill, during prior kill animation",
+            "sources": [
+              "ac4_prima_combat"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "grounded_enemy_finish",
+            "input": "X",
+            "gesture": "contextual",
+            "when": "enemy on ground before recovery",
+            "sources": [
+              "ac4_prima_combat"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN"
+      },
+      "ACBFR": {
+        "actions": [
+          {
+            "action": "takedown",
+            "input": "Y",
+            "gesture": "press",
+            "when": "enemy defense depleted or perfect parry exposes vulnerability",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "chain_takedown",
+            "input": "Y? / context",
+            "gesture": "unknown",
+            "when": "after qualified prior takedown, enemy chain eligibility",
+            "sources": [
+              "bfr_ubisoft_combat"
+            ],
+            "evidence": "feature_described_binding_unverified"
+          },
+          {
+            "action": "ground_takedown",
+            "input": "Y? / context",
+            "gesture": "unknown",
+            "when": "enemy grounded by sweep or explosion",
+            "sources": [
+              "bfr_ubisoft_combat"
+            ],
+            "evidence": "feature_described_binding_unverified"
+          },
+          {
+            "action": "wall_takedown",
+            "input": "Y? / context",
+            "gesture": "unknown",
+            "when": "enemy hit a wall/railing after kick",
+            "sources": [
+              "bfr_ubisoft_combat"
+            ],
+            "evidence": "feature_described_binding_unverified"
+          },
+          {
+            "action": "hidden_blade_takedown",
+            "input": "Y? / context",
+            "gesture": "unknown",
+            "when": "enemy defense broken or parry",
+            "sources": [
+              "bfr_ubisoft_combat"
+            ],
+            "evidence": "feature_described_binding_unverified"
+          }
+        ],
+        "engine_priority": "UNKNOWN",
+        "version_specific_priority": "UNKNOWN"
+      },
+      "unresolved": [
+        "AC4 kill streak is not automatically equivalent to Resynced chain takedown",
+        "Takedown eligibility/read-before-input unknown",
+        "Native action selection priority RB/Y unknown",
+        "Brutes and captains can deny chain takedown"
+      ]
+    },
+    {
+      "id": "combat_lockon_and_camera",
+      "label": "Target lock, camera, enemy direction",
+      "critical": true,
+      "AC4": {
+        "actions": [
+          {
+            "action": "combat_focus",
+            "input": "left_stick_direction",
+            "gesture": "analog",
+            "when": "combat opponent highlight selection",
+            "sources": [
+              "ac4_prima_combat"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "center_camera",
+            "input": "R3",
+            "gesture": "press",
+            "when": "generic camera orientation",
+            "sources": [
+              "ac4_guide_controls"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN"
+      },
+      "ACBFR": {
+        "actions": [
+          {
+            "action": "lock_target",
+            "input": "R3",
+            "gesture": "press",
+            "when": "combat target in range",
+            "sources": [
+              "bfr_ubisoft_combat"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "cycle_target",
+            "input": "right_stick",
+            "gesture": "analog",
+            "when": "locked target selection",
+            "sources": [
+              "bfr_ubisoft_combat"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN",
+        "version_specific_priority": "UNKNOWN"
+      },
+      "unresolved": [
+        "Changing target during a finisher/hold may alter priority",
+        "Offscreen attackers and targeting are not modeled by candidate resolver"
+      ]
+    },
+    {
+      "id": "stealth_awareness",
+      "label": "Detection, social stealth and crouch",
+      "critical": true,
+      "AC4": {
+        "actions": [
+          {
+            "action": "low_profile",
+            "input": "RT_released",
+            "gesture": "state",
+            "when": "stealth / blend / civilian interaction",
+            "sources": [
+              "ac4_prima_stealth"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "blend",
+            "input": "movement_or_standing",
+            "gesture": "automatic",
+            "when": "within civilian group",
+            "sources": [
+              "ac4_prima_stealth"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "high_profile_attention",
+            "input": "RT_held",
+            "gesture": "state",
+            "when": "run / attack / high-profile behavior",
+            "sources": [
+              "ac4_prima_stealth"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN"
+      },
+      "ACBFR": {
+        "actions": [
+          {
+            "action": "crouch",
+            "input": "X",
+            "gesture": "press",
+            "when": "on-foot, any terrain",
+            "sources": [
+              "bfr_ubisoft_parkour"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "social_blend",
+            "input": "near_crowd",
+            "gesture": "automatic",
+            "when": "crowds of at least three",
+            "sources": [
+              "bfr_ubisoft_parkour"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "hood_toggle",
+            "input": "DPadLeft",
+            "gesture": "press",
+            "when": "foot exploration",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN",
+        "version_specific_priority": "UNKNOWN"
+      },
+      "unresolved": [
+        "Low/High profile has broad consequences for AC4",
+        "Resynced independent crouch/hood state is different mechanism",
+        "No source-backed engine priority between stealth and combat"
+      ]
+    },
+    {
+      "id": "stealth_assassination",
+      "label": "Assassination: standing, air, ledge, cover",
+      "critical": true,
+      "AC4": {
+        "actions": [
+          {
+            "action": "low_profile_assassinate",
+            "input": "X",
+            "gesture": "press",
+            "when": "valid enemy within low-profile reach",
+            "sources": [
+              "ac4_prima_assassinations"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "high_profile_assassinate",
+            "input": "RT + X",
+            "gesture": "hold+press",
+            "when": "valid enemy in higher-range/high profile",
+            "sources": [
+              "ac4_prima_assassinations"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "air_assassinate",
+            "input": "RT + X",
+            "gesture": "hold+press",
+            "when": "highlighted target beneath Edward",
+            "sources": [
+              "ac4_prima_assassinations"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "ledge_corner_hide_assassinate",
+            "input": "X / RT + X",
+            "gesture": "contextual",
+            "when": "position-specific ledge/corner/hiding target",
+            "sources": [
+              "ac4_prima_assassinations"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN"
+      },
+      "ACBFR": {
+        "actions": [
+          {
+            "action": "assassinate",
+            "input": "Y",
+            "gesture": "hold",
+            "when": "stealth eligible nearby enemy",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "stealth_position_selection",
+            "input": "unverified",
+            "gesture": "unknown",
+            "when": "hidden/air/ledge/corner state",
+            "sources": [
+              "bfr_ubisoft_parkour"
+            ],
+            "evidence": "feature_described_binding_unverified"
+          }
+        ],
+        "engine_priority": "UNKNOWN",
+        "version_specific_priority": "UNKNOWN"
+      },
+      "unresolved": [
+        "AC4 high/low profile changes range, animation and detection",
+        "Resynced separate Assassinate vs Takedown and their priorities unknown",
+        "Ability to assassinate one/two targets and game-specific camera targeting"
+      ]
+    },
+    {
+      "id": "stealth_nonlethal",
+      "label": "Non-lethal takedown, pickpocket, body handling",
+      "critical": true,
+      "AC4": {
+        "actions": [
+          {
+            "action": "nonlethal_takedown",
+            "input": "X",
+            "gesture": "tap",
+            "when": "unarmed behind target",
+            "sources": [
+              "ac4_prima_assassinations"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "pickpocket",
+            "input": "B",
+            "gesture": "hold",
+            "when": "behind target and in range",
+            "sources": [
+              "ac4_prima_stealth"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "pickup_body",
+            "input": "B",
+            "gesture": "tap",
+            "when": "body nearby",
+            "sources": [
+              "ac4_prima_moves"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN"
+      },
+      "ACBFR": {
+        "actions": [
+          {
+            "action": "interact",
+            "input": "Y",
+            "gesture": "press",
+            "when": "body/object nearby",
+            "sources": [
+              "bfr_prima"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "body_throw",
+            "input": "RT",
+            "gesture": "press",
+            "when": "body held / throw mode",
+            "sources": [
+              "bfr_prima"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN",
+        "version_specific_priority": "UNKNOWN"
+      },
+      "unresolved": [
+        "AC4 X assassinate versus nonlethal action depends on equipped weapon",
+        "B pickpocket/loot vs B counter/interact semantics",
+        "Resynced body handling availability/priority unknown"
+      ]
+    },
+    {
+      "id": "tools_aim_and_loadout",
+      "label": "Aiming, firing, tools, weapon selection",
+      "critical": true,
+      "AC4": {
+        "actions": [
+          {
+            "action": "free_aim",
+            "input": "LT",
+            "gesture": "hold",
+            "when": "manual ranged weapon aiming",
+            "sources": [
+              "ac4_guide_controls"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "fire_aimed",
+            "input": "RT",
+            "gesture": "press",
+            "when": "while aimed",
+            "sources": [
+              "ac4_manual"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "select_inventory",
+            "input": "DPad",
+            "gesture": "direction",
+            "when": "weapon/tool quick inventory",
+            "sources": [
+              "ac4_guide_controls"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "use_tool",
+            "input": "Y",
+            "gesture": "press",
+            "when": "tool selected",
+            "sources": [
+              "ac4_guide_controls"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN"
+      },
+      "ACBFR": {
+        "actions": [
+          {
+            "action": "aim",
+            "input": "LT",
+            "gesture": "hold",
+            "when": "tool/pistol aiming",
+            "sources": [
+              "bfr_prima"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "shoot_or_tool",
+            "input": "RT",
+            "gesture": "press",
+            "when": "with weapon/tool",
+            "sources": [
+              "bfr_prima"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "equip_tools",
+            "input": "LT + DPad",
+            "gesture": "hold+direction",
+            "when": "tool-specific selectable actions",
+            "sources": [
+              "bfr_prima"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "reload_pistol",
+            "input": "LT + Y",
+            "gesture": "hold+press",
+            "when": "weapon ready",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "quick_use_pistol",
+            "input": "RT + Y",
+            "gesture": "hold+press",
+            "when": "game ability context",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "quick_use_rope",
+            "input": "RT + B",
+            "gesture": "hold+press",
+            "when": "game ability context",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN",
+        "version_specific_priority": "UNKNOWN"
+      },
+      "unresolved": [
+        "AC4 RT high-profile vs fire while aiming",
+        "Resynced LT and RT change face-button commands",
+        "No complete profile can be safe without enumerating tools and ammo/selection"
+      ]
+    },
+    {
+      "id": "interactions_context",
+      "label": "Contextual interaction, looting, grabbing",
+      "critical": true,
+      "AC4": {
+        "actions": [
+          {
+            "action": "interact",
+            "input": "B",
+            "gesture": "press",
+            "when": "interactable target at foot",
+            "sources": [
+              "ac4_manual"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "loot_pickpocket",
+            "input": "B",
+            "gesture": "hold",
+            "when": "corpse or NPC nearby",
+            "sources": [
+              "ac4_prima_moves"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "weapon_pickup_drop",
+            "input": "B",
+            "gesture": "press_or_modifier",
+            "when": "weapon near/held, different behavior in combat",
+            "sources": [
+              "ac4_prima_combat"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN"
+      },
+      "ACBFR": {
+        "actions": [
+          {
+            "action": "interact",
+            "input": "Y",
+            "gesture": "press",
+            "when": "character/ship interaction prompt",
+            "sources": [
+              "bfr_prima"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "human_shield",
+            "input": "Y",
+            "gesture": "press",
+            "when": "ranged attack approaching",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "takedown",
+            "input": "Y",
+            "gesture": "press",
+            "when": "vulnerable enemy",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN",
+        "version_specific_priority": "UNKNOWN"
+      },
+      "unresolved": [
+        "High profile changes AC4 pickup weapon behavior",
+        "Resynced shared Y actions need exact contextual priority model"
+      ]
+    },
+    {
+      "id": "surface_swimming",
+      "label": "Swimming on the surface",
+      "critical": true,
+      "AC4": {
+        "actions": [
+          {
+            "action": "swim",
+            "input": "left_stick",
+            "gesture": "analog",
+            "when": "in water",
+            "sources": [
+              "ac4_prima_movement"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "fast_swim",
+            "input": "RT + left_stick",
+            "gesture": "hold+analog",
+            "when": "swim on surface",
+            "sources": [
+              "ac4_manual"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "stealth_dive",
+            "input": "B",
+            "gesture": "hold",
+            "when": "surface water",
+            "sources": [
+              "ac4_manual"
+            ],
+            "evidence": "feature_described_binding_unverified"
+          }
+        ],
+        "engine_priority": "UNKNOWN"
+      },
+      "ACBFR": {
+        "actions": [
+          {
+            "action": "sprint_swim",
+            "input": "L3",
+            "gesture": "press",
+            "when": "swimming on surface",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "dive_down",
+            "input": "B",
+            "gesture": "hold",
+            "when": "swimming surface",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "interact",
+            "input": "Y",
+            "gesture": "press",
+            "when": "near underwater loot/object",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN",
+        "version_specific_priority": "UNKNOWN"
+      },
+      "unresolved": [
+        "Swimming B diverges from on-foot B defense/parkour",
+        "Water transitions require release of held movement states"
+      ]
+    },
+    {
+      "id": "underwater",
+      "label": "Underwater swimming, resurfacing and interactions",
+      "critical": true,
+      "AC4": {
+        "actions": [
+          {
+            "action": "swim",
+            "input": "left_stick",
+            "gesture": "analog",
+            "when": "underwater segment",
+            "sources": [
+              "ac4_manual"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "swim_up",
+            "input": "A",
+            "gesture": "press",
+            "when": "stationary underwater",
+            "sources": [
+              "ac4_manual"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "fast_swim",
+            "input": "RT + left_stick",
+            "gesture": "hold+analog",
+            "when": "underwater",
+            "sources": [
+              "ac4_manual"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN"
+      },
+      "ACBFR": {
+        "actions": [
+          {
+            "action": "swim_up",
+            "input": "A",
+            "gesture": "hold",
+            "when": "underwater",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "dive_down",
+            "input": "B",
+            "gesture": "hold",
+            "when": "underwater",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "lunge",
+            "input": "L3",
+            "gesture": "press",
+            "when": "underwater",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "eagle_vision",
+            "input": "R3",
+            "gesture": "hold",
+            "when": "underwater",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN",
+        "version_specific_priority": "UNKNOWN"
+      },
+      "unresolved": [
+        "Surface-to-underwater entry vs platform dive is separate state",
+        "Resynced dive-anywhere feature differs from original underwater constraints"
+      ]
+    },
+    {
+      "id": "ship_helm",
+      "label": "Ship steering and speed",
+      "critical": true,
+      "AC4": {
+        "actions": [
+          {
+            "action": "steer",
+            "input": "left_stick",
+            "gesture": "analog",
+            "when": "at Jackdaw wheel",
+            "sources": [
+              "ac4_guide_naval"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "accelerate",
+            "input": "A",
+            "gesture": "press",
+            "when": "at wheel, sailing",
+            "sources": [
+              "ac4_guide_naval"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "decelerate",
+            "input": "B",
+            "gesture": "press",
+            "when": "at wheel, sailing",
+            "sources": [
+              "ac4_guide_naval"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN"
+      },
+      "ACBFR": {
+        "actions": [
+          {
+            "action": "steer",
+            "input": "left_stick",
+            "gesture": "analog",
+            "when": "at Jackdaw wheel",
+            "sources": [
+              "bfr_prima"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "raise_sails",
+            "input": "A",
+            "gesture": "press_or_hold",
+            "when": "ship navigation",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "lower_sails",
+            "input": "B",
+            "gesture": "press_or_hold",
+            "when": "ship navigation",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "pathfinder",
+            "input": "DPadUp",
+            "gesture": "hold",
+            "when": "sea waypoint set",
+            "sources": [
+              "bfr_ubisoft_naval"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "follow_sea",
+            "input": "Y",
+            "gesture": "hold",
+            "when": "sea waypoint set",
+            "sources": [
+              "bfr_ubisoft_naval"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN",
+        "version_specific_priority": "UNKNOWN"
+      },
+      "unresolved": [
+        "Ship A/B actions cannot inherit on-foot guard-break or B counter behavior",
+        "Modern Follow Sea/pathfinder not in original"
+      ]
+    },
+    {
+      "id": "ship_weapons",
+      "label": "Ship broadsides, aiming, mortar, swivel",
+      "critical": true,
+      "AC4": {
+        "actions": [
+          {
+            "action": "free_aim",
+            "input": "LT",
+            "gesture": "hold",
+            "when": "helm/ship weapons aim mode",
+            "sources": [
+              "ac4_manual"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "shoot",
+            "input": "RT",
+            "gesture": "press",
+            "when": "ship weapon aim context",
+            "sources": [
+              "ac4_manual"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "heavy_chain_fire_barrels",
+            "input": "RT + camera_direction",
+            "gesture": "press+direction",
+            "when": "relative camera aiming decides heavy/chain/fire barrel",
+            "sources": [
+              "ac4_manual"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "mortar",
+            "input": "LB",
+            "gesture": "hold_and_release",
+            "when": "ship mortar when equipped",
+            "sources": [
+              "ac4_guide_naval"
+            ],
+            "evidence": "feature_described_binding_unverified"
+          },
+          {
+            "action": "swivel",
+            "input": "Y",
+            "gesture": "hold_and_release",
+            "when": "ship swivel engagement",
+            "sources": [
+              "ac4_guide_naval"
+            ],
+            "evidence": "feature_described_binding_unverified"
+          },
+          {
+            "action": "brace",
+            "input": "X",
+            "gesture": "hold",
+            "when": "incoming ship fire or large waves",
+            "sources": [
+              "ac4_guide_naval"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN"
+      },
+      "ACBFR": {
+        "actions": [
+          {
+            "action": "blind_fire",
+            "input": "RT",
+            "gesture": "press",
+            "when": "ship gunnery",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "aim",
+            "input": "LT",
+            "gesture": "hold",
+            "when": "ship aiming",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "aimed_fire",
+            "input": "LT + RT",
+            "gesture": "hold+press",
+            "when": "ship aim active",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "swivel",
+            "input": "RB",
+            "gesture": "hold",
+            "when": "ship swivel gun",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "mortar",
+            "input": "LB",
+            "gesture": "hold",
+            "when": "mortar aiming",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "change_fire_mode",
+            "input": "Y",
+            "gesture": "press",
+            "when": "while aiming",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "ram_dash",
+            "input": "LB + RB",
+            "gesture": "chord",
+            "when": "appropriate naval capability unlocked",
+            "sources": [
+              "bfr_prima"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN",
+        "version_specific_priority": "UNKNOWN"
+      },
+      "unresolved": [
+        "Ship LT+RT can be mistaken for on-foot ability chords",
+        "Naval weapon selected by camera/aim mode in AC4",
+        "Ship LB/RB must remain available despite ground combat remaps"
+      ]
+    },
+    {
+      "id": "ship_spyglass",
+      "label": "Spyglass, target marking, ship hints",
+      "critical": true,
+      "AC4": {
+        "actions": [
+          {
+            "action": "spyglass",
+            "input": "RB",
+            "gesture": "hold",
+            "when": "at wheel observing ships",
+            "sources": [
+              "ac4_guide_naval"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN"
+      },
+      "ACBFR": {
+        "actions": [
+          {
+            "action": "spyglass",
+            "input": "R3",
+            "gesture": "press",
+            "when": "on Jackdaw",
+            "sources": [
+              "bfr_prima"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "zoom_in",
+            "input": "RT",
+            "gesture": "press",
+            "when": "spyglass open",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "zoom_out",
+            "input": "LT",
+            "gesture": "press",
+            "when": "spyglass open",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "mark_target",
+            "input": "A",
+            "gesture": "press",
+            "when": "spyglass open",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "exit_spyglass",
+            "input": "B",
+            "gesture": "press",
+            "when": "spyglass open",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN",
+        "version_specific_priority": "UNKNOWN"
+      },
+      "unresolved": [
+        "Same A/B/X/RT physical buttons change meaning inside spyglass",
+        "State transition on closing view must restore ship helm semantics"
+      ]
+    },
+    {
+      "id": "ship_boarding",
+      "label": "Release wheel, board and combat transition",
+      "critical": true,
+      "AC4": {
+        "actions": [
+          {
+            "action": "release_wheel",
+            "input": "B",
+            "gesture": "hold",
+            "when": "Jackdaw stopped",
+            "sources": [
+              "ac4_manual"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "board_incapacitated",
+            "input": "B",
+            "gesture": "hold",
+            "when": "in range of disabled ship",
+            "sources": [
+              "ac4_manual"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN"
+      },
+      "ACBFR": {
+        "actions": [
+          {
+            "action": "board_ship",
+            "input": "Y",
+            "gesture": "hold",
+            "when": "disabled ship within boarding range",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "brace",
+            "input": "X",
+            "gesture": "hold",
+            "when": "naval incoming attack",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "release_wheel",
+            "input": "B",
+            "gesture": "hold",
+            "when": "helm stopped",
+            "sources": [
+              "bfr_prima"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN",
+        "version_specific_priority": "UNKNOWN"
+      },
+      "unresolved": [
+        "Hold B/Y has context priority over helm actions",
+        "Boarding transfers to ground combat with different button map"
+      ]
+    },
+    {
+      "id": "ship_shanties",
+      "label": "Sea shanties, sea route and UI",
+      "critical": true,
+      "AC4": {
+        "actions": [
+          {
+            "action": "shanties",
+            "input": "DPad",
+            "gesture": "unspecified",
+            "when": "Jackdaw music mode",
+            "sources": [
+              "ac4_guide_naval"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN"
+      },
+      "ACBFR": {
+        "actions": [
+          {
+            "action": "shanty_wheel",
+            "input": "DPadDown",
+            "gesture": "hold",
+            "when": "at ship helm",
+            "sources": [
+              "bfr_prima"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "toggle_shanty",
+            "input": "DPadRight",
+            "gesture": "press",
+            "when": "sailing",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "stop_shanty",
+            "input": "DPadRight",
+            "gesture": "hold",
+            "when": "sailing",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN",
+        "version_specific_priority": "UNKNOWN"
+      },
+      "unresolved": [
+        "D-pad shanties vs ground tools and time controls",
+        "Held D-pad wheel alters right-stick input state"
+      ]
+    },
+    {
+      "id": "menu_map_ui",
+      "label": "Pause menu, map, inventory, photo mode",
+      "critical": true,
+      "AC4": {
+        "actions": [
+          {
+            "action": "pause",
+            "input": "Menu",
+            "gesture": "press",
+            "when": "any supported single-player mode",
+            "sources": [
+              "ac4_manual"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "map",
+            "input": "View",
+            "gesture": "press",
+            "when": "in single-player",
+            "sources": [
+              "ac4_manual"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "inventory",
+            "input": "DPad",
+            "gesture": "direction",
+            "when": "foot gameplay quick inventory",
+            "sources": [
+              "ac4_manual"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN"
+      },
+      "ACBFR": {
+        "actions": [
+          {
+            "action": "pause",
+            "input": "Menu",
+            "gesture": "press",
+            "when": "single-player UI",
+            "sources": [
+              "bfr_prima"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "map",
+            "input": "View",
+            "gesture": "press",
+            "when": "single-player UI",
+            "sources": [
+              "bfr_prima"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "photo_mode",
+            "input": "L3 + R3",
+            "gesture": "chord",
+            "when": "character controls",
+            "sources": [
+              "bfr_prima"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "hud_toggle",
+            "input": "R3",
+            "gesture": "double_tap",
+            "when": "during game",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN",
+        "version_specific_priority": "UNKNOWN"
+      },
+      "unresolved": [
+        "Menu/UI must bypass gameplay action hooks",
+        "Photo mode and HUD controls share sticks with gameplay actions"
+      ]
+    },
+    {
+      "id": "modern_day_ac4",
+      "label": "Original AC4 present-day Abstergo gameplay",
+      "critical": false,
+      "AC4": {
+        "actions": [
+          {
+            "action": "move_camera",
+            "input": "sticks",
+            "gesture": "analog",
+            "when": "present-day Abstergo environment",
+            "sources": [
+              "ac4_manual"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "tablet",
+            "input": "contextual_button_unknown",
+            "gesture": "unspecified",
+            "when": "present-day UI",
+            "sources": [
+              "ac4_manual"
+            ],
+            "evidence": "feature_described_binding_unverified"
+          }
+        ],
+        "engine_priority": "UNKNOWN"
+      },
+      "ACBFR": {
+        "actions": [],
+        "engine_priority": "UNKNOWN",
+        "version_specific_priority": "UNKNOWN"
+      },
+      "unresolved": [
+        "Not documented as a Resynced surface; confirm whether present-day is included",
+        "Do not apply ground combat or ship controls to modern-day mode"
+      ]
+    },
+    {
+      "id": "hunting_harpooning",
+      "label": "Hunting/harpooning and minigames",
+      "critical": false,
+      "AC4": {
+        "actions": [
+          {
+            "action": "special_mode",
+            "input": "unknown",
+            "gesture": "unknown",
+            "when": "hunting/harpooning/side activity",
+            "sources": [
+              "ac4_prima_moves"
+            ],
+            "evidence": "feature_described_binding_unverified"
+          }
+        ],
+        "engine_priority": "UNKNOWN"
+      },
+      "ACBFR": {
+        "actions": [],
+        "engine_priority": "UNKNOWN",
+        "version_specific_priority": "UNKNOWN"
+      },
+      "unresolved": [
+        "Independent minigame bindings not fully retrieved",
+        "Never intercept core buttons in unclassified minigame"
+      ]
+    },
+    {
+      "id": "original_multiplayer",
+      "label": "AC4 multiplayer (outside initial single-player scope)",
+      "critical": false,
+      "AC4": {
+        "actions": [
+          {
+            "action": "kill_stun",
+            "input": "contextual_button",
+            "gesture": "unspecified",
+            "when": "multiplayer target encounter",
+            "sources": [
+              "ac4_manual"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "ability_slots",
+            "input": "shoulder_buttons",
+            "gesture": "press_or_hold",
+            "when": "multiplayer activated ability",
+            "sources": [
+              "ac4_manual"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          }
+        ],
+        "engine_priority": "UNKNOWN"
+      },
+      "ACBFR": {
+        "actions": [],
+        "engine_priority": "UNKNOWN",
+        "version_specific_priority": "UNKNOWN"
+      },
+      "unresolved": [
+        "AC4 multiplayer has independent semantics; Resynced equivalent not established",
+        "Explicit exclusion from initial modification scope"
+      ]
+    }
+  ],
+  "hazards": [
+    {
+      "id": "AC4_B_TAP_HOLD_COUNTER",
+      "priority": "P0",
+      "game": "AC4",
+      "statement": "B hold guards while B tap starts a counter follow-up choice; B also interacts outside combat",
+      "surface_ids": [
+        "combat_incoming_attack",
+        "combat_counter_followup",
+        "interactions_context"
+      ],
+      "source_ids": [
+        "ac4_prima_combat",
+        "ac4_guide_controls"
+      ],
+      "risk": "Blocking B or collapsing this to a single immediate counter could remove entire counter submenu and guard",
+      "engine_arbitration_verified": false
+    },
+    {
+      "id": "AC4_B_COUNTER_FOLLOWUP",
+      "priority": "P0",
+      "game": "AC4",
+      "statement": "Successful counter enters temporary follow-up face-button selection with four outcome types",
+      "surface_ids": [
+        "combat_counter_followup",
+        "combat_finisher"
+      ],
+      "source_ids": [
+        "ac4_prima_combat"
+      ],
+      "risk": "Second face-button must not trigger its unrelated world action while counter submenu active",
+      "engine_arbitration_verified": false
+    },
+    {
+      "id": "AC4_RT_PROFILE",
+      "priority": "P0",
+      "game": "AC4",
+      "statement": "RT high-profile modifier changes free run, stealth assassination, combat disengagement and weapon firing while aiming",
+      "surface_ids": [
+        "high_profile_travel",
+        "stealth_assassination",
+        "tools_aim_and_loadout"
+      ],
+      "source_ids": [
+        "ac4_prima_movement",
+        "ac4_prima_assassinations",
+        "ac4_prima_combat"
+      ],
+      "risk": "Binding RT as sprint only loses contextual action shifts",
+      "engine_arbitration_verified": false
+    },
+    {
+      "id": "AC4_A_GUARDBREAK_JUMP",
+      "priority": "P0",
+      "game": "AC4",
+      "statement": "A jump and combat break defense share physical button, selected by mode",
+      "surface_ids": [
+        "combat_neutral",
+        "manual_jump",
+        "climb_and_ledge"
+      ],
+      "source_ids": [
+        "ac4_guide_controls",
+        "ac4_prima_combat"
+      ],
+      "risk": "Always mapping A to one combat move can disable jumps and parkour",
+      "engine_arbitration_verified": false
+    },
+    {
+      "id": "AC4_X_ASSASSINATE_KILLCHAIN",
+      "priority": "P0",
+      "game": "AC4",
+      "statement": "X primary attack, low/high assassinate and follow-up kill streak require different states",
+      "surface_ids": [
+        "combat_neutral",
+        "combat_finisher",
+        "stealth_assassination"
+      ],
+      "source_ids": [
+        "ac4_prima_combat",
+        "ac4_prima_assassinations"
+      ],
+      "risk": "Do not implement X finisher using enemy health alone or a simple button rebound",
+      "engine_arbitration_verified": false
+    },
+    {
+      "id": "AC4_WATER_B",
+      "priority": "P0",
+      "game": "AC4",
+      "statement": "B surface dive, hang drop and on-foot interaction/counter differ by state",
+      "surface_ids": [
+        "surface_swimming",
+        "climb_and_ledge",
+        "combat_incoming_attack"
+      ],
+      "source_ids": [
+        "ac4_manual",
+        "ac4_prima_movement"
+      ],
+      "risk": "Global B override can block swimming and ledge release",
+      "engine_arbitration_verified": false
+    },
+    {
+      "id": "BFR_RT_A_B_ABILITIES",
+      "priority": "P0",
+      "game": "ACBFR",
+      "statement": "RT+A sweep, RT+B quick rope dart, RT+X kick can take precedence over parkour action in customized layouts",
+      "surface_ids": [
+        "combat_counter_followup",
+        "tools_aim_and_loadout",
+        "manual_jump"
+      ],
+      "source_ids": [
+        "bfr_shacknews",
+        "community_collision"
+      ],
+      "risk": "Changing RT sprint without relocating abilities can disable parkour; actual 1.0.6 arbitration unknown",
+      "engine_arbitration_verified": false
+    },
+    {
+      "id": "BFR_Y_OVERLAP",
+      "priority": "P0",
+      "game": "ACBFR",
+      "statement": "Y interact/takedown/human shield and hold-Y assassination are not interchangeable",
+      "surface_ids": [
+        "interactions_context",
+        "combat_finisher",
+        "stealth_assassination"
+      ],
+      "source_ids": [
+        "bfr_shacknews",
+        "bfr_prima"
+      ],
+      "risk": "Putting these on X may accidentally hide/disable important interactions or lethal actions",
+      "engine_arbitration_verified": false
+    },
+    {
+      "id": "BFR_RB_ATTACK_HOLD",
+      "priority": "P0",
+      "game": "ACBFR",
+      "statement": "RB tap/hold means basic/heavy ground attack, naval swivel changes same button",
+      "surface_ids": [
+        "combat_neutral",
+        "ship_weapons"
+      ],
+      "source_ids": [
+        "bfr_shacknews"
+      ],
+      "risk": "Replacing RB must preserve hold semantics and ship-specific use",
+      "engine_arbitration_verified": false
+    },
+    {
+      "id": "BFR_UNPARRYABLE_ATTACK",
+      "priority": "P0",
+      "game": "ACBFR",
+      "statement": "Brute attacks cannot be parried; some windows require dodge, Perfect Dodge is separate",
+      "surface_ids": [
+        "combat_incoming_attack",
+        "combat_counter_followup"
+      ],
+      "source_ids": [
+        "bfr_ubisoft_combat"
+      ],
+      "risk": "Blind B counter mapping can eat required dodge or choose an invalid parry",
+      "engine_arbitration_verified": false
+    },
+    {
+      "id": "BFR_SHARED_BUTTON_OBSERVED",
+      "priority": "P0",
+      "game": "ACBFR",
+      "statement": "User assigned normal Attack and Takedown to one physical button and saw only Attack",
+      "surface_ids": [
+        "combat_neutral",
+        "combat_finisher"
+      ],
+      "source_ids": [],
+      "risk": "Confirmed for tested configuration; visible Takedown prompt and build fingerprint were not supplied; don't request duplicate",
+      "engine_arbitration_verified": false
+    },
+    {
+      "id": "BFR_WATER_SHIP",
+      "priority": "P0",
+      "game": "ACBFR",
+      "statement": "B dives while swimming / lowers ship sails / evades combat; A surfaces/jumps/raises sails",
+      "surface_ids": [
+        "surface_swimming",
+        "underwater",
+        "ship_helm",
+        "combat_incoming_attack"
+      ],
+      "source_ids": [
+        "bfr_shacknews"
+      ],
+      "risk": "Global rebinding without context separation blocks movement or ship commands",
+      "engine_arbitration_verified": false
+    },
+    {
+      "id": "BFR_PARKOUR_SETTINGS",
+      "priority": "P0",
+      "game": "ACBFR",
+      "statement": "Advanced Parkour and Manual Jump configuration affect traversal outcomes independently of button choices",
+      "surface_ids": [
+        "manual_jump",
+        "climb_and_ledge"
+      ],
+      "source_ids": [
+        "bfr_ubisoft_parkour",
+        "bfr_ubisoft_access"
+      ],
+      "risk": "Do not confuse a settings-dependent dive/jump outcome with a broken key dispatcher",
+      "engine_arbitration_verified": false
+    },
+    {
+      "id": "BFR_VERSION_PROFILE",
+      "priority": "P0",
+      "game": "ACBFR",
+      "statement": "Launch control tables are not the owner's verified 1.0.6 behavior",
+      "surface_ids": [
+        "ground_idle",
+        "combat_neutral",
+        "combat_finisher",
+        "ship_helm"
+      ],
+      "source_ids": [
+        "bfr_shacknews",
+        "bfr_prima"
+      ],
+      "risk": "No claim of TU 1.0.6 or TU 1.0.8 action arbitration from July launch guide",
+      "engine_arbitration_verified": false
+    },
+    {
+      "id": "BFR_DEVICES_INPUT_MODES",
+      "priority": "P0",
+      "game": "ACBFR",
+      "statement": "Press/Hold/Double Tap/Toggle and auto input-device switching change mapping recognition",
+      "surface_ids": [
+        "ground_idle",
+        "combat_finisher",
+        "tools_aim_and_loadout"
+      ],
+      "source_ids": [
+        "bfr_ubisoft_custom",
+        "bfr_ubisoft_access"
+      ],
+      "risk": "Unknown press/hold arbitration, modifier ordering and transitions; never intercept blindly",
+      "engine_arbitration_verified": false
+    },
+    {
+      "id": "MOD_SCOPE_UI_MINIGAMES",
+      "priority": "P1",
+      "game": "BOTH",
+      "statement": "Menus, special minigames and original present-day/multiplayer must be excluded until observed",
+      "surface_ids": [
+        "menu_map_ui",
+        "hunting_harpooning",
+        "modern_day_ac4",
+        "original_multiplayer"
+      ],
+      "source_ids": [
+        "ac4_manual",
+        "bfr_prima"
+      ],
+      "risk": "Unknown modes must bypass any override to prevent soft locks",
+      "engine_arbitration_verified": false
+    }
+  ],
+  "critical_unknowns": [
+    {
+      "id": "AC4_SECOND_STAGE_BUTTONS",
+      "priority": "P0",
+      "statement": "Precisely map B-counter submenu four outcomes to face buttons, timing and follow-up action blocking",
+      "blocked_features": [
+        "B_counter",
+        "X_counter_followup"
+      ],
+      "needs": "original manual in-game cues, corroborated footage or authoritative button table"
+    },
+    {
+      "id": "AC4_B_DODGE",
+      "priority": "P0",
+      "statement": "Distinguish dodge, parry, counter and throw in original AC4 rather than copying a goal-level assumption",
+      "blocked_features": [
+        "B_dodge"
+      ],
+      "needs": "original game mechanics evidence"
+    },
+    {
+      "id": "AC4_X_PRIORITY",
+      "priority": "P0",
+      "statement": "Original attack/kill streak/stealth assassination/ground finish priority and failure behavior",
+      "blocked_features": [
+        "X_attack",
+        "X_takedown",
+        "X_assassinate"
+      ],
+      "needs": "reliable original game behavioral trace"
+    },
+    {
+      "id": "BFR_X_CONFLICT_CONTEXT",
+      "priority": "P0",
+      "statement": "User observed same-button Attack wins over Takedown; whether Takedown HUD prompt was available in that case unknown",
+      "blocked_features": [
+        "X_takedown"
+      ],
+      "needs": "do not repeat same remap; only materially different source evidence"
+    },
+    {
+      "id": "BFR_NATIVE_ELIGIBILITY",
+      "priority": "P0",
+      "statement": "No verified pre-action availability signal for Takedown/Assassinate for exact game build",
+      "blocked_features": [
+        "X_takedown",
+        "X_assassinate"
+      ],
+      "needs": "documented or independently validated native state API"
+    },
+    {
+      "id": "BFR_NATIVE_DISPATCH",
+      "priority": "P0",
+      "statement": "No verified native game action dispatcher for 1.0.6",
+      "blocked_features": [
+        "X_takedown",
+        "X_assassinate",
+        "B_counter",
+        "A_break"
+      ],
+      "needs": "source-backed callable game command independent of physical mapping"
+    },
+    {
+      "id": "BFR_MANUAL_JUMP_MODES",
+      "priority": "P0",
+      "statement": "Actual binding and precedence of Manual Jump, Advanced Parkour, B dive and side eject in 1.0.6 unknown",
+      "blocked_features": [
+        "RT_parkour",
+        "A_jump",
+        "B_dodge"
+      ],
+      "needs": "documented setting and reproducible game-side behavior"
+    },
+    {
+      "id": "BFR_TOOL_MODIFIERS",
+      "priority": "P0",
+      "statement": "Exact gesture priority when RT/LT modifier overlaps parkour and abilities on 1.0.6 unknown",
+      "blocked_features": [
+        "RT_parkour",
+        "A_break",
+        "B_dodge"
+      ],
+      "needs": "button-gesture graph for each affected context and version"
+    },
+    {
+      "id": "FULL_SURFACE_COVERAGE",
+      "priority": "P0",
+      "statement": "Hunting/harpooning, UI and all contextual actions not exhaustively verified from current sources",
+      "blocked_features": [
+        "all_runtime_overrides"
+      ],
+      "needs": "complete per-surface confirmed map and fail-open bypass for unknown"
+    },
+    {
+      "id": "GAMEPAD_VERSION_OPTIONS",
+      "priority": "P0",
+      "statement": "Full controller remap, accessibility options, input device auto-switch and 1.0.6 custom mapping not captured",
+      "blocked_features": [
+        "all_runtime_overrides"
+      ],
+      "needs": "real target version settings when appropriate single-session validation"
+    }
+  ],
+  "global_invariants": [
+    "Only compare a concrete surface and gesture; no global A/B/X/Y remap inference",
+    "Source-described mapping does not establish runtime action priority",
+    "No input-consuming gameplay adapter while any P0 relevant arbitration remains unverified",
+    "On menu/ship/swim/unknown surfaces proposed ground combat overrides remain disabled",
+    "Never silently suppress multi-step AC4 counter follow-up or X kill streak state",
+    "Never call simulated game action success a verified in-game result",
+    "Do not require owner to repeat already observed dual-binding conflict"
+  ],
+  "research_notes": [
+    "Original AC4 B is NOT just a generic context-based counter/dodge. Holding B guards; tapping B on a prompted incoming melee opens a separate timed counter menu with four face-button follow-ups.",
+    "Original AC4 High Profile RT modifies stealth assassination range/animation and traversal, and influences combat disengagement and aimed firing. High Profile must not be treated as a plain sprint key.",
+    "Resynced Takedown after defense break/perfect parry, normal/perfect dodge and enemy archetype limits are separate systems from original AC4 kill streaks.",
+    "Controller maps from July 2026 do not establish exact input priority or bindings on the owner's TU 1.0.6.",
+    "Every feature described with an unconfirmed binding is explicitly marked feature_described_binding_unverified.",
+    "User confirmed only normal Attack fired when Attack and Takedown shared a physical button in Resynced; exact available prompt at that moment unknown."
+  ],
+  "transitions": [
+    {
+      "id": "TR-01",
+      "game": "AC4",
+      "from": "ground_idle",
+      "to": "high_profile_travel",
+      "trigger": "hold RT while moving",
+      "sources": [
+        "ac4_prima_movement"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-02",
+      "game": "AC4",
+      "from": "high_profile_travel",
+      "to": "ground_idle",
+      "trigger": "release RT (exit high profile)",
+      "sources": [
+        "ac4_prima_stealth"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-03",
+      "game": "AC4",
+      "from": "high_profile_travel",
+      "to": "manual_jump",
+      "trigger": "hold RT + directional input + tap A at edge",
+      "sources": [
+        "ac4_prima_movement"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-04",
+      "game": "AC4",
+      "from": "high_profile_travel",
+      "to": "climb_and_ledge",
+      "trigger": "reach wall/handhold under high profile",
+      "sources": [
+        "ac4_prima_movement"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-05",
+      "game": "AC4",
+      "from": "ground_idle",
+      "to": "stealth_awareness",
+      "trigger": "enter suspicious/hidden/blending situation",
+      "sources": [
+        "ac4_prima_stealth"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-06",
+      "game": "AC4",
+      "from": "stealth_awareness",
+      "to": "stealth_assassination",
+      "trigger": "eligible enemy with X (RT changes profile)",
+      "sources": [
+        "ac4_prima_assassinations"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-07",
+      "game": "AC4",
+      "from": "ground_idle",
+      "to": "combat_neutral",
+      "trigger": "hostility triggers combat stance",
+      "sources": [
+        "ac4_prima_combat"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-08",
+      "game": "AC4",
+      "from": "combat_neutral",
+      "to": "combat_incoming_attack",
+      "trigger": "enemy telegraphs incoming melee",
+      "sources": [
+        "ac4_prima_combat"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-09",
+      "game": "AC4",
+      "from": "combat_incoming_attack",
+      "to": "combat_counter_followup",
+      "trigger": "tap B inside counter window",
+      "sources": [
+        "ac4_prima_combat"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-10",
+      "game": "AC4",
+      "from": "combat_counter_followup",
+      "to": "combat_neutral",
+      "trigger": "face-button follow-up or timeout",
+      "sources": [
+        "ac4_prima_combat"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-11",
+      "game": "AC4",
+      "from": "combat_neutral",
+      "to": "combat_finisher",
+      "trigger": "after qualifying combo kill / counter kill",
+      "sources": [
+        "ac4_prima_combat"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-12",
+      "game": "AC4",
+      "from": "combat_finisher",
+      "to": "combat_finisher",
+      "trigger": "X toward next opponent during killing animation",
+      "sources": [
+        "ac4_prima_combat"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-13",
+      "game": "AC4",
+      "from": "combat_neutral",
+      "to": "high_profile_travel",
+      "trigger": "hold RT to disengage",
+      "sources": [
+        "ac4_prima_combat"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-14",
+      "game": "AC4",
+      "from": "ground_idle",
+      "to": "surface_swimming",
+      "trigger": "enter open water",
+      "sources": [
+        "ac4_prima_movement"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-15",
+      "game": "AC4",
+      "from": "surface_swimming",
+      "to": "underwater",
+      "trigger": "hold surface-dive action",
+      "sources": [
+        "ac4_manual"
+      ],
+      "evidence": "binding_not_verified",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-16",
+      "game": "AC4",
+      "from": "ground_idle",
+      "to": "ship_helm",
+      "trigger": "take the Jackdaw wheel",
+      "sources": [
+        "ac4_manual"
+      ],
+      "evidence": "binding_not_verified",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-17",
+      "game": "AC4",
+      "from": "ship_helm",
+      "to": "ship_weapons",
+      "trigger": "aim or fire naval weapon",
+      "sources": [
+        "ac4_guide_naval"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-18",
+      "game": "AC4",
+      "from": "ship_helm",
+      "to": "ship_spyglass",
+      "trigger": "activate spyglass at wheel",
+      "sources": [
+        "ac4_guide_naval"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-19",
+      "game": "AC4",
+      "from": "ship_helm",
+      "to": "ship_boarding",
+      "trigger": "approach disabled ship, hold board action",
+      "sources": [
+        "ac4_manual"
+      ],
+      "evidence": "binding_not_verified",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-20",
+      "game": "AC4",
+      "from": "ship_boarding",
+      "to": "combat_neutral",
+      "trigger": "move onto enemy deck",
+      "sources": [
+        "ac4_manual"
+      ],
+      "evidence": "inferred_not_verified",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-21",
+      "game": "ACBFR",
+      "from": "ground_idle",
+      "to": "high_profile_travel",
+      "trigger": "press L3 for sprint / foot locomotion",
+      "sources": [
+        "bfr_shacknews"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-22",
+      "game": "ACBFR",
+      "from": "high_profile_travel",
+      "to": "manual_jump",
+      "trigger": "A jump under Manual Jump preference",
+      "sources": [
+        "bfr_ubisoft_parkour"
+      ],
+      "evidence": "binding_not_verified",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-23",
+      "game": "ACBFR",
+      "from": "high_profile_travel",
+      "to": "climb_and_ledge",
+      "trigger": "parkour up/descend with setting-dependent context",
+      "sources": [
+        "bfr_ubisoft_parkour"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-24",
+      "game": "ACBFR",
+      "from": "ground_idle",
+      "to": "stealth_awareness",
+      "trigger": "enter crouch via X / blend near group",
+      "sources": [
+        "bfr_ubisoft_parkour"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-25",
+      "game": "ACBFR",
+      "from": "stealth_awareness",
+      "to": "stealth_assassination",
+      "trigger": "hold Y when assassination available",
+      "sources": [
+        "bfr_shacknews"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-26",
+      "game": "ACBFR",
+      "from": "ground_idle",
+      "to": "combat_neutral",
+      "trigger": "enter combat",
+      "sources": [
+        "bfr_ubisoft_combat"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-27",
+      "game": "ACBFR",
+      "from": "combat_neutral",
+      "to": "combat_incoming_attack",
+      "trigger": "hostile incoming melee/ranged threat",
+      "sources": [
+        "bfr_ubisoft_combat"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-28",
+      "game": "ACBFR",
+      "from": "combat_incoming_attack",
+      "to": "combat_finisher",
+      "trigger": "perfect parry exposes takedown opportunity",
+      "sources": [
+        "bfr_ubisoft_combat"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-29",
+      "game": "ACBFR",
+      "from": "combat_neutral",
+      "to": "combat_finisher",
+      "trigger": "deplete defense bar / sweep or wall takedown condition",
+      "sources": [
+        "bfr_ubisoft_combat"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-30",
+      "game": "ACBFR",
+      "from": "combat_finisher",
+      "to": "combat_finisher",
+      "trigger": "chain takedown to another eligible opponent (up to weapon limit)",
+      "sources": [
+        "bfr_ubisoft_combat"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-31",
+      "game": "ACBFR",
+      "from": "combat_neutral",
+      "to": "combat_counter_followup",
+      "trigger": "successful perfect dodge enables RB attack",
+      "sources": [
+        "bfr_ubisoft_combat"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-32",
+      "game": "ACBFR",
+      "from": "ground_idle",
+      "to": "tools_aim_and_loadout",
+      "trigger": "hold LT to aim or select equipment",
+      "sources": [
+        "bfr_shacknews"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-33",
+      "game": "ACBFR",
+      "from": "high_profile_travel",
+      "to": "surface_swimming",
+      "trigger": "enter water",
+      "sources": [
+        "bfr_ubisoft_parkour"
+      ],
+      "evidence": "inferred_not_verified",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-34",
+      "game": "ACBFR",
+      "from": "surface_swimming",
+      "to": "underwater",
+      "trigger": "hold B to dive",
+      "sources": [
+        "bfr_shacknews"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-35",
+      "game": "ACBFR",
+      "from": "ground_idle",
+      "to": "ship_helm",
+      "trigger": "take ship wheel (specific prompt unknown)",
+      "sources": [
+        "bfr_prima"
+      ],
+      "evidence": "binding_not_verified",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-36",
+      "game": "ACBFR",
+      "from": "ship_helm",
+      "to": "ship_weapons",
+      "trigger": "LT aim / RT fire / RB swivel / LB mortar",
+      "sources": [
+        "bfr_shacknews"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-37",
+      "game": "ACBFR",
+      "from": "ship_helm",
+      "to": "ship_spyglass",
+      "trigger": "press R3 while helming",
+      "sources": [
+        "bfr_prima"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-38",
+      "game": "ACBFR",
+      "from": "ship_helm",
+      "to": "ship_shanties",
+      "trigger": "hold DPadDown for shanty wheel",
+      "sources": [
+        "bfr_shacknews"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-39",
+      "game": "ACBFR",
+      "from": "ship_helm",
+      "to": "ship_boarding",
+      "trigger": "hold Y near disabled vessel",
+      "sources": [
+        "bfr_shacknews"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-40",
+      "game": "ACBFR",
+      "from": "ship_boarding",
+      "to": "combat_neutral",
+      "trigger": "board enemy ship and fight on deck",
+      "sources": [
+        "bfr_ubisoft_parkour"
+      ],
+      "evidence": "inferred_not_verified",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-41",
+      "game": "ACBFR",
+      "from": "ground_idle",
+      "to": "menu_map_ui",
+      "trigger": "press Menu opens pause UI",
+      "sources": [
+        "bfr_prima"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-42",
+      "game": "AC4",
+      "from": "ground_idle",
+      "to": "menu_map_ui",
+      "trigger": "press Menu opens pause UI",
+      "sources": [
+        "ac4_manual"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    }
+  ]
+}

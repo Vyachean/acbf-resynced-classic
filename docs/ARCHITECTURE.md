@@ -2,6 +2,13 @@
 
 > The **pure C++ decision core, sampled-input edge tracker, and gated native action-bridge contract** are now implemented and tested offline. **No ACBFR input API, hook target, memory layout, action invocation, compatible loader, or runtime integration has been verified.**
 
+## Critical design audit / implementation freeze
+
+**Full-system control audit #18 is mandatory before any game-facing work.**
+See [CONTROL_SYSTEM_AUDIT.md](CONTROL_SYSTEM_AUDIT.md) and its [coverage ledger](../research/control_system_ledger.json). Current `resolve_b()` assumes a one-step choice between counter and dodge; original AC4 instead documents **hold B to block, tap B to enter a counter phase, then a second face-button choice**. Thus the function cannot be treated as a faithful AC4 replica. `resolve_x()` and `resolve_a()` similarly encode **provisional goals**, not recovered runtime priority. **Do not use the existing offline bridge as authorization to suppress any physical input.**
+
+No new game hook or remapping runtime shall be enabled until all other actions sharing that input have been analyzed across contexts, press/hold/release, modifiers, target states and game versions. An unmodeled mode must pass through without consuming game input.
+
 ## Design objective
 
 Translate **player intent** into **one appropriate game action** based on verified context, without relying on several conflicting game-level bindings to the same physical button.
@@ -36,7 +43,7 @@ Supporting modules: per-build compatibility policy, configuration, sanitized dia
 
 **Context provider:** expose only game state that has been validated by evidence, with explicit unknown/unavailable values. Hypothetical inputs may include combat state, action eligibility, targeted enemy, and traversal state, but none of these are assumed to be readable today.
 
-**Resolver (implemented):** [`resolve`](../include/acbf/classic_control.h) is a pure function of abstract button input, physical edge and an explicit context/eligibility snapshot. For X it proposes combat takedown before ordinary attack, stealth assassination before ordinary attack. For B it proposes available counter before dodge. These are **design priorities**, not reverse-engineered game facts. No action is emitted when relevant eligibility is unknown. [`EdgeTracker`](../include/acbf/classic_control.h) provides one press edge per sampled down/up cycle.
+**Resolver (implemented):** [`resolve`](../include/acbf/classic_control.h) is a pure function of abstract button input, physical edge and an explicit context/eligibility snapshot. For X it proposes combat takedown before ordinary attack, stealth assassination before ordinary attack. For B it proposes counter before dodge as an **old, likely incorrect placeholder**. AC4's actual documented B behavior includes guard held and a multi-stage counter submenu; any one-step resolver must be redesigned after the audit. These are **design priorities**, not reverse-engineered game facts. No action is emitted when relevant eligibility is unknown. [`EdgeTracker`](../include/acbf/classic_control.h) provides one press edge per sampled down/up cycle.
 
 **Decision states:** `Selected` = candidate intent, **not** executed; `NoAction` = complete negative eligibility for the handled context; `PassThrough` = leave native game handling alone; `Unresolved` = insufficient trusted data, **do not install/enable a consuming override**; `Ignored` = not a new press. Input-release propagation and safety remain the adapter's responsibility. No game adapter exists yet.
 

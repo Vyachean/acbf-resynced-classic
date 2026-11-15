@@ -4,6 +4,10 @@
 
 This index separates **authoritative documented behavior**, **third-party source observations**, **user/community reports**, and **unresolved game-engine questions**.
 
+## Priority gate: whole-system behavior audit
+
+The [whole-system audit](CONTROL_SYSTEM_AUDIT.md) supersedes the earlier button-only reference and is the mandatory gate for implementation. It includes source-labelled [control surfaces, transitions, hazards and P0 unknowns](../research/control_system_ledger.json). A documented *button mapping* is not an engine action arbitration contract. The AC4 B hold/block → tap/counter → second face-button choice is a critical counterexample to the previous simplistic B resolver.
+
 ## Detailed findings
 
 - [AC4 vs Resynced control reference](CONTROL_REFERENCE.md): source-backed Xbox-style mapping, AC4 reference vs Resynced default, release differences and contradictory remap reports.

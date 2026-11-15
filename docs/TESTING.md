@@ -2,6 +2,10 @@
 
 The maintainer cannot directly run the user's game. Manual tests should therefore be **short, deterministic and diagnostically useful**.
 
+## Required controls audit gate
+
+Issue [#18](https://github.com/Vyachean/acbf-resynced-classic/issues/18) blocks any new game-facing controller override. Before approving a single new behavior, validate the [complete multi-surface behavior inventory](CONTROL_SYSTEM_AUDIT.md), including timed counter follow-ups, profile modifiers, aiming/tool chords, ship/water/menu states and input-release safety. Unknown modes must pass through. This test document's X/B/A scenarios describe **goals, not faithful recovered AC4 action logic**.
+
 ## Before testing
 
 Record:

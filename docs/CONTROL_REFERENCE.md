@@ -1,5 +1,7 @@
 # Controller behavior reference: AC4 vs Resynced
 
+> **Legacy quick-reference, not the complete behavior model.** The new mandatory [whole-system controls audit](CONTROL_SYSTEM_AUDIT.md) covers 25 surfaces, input gestures, multi-stage actions, ship/water modes, collision risks and unverified state transitions. **No gameplay hooks are approved.**
+
 **Research date:** 2026-11-15. **Status:** source-backed baseline, **not** in-game validation of this mod.
 
 This document compares Xbox-style inputs and separates three things:
@@ -16,8 +18,8 @@ This document compares Xbox-style inputs and separates three things:
 | Ordinary melee attack | **X**: melee weapon / primary attack | **RB**, hold RB for heavy attack | **X** should perform exactly one ordinary attack when that is the relevant action. |
 | Stealth assassination | **X**: assassinate | **Hold Y**: assassination | **X** should select assassination when eligible, without issuing a stray normal swing. Exact eligibility/API unknown. |
 | Combat finisher / takedown | User's AC4 reference: **X** can resolve a finishing action; not separately established by a button table | **Y**: takedown | **X** should choose finisher when eligible; determine what the game calls microkill/softkill/takedown. Priority unknown. |
-| Counter / parry | **B**: counter | **LB**: parry | **B** should invoke the intended classic-style defense only when it is available. |
-| Dodge / roll | Original AC4 dodge's exact button/state semantics **not established by these sources** | **B**, double-B roll | Combined B counter/evade is a **requested design goal**, not yet a verified description of the original's decision tree. |
+| Counter / block | **Hold B**: guard/parry; **tap B** at enemy-attack warning: enter a **temporary four-way counter follow-up** (face-button choice) | **LB**: parry/perfect parry | **B cannot safely be represented by one immediate Counter-or-Dodge decision.** AC4's second action stage must be reconstructed. |
+| Dodge / roll | Original AC4 dodge/evade control is not established by the available source tables; original B counter does **not** imply a dodge command | **B** dodge, double-B roll | Combining AC4 counter with Resynced dodge on one B press is **not yet justified** and may block counter follow-up/guard. |
 | Defense break | **A**: break defense in combat; also movement/jump context | **RT + A** is a **Sweep** shortcut in launch mapping, not necessarily equivalent to AC4 guard break | Investigate which Resynced move, if any, reproduces AC4 guard break. Do not map A to Sweep without testing semantics. |
 | High-profile traversal | **RT**: high profile / free run | **L3**: sprint; **A**: jump/parkour up; **B**: parkour down | **RT** as a high-profile modifier is desired, not simply RT = L3; avoid breaking A/B parkour or quick abilities. |
 | Interact | **B**: interact outside combat | **Y**: interact | Interaction vs defense priority needs a separate context policy. |
@@ -49,7 +51,7 @@ Counter-evidence:
 - At least one community comment reports **attack and takedown on the same button** working after a parry/stun: https://www.reddit.com/r/ACBFResynced/comments/1usa1zu/best_legacy_control_scheme_for_black_flag_resynced/
 - A July 2026 demonstration also configures X for both attack and takedown: https://www.youtube.com/watch?v=q4r1P2Q2bsE
 
-**Conclusion:** there is evidence of **context-/version-dependent conflicts**, not proof that the shared binding universally works or universally fails. Do **not** turn this contradiction into a supposedly known engine priority. Our first test must distinguish **normal swing**, **eligible takedown**, **eligible assassination**, and **input mode (press/hold)** with exact settings.
+**Conclusion:** the user observed the shared Attack/Takedown button executing only normal Attack. Other sources report different outcomes, but the Takedown eligibility/prompt during that observation is unknown. This is a recorded conflict, **not** permission to ask for the same test again. There is evidence of **context-/version-dependent conflicts**, not proof that the shared binding universally works or universally fails. Do **not** turn this contradiction into a supposedly known engine priority. Our first test must distinguish **normal swing**, **eligible takedown**, **eligible assassination**, and **input mode (press/hold)** with exact settings.
 
 ## Ordered requirements for the first resolver
 
