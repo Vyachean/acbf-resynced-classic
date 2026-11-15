@@ -55,7 +55,7 @@ class CombatConditionsContract(unittest.TestCase):
         c = self.catalog["AC4"]
         self.assertEqual(set(c["moves"]), MOVES)
         self.assertEqual(set(c["archetypes"]), ARCHETYPES)
-        self.assertIn("not an actionable", c["evidence"])
+        self.assertIn("does not establish an actionable", c["evidence"])
         for name, row in c["archetypes"].items():
             with self.subTest(enemy=name):
                 self.assertFalse(row["gameplay_state_verified"])
