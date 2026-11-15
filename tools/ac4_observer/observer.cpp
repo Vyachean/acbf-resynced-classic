@@ -67,7 +67,9 @@ using DispatchFn = int(__thiscall*)(void*, uint32_t, uint32_t, int*);
 using GateFn = uint32_t(__thiscall*)(void*, uint32_t);
 using EdgeFn = uint32_t(__thiscall*)(void*, uint32_t, uintptr_t, uintptr_t);
 using HoldFn = uint32_t(__thiscall*)(void*, uint32_t, uintptr_t, uintptr_t, uintptr_t);
-using AvailableFn = uint8_t(__cdecl*)(uint32_t);
+// FUN_01147A20 is called with ECX=this, one stack argument, and ends in RET 4.
+// Keep the thiscall stack-cleanup contract; treating it as cdecl corrupts ESP.
+using AvailableFn = uint8_t(__thiscall*)(void*, uint32_t);
 CallbackFn original_callback = nullptr;
 ResolverFn original_resolver = nullptr;
 DispatchFn original_dispatch = nullptr;
@@ -311,10 +313,11 @@ uint32_t __fastcall hold_hook(void* self, void*, uint32_t slot, uintptr_t arg3,
     return result;
 }
 
-uint8_t __cdecl available_hook(uint32_t slot) {
-    const uint8_t result = original_available(slot);
+uint8_t __fastcall available_hook(void* self, void*, uint32_t slot) {
+    const uint8_t result = original_available(self, slot);
     if (active_correlation)
-        push(8, 8, slot, result, 0, 0, static_cast<int32_t>(slot), active_correlation);
+        push(8, 8, slot, result, reinterpret_cast<uintptr_t>(self), 0,
+             static_cast<int32_t>(slot), active_correlation);
     return result;
 }
 
