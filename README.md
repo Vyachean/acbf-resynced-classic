@@ -62,6 +62,7 @@ No DRM bypass or unauthorized game redistribution is part of this project. Users
 - [Research register](docs/RESEARCH.md) — evidence and outstanding technical questions
 - [Control reference](docs/CONTROL_REFERENCE.md) — AC4 vs Resynced default bindings, discrepancies and unknowns
 - [Integration findings](docs/INTEGRATION_FINDINGS.md) — public modding evidence, licensing, compatibility gates
+- [Puppet Native ABI](docs/PUPPET_NATIVE.md) — public plugin API and CI-tested lifecycle bridge, not a gameplay hook
 - [Reference cases](research/reference_scenarios.json) — machine-readable design cases (**not tested in game**)
 - [C++ control core](include/acbf/classic_control.h) — pure, provisional action resolver (no game integration)
 - [Diagnostic ASI](docs/DIAGNOSTICS.md) — experimental read-only Windows observer, built by Actions and tested only with a synthetic host
@@ -81,7 +82,7 @@ Technical observations or reproducible control conflicts can be filed through [G
 - [Single-session diagnostic strategy](docs/TEST_STRATEGY.md): offline-first testing and maximal evidence per game launch.
 - [GitHub Actions CI](.github/workflows/ci.yml): documentation checks, offline tests, and a Windows build/package pipeline that activates once actual source exists.
 
-**Project versions are Git tags, not necessarily public releases.** GitHub Actions builds/tests the Windows observer and offline core, and packages the diagnostic ASI separately. A green diagnostic build is **not** proof of game support.
+**Project versions are Git tags, not necessarily public releases.** GitHub Actions builds/tests the Windows observer and offline core, and packages the diagnostic ASI separately. A green diagnostic build is **not** proof of game support. A separate Puppet Native ABI v1 plugin is now compiled and lifecycle-tested offline (not packaged for player use).
 
 ## Legal and licensing
 

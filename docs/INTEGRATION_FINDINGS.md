@@ -11,7 +11,7 @@ No game was launched, and no executable was obtained for this investigation.
 | **Ultimate ASI Loader** | Several Resynced mods document an x64 ASI loader as `version.dll` alongside `ACBlackFlag.exe`. | That any particular loader build works with the user's installed version or with Puppet Native simultaneously. | Third-party loader; do not bundle it without verifying upstream license/permissions. |
 | **ACBFHapticsBridge** | Public C++ sources and tests include executable profiles for TU 1.0.6/1.0.7/1.0.8, input and selected gameplay-state instrumentation, and version-dependent hook validation. A published state mapping covers **21 enter/exit hooks for movement/traversal/swimming/haystack**, with checks/rollback tests. | That those hooks can observe enemy **takedown eligibility** or call **attack/finisher**. The state table inspected is **not** an action-dispatch API. | Upstream is under its own **non-commercial** source license. We may learn from documented techniques, but must **not copy licensed source, generated pattern tables, or binaries** into this proprietary repository without a compatible agreement. |
 | **QuickSaveF5** | The mod documents a compatible x64 ASI loader and calling a native save routine. | That a gameplay action dispatcher exists at a known address, or that ASI collision is solved. | No copying; mod-specific terms need checking before any reuse. |
-| **Puppet Native** | Public Nexus description advertises plugin loading and Resynced fixes; author post refers to v1.5 distribution on GitHub. | A verified standalone plugin API, its source code/license, or reliable coexistence with other ASI loaders. Earlier user-reported startup collisions are unverified for a clean environment. | No redistribution or use of internals without permission. |
+| **Puppet Native** | Public **MIT-licensed GitHub source** includes `PN_Api` v1 and loader lifecycle, plus Resynced support claim. | A gameplay action API, confirmed loader interoperability, or compatibility with a specific executable. Earlier user-reported startup collisions are unverified for a clean environment. | No redistribution or use of internals without permission. |
 | **Unrestricted Combat Finishers** | A TU 1.0.8 data mod claims to change finishers triggered by normal attacks using `Edward_Default.data` / forge packages. | That it restores AC4's **input priorities**, helps 1.0.6, or can be incorporated safely with other data mods. | Nexus author forbids modification/redistribution without permission. Not usable as a dependency or code source. |
 | **Resynced built-in controls** | Official help confirms rebinding controls and changing press/hold/double-tap/toggle modes. | A public scripting API, read-only state stream, or force-action API. | Ubisoft game internals/data must not be shipped in this repo. |
 
@@ -44,7 +44,7 @@ These links describe independently published projects and **do not** establish a
 - Whether a loader can be **safely reused** in the user's setup without replacing an existing `version.dll`.
 - Exact DLL/EXE hashes for the user's installation, supported store channel, or compatibility of a future project build.
 - Whether a built-in mapping conflict survives the same test on official TU 1.0.8; community experiences conflict.
-- Whether Puppet Native 1.5 has a stable public API we can legally build against.
+- Whether Puppet Native API v1 remains ABI-compatible with the user's installed v1.5 binary (**public source confirms the contract; deployed binary not tested**).
 
 ## Integration architecture decision
 
@@ -98,3 +98,7 @@ This is meant to narrow hypotheses around `XInput`, `GameInput` and `DirectInput
 Public HapticsBridge source also distinguishes GameInput and XInput input backends and exposes a game **XInputSetState IAT observer** for haptic output. This is not evidence of a safely usable `XInputGetState` input interception point or a native attack/takedown dispatch API; do not equate output vibration with a player action. See source: https://github.com/DEadDRop470/Assassins-Creed-Black-Flag-Resynced-Haptics-Bridge/blob/main/Source%20v%202.3.7.9/src/main.cpp
 
 **Still unresolved:** which semantic input/action boundary permits classic contextual controls.
+
+## Confirmed Puppet Native plugin ABI (2026-11-15)
+
+Earlier research understated the public availability of Puppet Native's plugin interface. The **public MIT-licensed repository** publishes a C ABI v1; our source-only compatibility plugin compiles and is checked with a synthetic host in Windows Actions. See [Puppet Native integration assessment](PUPPET_NATIVE.md) for exact signature, loader path and limitations. This is a meaningful integration seam; **it is not a game action dispatcher**.

@@ -7,10 +7,11 @@ The roadmap is ordered by **uncertainty reduction and observable gameplay value*
 - [x] Document the source-backed **original AC4 vs Resynced launch bindings**, known control conflicts and title-update caveats in [CONTROL_REFERENCE](CONTROL_REFERENCE.md).
 - [x] Inventory public **ASI modding examples, state-hook evidence, alternative data-mod route and reuse/license constraints** in [INTEGRATION_FINDINGS](INTEGRATION_FINDINGS.md).
 - [x] Create **source-labelled, explicitly unverified** test scenarios and validate their structure in GitHub Actions.
-- [ ] Establish which input API/game-action boundary is safe to integrate.
+- [x] Verify a public **Puppet Native PluginLoader C ABI v1** and build a no-hook lifecycle test under GitHub Actions (integration seam only).
+- [ ] Establish which **game action eligibility and dispatch** boundary is safe to integrate.
 - [ ] Prove or disprove the ability to read **finisher / assassination eligibility** (public evidence before runtime instrumentation).
 - [ ] Prove or disprove ability to dispatch an eligible action **independently of existing button mappings**.
-- [ ] Verify loader coexistence and fail-closed build identification without introducing fragile assumptions.
+- [ ] Verify Puppet Native loader coexistence and fail-closed executable identification without introducing fragile assumptions.
 
 **Exit:** documented and independently supported decision for the *specific* action-eligibility and dispatch integration, or a defined, combined diagnostic needed to settle it. **Current result:** enough to design a pure controller resolver, not enough to deliver a playable game integration.
 
