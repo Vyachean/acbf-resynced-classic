@@ -6,6 +6,7 @@
 #define WIN32_LEAN_AND_MEAN
 #endif
 #include "acbf/diagnostic_exports.h"
+#include "acbf/pe_imports.h"
 #include "acbf/classic_control.h"
 
 #include <bcrypt.h>
@@ -53,6 +54,9 @@ struct ProbeState {
     std::string exe_class = "other";
     std::string sha256 = "";
     std::string hash_status = "NOT_RUN";
+    std::string pe_import_status = "NOT_RUN";
+    std::vector<std::string> imported_input_dlls;
+    std::vector<std::string> loaded_input_dlls_before_probe;
 };
 
 std::atomic<bool> stop_requested{false};
@@ -141,6 +145,72 @@ std::string file_sha256(const std::wstring& path, std::string& status) {
     if (algorithm) BCryptCloseAlgorithmProvider(algorithm, 0);
     CloseHandle(file);
     return result;
+}
+
+void scan_executable_imports(ProbeState& state, const std::wstring& path) {
+    // Map the existing executable READ-ONLY. Views are demand-paged;
+    // parsing accesses only the bounded PE headers and import directory.
+    HANDLE file = CreateFileW(path.c_str(), GENERIC_READ,
+                              FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+                              nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+    if (file == INVALID_HANDLE_VALUE) {
+        state.pe_import_status = "FILE_UNAVAILABLE";
+        return;
+    }
+    LARGE_INTEGER length{};
+    if (!GetFileSizeEx(file, &length) || length.QuadPart < 0 ||
+        length.QuadPart > 2LL * 1024 * 1024 * 1024) {
+        state.pe_import_status = "SIZE_LIMIT";
+        CloseHandle(file);
+        return;
+    }
+    HANDLE mapping = CreateFileMappingW(file, nullptr, PAGE_READONLY, 0, 0, nullptr);
+    if (!mapping) {
+        state.pe_import_status = "MAP_FAILED";
+        CloseHandle(file);
+        return;
+    }
+    const void* view = MapViewOfFile(mapping, FILE_MAP_READ, 0, 0, 0);
+    if (!view) {
+        state.pe_import_status = "MAP_FAILED";
+    } else {
+        const auto result = acbf::pe::enumerate_imports(
+            static_cast<const std::uint8_t*>(view),
+            static_cast<std::size_t>(length.QuadPart));
+        state.pe_import_status = acbf::pe::status_name(result.status);
+        for (const auto& dll : result.dll_names)
+            if (acbf::pe::is_input_library(dll))
+                state.imported_input_dlls.push_back(dll);
+        UnmapViewOfFile(view);
+    }
+    CloseHandle(mapping);
+    CloseHandle(file);
+}
+
+void observe_loaded_input_modules_before_probe(ProbeState& state) {
+    // Snapshot BEFORE opening our own XInput client library. This is
+    // evidence that an input-related DLL was loaded, NOT that the game uses it.
+    std::array<HMODULE, 512> modules{};
+    DWORD bytes_needed = 0;
+    if (!EnumProcessModulesEx(GetCurrentProcess(), modules.data(),
+                              static_cast<DWORD>(sizeof(modules)),
+                              &bytes_needed, LIST_MODULES_ALL)) return;
+    const std::size_t count = std::min<std::size_t>(
+        bytes_needed / sizeof(HMODULE), modules.size());
+    for (std::size_t i = 0; i < count; ++i) {
+        std::array<wchar_t, 32768> buffer{};
+        const DWORD n = GetModuleFileNameW(modules[i], buffer.data(),
+                                           static_cast<DWORD>(buffer.size()));
+        if (n == 0 || n >= buffer.size()) continue;
+        const std::wstring name = lowercase(basename_of(
+            std::wstring(buffer.data(), n)));
+        const std::string ascii = sanitized_filename(name);
+        if (acbf::pe::is_input_library(ascii))
+            state.loaded_input_dlls_before_probe.push_back(ascii);
+    }
+    auto& values = state.loaded_input_dlls_before_probe;
+    std::sort(values.begin(), values.end());
+    values.erase(std::unique(values.begin(), values.end()), values.end());
 }
 
 void collect_local_modules(ProbeState& state, const std::wstring& exe_path) {
@@ -290,6 +360,8 @@ bool write_report(const std::wstring& directory, const ProbeState& state, bool f
          << "  \"exe_class\": \"" << state.exe_class << "\",\n"
          << "  \"exe_sha256_status\": \"" << state.hash_status << "\",\n"
          << "  \"exe_sha256\": \"" << state.sha256 << "\",\n"
+         << "  \"pe_import_status\": \"" << state.pe_import_status << "\",\n"
+         << "  \"input_api_evidence\": \"HINT_ONLY_NOT_PROOF_OF_GAME_USAGE\",\n"
          << "  \"native_game_action_dispatch\": \"NOT_IMPLEMENTED\",\n"
          << "  \"game_semantics\": \"NOT_OBSERVABLE\",\n"
          << "  \"controller_observation\": \"XInput polling only (not the game's action stream)\",\n"
@@ -308,6 +380,8 @@ bool write_report(const std::wstring& directory, const ProbeState& state, bool f
     };
     arr("local_asi_modules", state.local_asi);
     arr("local_proxy_modules", state.local_proxies);
+    arr("imported_input_dlls", state.imported_input_dlls);
+    arr("loaded_input_dlls_before_probe", state.loaded_input_dlls_before_probe);
     json << "  \"recent_controller_edges\": [";
     bool first = true;
     for (const ButtonEvent& e : state.recent) {
@@ -350,7 +424,9 @@ DWORD WINAPI diagnostic_worker(void*) {
                        reinterpret_cast<LPCWSTR>(&diagnostic_worker), &own_ref);
 
     state.sha256 = file_sha256(exe_path, state.hash_status);
+    scan_executable_imports(state, exe_path);
     collect_local_modules(state, exe_path);
+    observe_loaded_input_modules_before_probe(state);
     XInputLibrary xinput = open_xinput();
     state.xinput_api = xinput.get_state != nullptr;
     const uint64_t started = GetTickCount64();

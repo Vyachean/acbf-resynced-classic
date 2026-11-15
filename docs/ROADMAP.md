@@ -22,7 +22,8 @@ The roadmap is ordered by **uncertainty reduction and observable gameplay value*
 - [x] Introduce an isolated, deterministic **candidate** contextual-action resolver and press edge tracker with synthetic test cases (not connected to a game).
 - [x] Add a **non-modifying** diagnostic module that reports executable SHA-256, loaded local ASIs/proxies and XInput edges; **not** native gameplay context.
 - [ ] Add version-safe, semantic game-state observation and fail-closed action hook integration.
-- [x] Observe XInput button transitions in an external read-only observer (tested only in a synthetic host).
+- [x] Observe XInput button transitions in an external read-only observer (tested in a synthetic host and deterministic fake XInput provider).
+- [x] Implement a **read-only PE import and pre-probe loaded DLL inventory** for input-backend hypotheses; test malformed synthetic PE fixtures in Windows Actions.
 - [ ] Observe **verified in-game** player context/action eligibility and actual action dispatch.
 - [x] Cap local JSON diagnostics (only X/B/A/RT edges, no paths or network), and require explicit installation of the ASI.
 - [ ] Add validated semantic event telemetry for the **single comprehensive game test**; no game launch before that.

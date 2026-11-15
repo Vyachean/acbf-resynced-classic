@@ -88,3 +88,13 @@ See [single-session strategy](TEST_STRATEGY.md), [controller matrix](CONTROL_REF
 This repository now contains its own [Windows x64 ASI](DIAGNOSTICS.md), built by GitHub Actions and loaded by a synthetic Windows test host. It **does not** rely on third-party hook signatures, and is **not** a live gameplay hook. It provides executable hash, local loader/module inventory and XInput edge sampling, explicitly marking semantic action-availability and game dispatch as unsupported.
 
 This is useful infrastructure, but does not reduce the main blocker: identifying game-facing **action eligibility + dispatch**. The ASI must **not** be presented as fixing gameplay and should not trigger a premature game launch.
+
+## Input API provenance without launching the game
+
+Our [diagnostic implementation](DIAGNOSTICS.md) now includes an original read-only PE32+ **static import-table inspector**, plus a snapshot of loaded input-related DLL names **before** the observer itself opens XInput. Both are tested in Windows GitHub Actions, including intentionally malformed PE fixtures.
+
+This is meant to narrow hypotheses around `XInput`, `GameInput` and `DirectInput` during a future combined session. The observation is strictly **HINT_ONLY_NOT_PROOF_OF_GAME_USAGE**. Static imports cannot reveal dynamic resolution, an injected proxy, or actual gameplay action selection.
+
+Public HapticsBridge source also distinguishes GameInput and XInput input backends and exposes a game **XInputSetState IAT observer** for haptic output. This is not evidence of a safely usable `XInputGetState` input interception point or a native attack/takedown dispatch API; do not equate output vibration with a player action. See source: https://github.com/DEadDRop470/Assassins-Creed-Black-Flag-Resynced-Haptics-Bridge/blob/main/Source%20v%202.3.7.9/src/main.cpp
+
+**Still unresolved:** which semantic input/action boundary permits classic contextual controls.
