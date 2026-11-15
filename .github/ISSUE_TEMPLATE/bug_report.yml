@@ -1,0 +1,53 @@
+name: Control or compatibility bug
+description: Report a reproducible problem with the mod or a specific control conflict
+title: "[Bug] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        No gameplay changes have been released yet. Until then, use this form for reproducible baseline behavior or reference comparisons.
+        **Do not attach game executables, assets, memory dumps, or unredacted private data.**
+  - type: input
+    id: game-version
+    attributes:
+      label: Game and exact build
+      description: Include version or build identifier; don't infer it from an installer name.
+      placeholder: ACBFR version/build unknown
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Controller, loader, and other mods
+      placeholder: Xbox-compatible controller; loader unknown; no other mods
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Include a scenario ID from docs/TESTING.md when applicable.
+      placeholder: |
+        1. Enter ...
+        2. Press ...
+        3. Observe ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected (original AC4 reference, when relevant)
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sanitized logs / evidence / workaround (optional)
+      description: Include whether the issue persists with all mods disabled.

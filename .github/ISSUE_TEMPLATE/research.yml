@@ -1,0 +1,26 @@
+name: Research or feasibility question
+description: Propose a source-backed investigation for classic controls
+title: "[Research] "
+labels: []
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Exact question or hypothesis
+      description: State a falsifiable technical question.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Public sources or observations
+      description: Include links and version-specific evidence; distinguish observation from speculation.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: What would count as verification?
+      placeholder: Reproduction, instrumented evidence, or documented upstream API...
+    validations:
+      required: true

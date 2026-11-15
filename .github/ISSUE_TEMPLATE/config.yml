@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Project scope and roadmap
+    url: https://github.com/Vyachean/acbf-resynced-classic/blob/main/docs/ROADMAP.md
+    about: Review current priorities before filing a request.

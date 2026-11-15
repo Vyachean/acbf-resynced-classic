@@ -1,0 +1,55 @@
+# Build directories / IDE
+.vs/
+.vscode/
+.idea/
+build/
+out/
+bin/
+obj/
+Debug/
+Release/
+x64/
+x86/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+compile_commands.json
+*.sln.docstates
+*.VC.db
+*.VC.opendb
+*.ipch
+*.suo
+*.user
+*.userosscache
+*.sdf
+*.pdb
+*.ilk
+*.idb
+*.obj
+*.o
+*.pch
+*.tlog
+*.lastbuildstate
+
+# Generated binaries and game installation files
+*.asi
+*.dll
+*.exe
+*.pak
+*.forge
+*.fat
+*.dat
+*.dmp
+*.mdmp
+
+# Local diagnostics and secrets
+logs/
+diagnostics/
+*.log
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
