@@ -54,3 +54,16 @@ The actual target methods are indirect. Their concrete implementations depend on
 The generic queue was also checked more narrowly. The queue append method is reached through a wrapper with 801 static callers, confirming shared engine message plumbing. No unique BhvAssassin message consumer or action-start routine was identified. Further enumeration of queue callers is therefore low-information until a concrete component/resource mapping is available.
 
 **Updated status:** static evidence now reaches conditional virtual-handler selection, but still stops short of a named gameplay action and actor ownership. The discriminating next static method is to resolve component composition and concrete vtable targets from one controlled-player and one NPC actor resource using a validated bounded parser. The game remains unlaunched under the current constraint; no runtime confirmation is claimed.
+
+
+## Follow-up: actor-template limit and dynamic test boundary
+
+The local original-game installation contains v27 Forge archives, but the targeted static pass did not identify an Edward actor-template or a comparable NPC actor-template. A filename-only search found no GFL/FGFL or file-list sidecar that would provide a validated resource-name mapping. Read-only reflection of the installed AnvilToolkit confirms a byte-array DataFile constructor and v27 archive APIs, but the inspected generic metadata reader exposes primitive item classes and no obvious actor-template reader. The previously parsed combat resource has an unregistered root type; it has not been shown to be an actor template. No archive deserializer, bulk extraction, or file-writing API was invoked.
+
+As a result, there is no evidence that any actor template contains or omits BhvAssassin. The component lookup and callback registration prove runtime availability, not actor ownership. The concrete vtable class and named action remain unknown. Because the class mapping prerequisite is unmet, broad virtual-method searches were stopped.
+
+### Minimal dynamic session to resolve the boundary
+
+No runtime session was performed. After separate authorization, use an authenticated clean original build if available; the examined local sample is modified and has an input proxy. In one witnessed session, observe the callback at module-relative FUN_01AE1490/FUN_01AB59D0, record owning entity and logical edge, then capture resolver outputs at FUN_0161CDD0. At FUN_01AA3990, stop before the selected indirect call and record its interface/vtable/slot/target address and arguments; step into that target and correlate it with the visible outcome. Compare one ineligible/no-target state with one visibly eligible/stunned guard state under the same mapped input. This can establish callback ownership, candidate fallback, concrete virtual implementation, and one action semantics without guessing from labels or continuing generic queue enumeration. No protection bypass or game modification is proposed.
+
+**Static-stage conclusion:** not successful at the requested actor ownership/action-semantic criterion. The remaining obstacle is missing authoritative template-to-resource mapping plus an untyped root schema, followed by runtime-only resolution of the interface's concrete vtable. The proposed dynamic session is a plan, not evidence.
