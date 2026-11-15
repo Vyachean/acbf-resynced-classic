@@ -68,15 +68,19 @@ No DRM bypass or unauthorized game redistribution is part of this project. Users
 - [Diagnostic ASI](docs/DIAGNOSTICS.md) — experimental read-only Windows observer, built by Actions and tested only with a synthetic host
 - [Contributing](CONTRIBUTING.md) — issue reports and contribution rules
 
+## Immediate validation task
+
+**[X-001: one-session native X comparison](docs/X_INPUT_EXPERIMENT.md)** is now the shortest proof to pursue. It tests whether the game's own Attack/Takedown arbitration works under a published complete remapping profile. **No project ASI/DLL, loader changes, scripts, or uploads are required.** Only a visible in-game Takedown outcome can settle the observation. If the exact same profile was already tested, report that earlier result instead of repeating it. The protocol does **not** establish a playable mod or game-hook compatibility.
+
 ## Getting started
 
-There is **no playable mod to install yet**. A read-only diagnostic ASI is produced as a distinct **diagnostic** GitHub Actions artifact (not a release or gameplay modification). **Do not launch the game for this initial diagnostic build**; it is waiting for further semantic probes so a later test can gather maximum information in one session. It does not include or replace an ASI loader. See [diagnostics](docs/DIAGNOSTICS.md).
+There is **no playable mod to install yet**. A read-only diagnostic ASI is produced as a distinct **diagnostic** GitHub Actions artifact (not a release or gameplay modification). **Do not install the diagnostic build for X-001**; it cannot observe native Takedown outcomes. A future *mod-based* session will require richer semantic probes. It does not include or replace an ASI loader. See [diagnostics](docs/DIAGNOSTICS.md).
 
 Technical observations or reproducible control conflicts can be filed through [GitHub Issues](https://github.com/Vyachean/acbf-resynced-classic/issues). Do not upload game binaries, copyrighted assets, personal data, or crash dumps containing secrets.
 
 ## Development workflow and automation
 
-**No game launch by default.** We research and test with public evidence and automated synthetic tests before requesting any in-game diagnostics. When a game start is unavoidable, the target is **one CI-prepared, comprehensively instrumented session** with minimal player interaction and one sanitized report.
+**No game launch by default.** We research and test with public evidence and automated synthetic tests before requesting any in-game diagnostics. For a no-mod control comparison, use one [X-001](docs/X_INPUT_EXPERIMENT.md) game session and a short observed outcome; if a *mod-based* game session later becomes unavoidable, require one CI-built bundle and a sanitized report.
 
 - [Development and versioning policy](docs/WORKFLOW.md): feature branches, **squash-only PR merges**, one version tag per completed merge, GitHub Actions as the sole automation/build service.
 - [Single-session diagnostic strategy](docs/TEST_STRATEGY.md): offline-first testing and maximal evidence per game launch.

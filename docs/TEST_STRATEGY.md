@@ -18,9 +18,15 @@ Do not run ACBFR or original AC4 merely because development is uncertain. Perfor
 
 The existence of an input/ASI mod **does not** prove we can automate scene creation, NPC states or action dispatch. Do not pretend that an offline simulator proves in-game behavior.
 
-## Gate before requesting any in-game test
+## Exception: one-session built-in control comparison (X-001)
 
-A diagnostic request must have all of the following:
+A **remapping-only**, user-observed behavior comparison is different from a mod diagnostic. It requires **no instrumented build, compiler, loader, package or telemetry**. [X-001](X_INPUT_EXPERIMENT.md) tests the existing game once: first establish that default Takedown Y works with a visible prompt, then try the *complete* published shared-X profile under controlled input methods. The game's own action/animation is the outcome; our XInput report cannot observe it. Skip execution if the complete tested profile already matches the maintainer's earlier failure.
+
+This exception is preferred before invasive hooks because a successful built-in mapping would remove the need to develop a fragile game-action dispatcher. It does **not** certify the project's plugin, 1.0.8 compatibility, or other AC4 control contexts.
+
+## Gate before requesting a mod-based in-game diagnostic
+
+A **mod-based diagnostic request** must have all of the following:
 
 - Specific technical question(s) that other evidence cannot settle.
 - Exact target build/version, loader assumptions and fallback behavior; unknown builds must not trigger invasive hooks.
@@ -31,7 +37,7 @@ A diagnostic request must have all of the following:
 - Installation and cleanup instructions limited to copying/removing files and running the game, when supported by the integration.
 - Known limitations and unsafe/unsupported combinations called out in advance.
 
-If any gate is not met, **do not ask the player to start the game**.
+If any gate is not met, **do not ask the player to start the game for that mod diagnostic**. This does not prohibit the separate, no-mod remapping experiment X-001.
 
 ## Intended one-launch diagnostic bundle
 

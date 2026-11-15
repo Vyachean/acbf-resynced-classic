@@ -30,6 +30,10 @@ Never attach proprietary game files, executables, memory dumps or unredacted fil
 
 These are **proposed test cases**, not evidence of current working behavior. Add exact setup, video evidence or logs as each case is independently validated.
 
+## Immediate single-session native control experiment
+
+The next useful on-game check is [X-001: native same-X comparison](X_INPUT_EXPERIMENT.md). It is a **controlled remapping-only trial**, intentionally not an ASI/loader test. No diagnostic package is necessary to tell whether the displayed Takedown prompt produced an actual finishing move. The user only needs to report the outcome; synthetic tests cannot observe it.
+
 ## Suggested efficient workflow
 
 1. Reproduce in an unmodified target build and document expected reference outcome.
