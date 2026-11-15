@@ -14,6 +14,8 @@ REQUIRED = [
     "docs/ROADMAP.md",
     "docs/CONTROL_SYSTEM_AUDIT.md",
     "research/control_system_ledger.json",
+    "docs/COMBAT_CONDITIONS.md",
+    "research/combat_conditions.json",
     "docs/ARCHITECTURE.md",
     "docs/TESTING.md",
     "docs/TEST_STRATEGY.md",

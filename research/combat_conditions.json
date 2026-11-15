@@ -1,0 +1,453 @@
+{
+  "schema_version": 1,
+  "status": "RESEARCH_ONLY_INCOMPLETE",
+  "updated": "2026-11-15",
+  "intended_build": "Resynced TU 1.0.6 (owner's reported edition; executable fingerprint unverified)",
+  "source_registry": {
+    "original_enemy_archetypes": {
+      "kind": "period_game_guide",
+      "url": "https://primagames.com/eguides/assassins-creed-iv-black-flag-eguide/reference-analysis/enemy-archetypes",
+      "scope": "2013 single-player AC4 enemy matchup guide; not an engine state table"
+    },
+    "original_combat": {
+      "kind": "period_game_guide",
+      "url": "https://primagames.com/eguides/assassins-creed-iv-black-flag-eguide/primer/combat",
+      "scope": "2013 AC4 counter, guard and kill-streak guidance"
+    },
+    "bfr_combat": {
+      "kind": "official_gameplay_description",
+      "url": "https://www.ubisoft.com/en-gb/game/assassins-creed/news/1A8XkbnvONciecEZm9my1C/assassins-creed-black-flag-resynced-combat-system-breakdown",
+      "scope": "July 7 2026 Resynced gameplay descriptions; not engine programming API"
+    },
+    "tu106": {
+      "kind": "official_patch_notes",
+      "url": "https://www.ubisoft.com/en-gb/game/assassins-creed/news/5c72WnN2ot90ii8d9Le1Wt/ac-black-flag-resynced-title-update-106-patch-notes",
+      "scope": "Released August 4 2026; owner reports 1.0.6, unverified binary; note says a bug was fixed, not proof of per-input priority"
+    },
+    "tu107": {
+      "kind": "official_patch_notes",
+      "url": "https://www.ubisoft.com/de-de/game/assassins-creed/news/24bBcwoOoYNZ2gt2yi3HdH/ac-black-flag-resynced-title-update-107-patch-notes",
+      "scope": "Released September 1 2026; newer than target TU1.0.6, not assumed to be available"
+    },
+    "tu108": {
+      "kind": "official_patch_notes",
+      "url": "https://www.ubisoft.com/en-us/game/assassins-creed/news/5Z1RxwznM6CcrkSEVoibmh/ac-black-flag-resynced-title-update-108-patch-notes",
+      "scope": "Released October 27 2026; newer than target TU1.0.6, not assumed to be available"
+    }
+  },
+  "AC4": {
+    "evidence": "2013 Prima guide matchup matrix; does not establish an actionable in-game eligibility flag, script API, animation timing or input priority",
+    "moves": [
+      "Attack",
+      "Combo Kill",
+      "Kill Streak",
+      "Break Defense",
+      "Ranged Attack",
+      "Counter Kill",
+      "Counter Disarm",
+      "Counter Throw",
+      "Special Counter",
+      "Parry"
+    ],
+    "archetypes": {
+      "Soldier": {
+        "move_effectiveness": {
+          "Attack": "weak",
+          "Combo Kill": "weak",
+          "Kill Streak": "weak",
+          "Break Defense": "weak",
+          "Ranged Attack": "weak",
+          "Counter Kill": "weak",
+          "Counter Disarm": "weak",
+          "Counter Throw": "weak",
+          "Special Counter": "weak",
+          "Parry": "unspecified"
+        },
+        "gameplay_state_verified": false
+      },
+      "Scout": {
+        "move_effectiveness": {
+          "Attack": "immune",
+          "Combo Kill": "weak",
+          "Kill Streak": "weak",
+          "Break Defense": "weak",
+          "Ranged Attack": "weak",
+          "Counter Kill": "weak",
+          "Counter Disarm": "weak",
+          "Counter Throw": "weak",
+          "Special Counter": "weak",
+          "Parry": "unspecified"
+        },
+        "gameplay_state_verified": false
+      },
+      "Gunner": {
+        "move_effectiveness": {
+          "Attack": "weak",
+          "Combo Kill": "weak",
+          "Kill Streak": "weak",
+          "Break Defense": "weak",
+          "Ranged Attack": "weak",
+          "Counter Kill": "weak",
+          "Counter Disarm": "weak",
+          "Counter Throw": "weak",
+          "Special Counter": "weak",
+          "Parry": "unspecified"
+        },
+        "gameplay_state_verified": false
+      },
+      "Brute": {
+        "move_effectiveness": {
+          "Attack": "immune",
+          "Combo Kill": "immune",
+          "Kill Streak": "immune",
+          "Break Defense": "weak",
+          "Ranged Attack": "weak",
+          "Counter Kill": "immune",
+          "Counter Disarm": "immune",
+          "Counter Throw": "immune",
+          "Special Counter": "immune",
+          "Parry": "immune"
+        },
+        "gameplay_state_verified": false
+      },
+      "Captain": {
+        "move_effectiveness": {
+          "Attack": "immune",
+          "Combo Kill": "immune",
+          "Kill Streak": "immune",
+          "Break Defense": "immune",
+          "Ranged Attack": "weak",
+          "Counter Kill": "immune",
+          "Counter Disarm": "immune",
+          "Counter Throw": "immune",
+          "Special Counter": "immune",
+          "Parry": "weak"
+        },
+        "gameplay_state_verified": false
+      }
+    },
+    "caveats": [
+      {
+        "id": "BRUTE_COUNTER_DODGE",
+        "description": "The guide describes Brute melee-attack counter input redirecting to a dodge, not ordinary counter follow-up; briefly vulnerable back can be attacked",
+        "source_id": "original_enemy_archetypes",
+        "engine_state_verified": false
+      },
+      {
+        "id": "CAPTAIN_PARRY_KICK",
+        "description": "The guide describes Captain vulnerable to held defensive parry leading to a stun kick; standard counter kills resisted",
+        "source_id": "original_enemy_archetypes",
+        "engine_state_verified": false
+      },
+      {
+        "id": "CAPTAIN_BREAK_DEFENSE_TEXT_CONFLICT",
+        "description": "Same guide prose suggests prone after two successive Break Defense uses on Captains, but its summary matrix marks Captain immune to Break Defense. This is an unresolved SOURCE CONTRADICTION, not a resolved combat rule",
+        "source_id": "original_enemy_archetypes",
+        "engine_state_verified": false
+      },
+      {
+        "id": "MELEE_COMBO_VS_ATTACK",
+        "description": "A Scout is marked immune to a normal Attack but weak to Combo Kill and Kill Streak; never treat normal attack and completed combo finisher as the same effect",
+        "source_id": "original_enemy_archetypes",
+        "engine_state_verified": false
+      }
+    ]
+  },
+  "ACBFR": {
+    "evidence": "Ubisoft July 7 gameplay explanation: conceptual enemy defense, parry, weapon and environment conditions; in-game eligibility API and exact 1.0.6 status UNKNOWN",
+    "source_id": "bfr_combat",
+    "conditional_actions": [
+      {
+        "id": "BREAK_DEFENSE",
+        "action": "takedown",
+        "required": "enemy defense depleted by attacks or special moves",
+        "limitation": "unknown amount and susceptibility; per-enemy runtime context unknown"
+      },
+      {
+        "id": "PERFECT_PARRY",
+        "action": "takedown_or_chain",
+        "required": "successful Perfect Parry of parryable attack",
+        "limitation": "timing threshold and enemy type/resistance unknown"
+      },
+      {
+        "id": "CHAIN_CAPTAIN_BRUTE",
+        "action": "continue_chain",
+        "required": "advanced Brute or Captain defense broken by pistol quickshot between chains",
+        "limitation": "a normal chain may be denied by advanced enemy; not same as original AC4 kill streak"
+      },
+      {
+        "id": "WALL_KICK",
+        "action": "wall_takedown",
+        "required": "valid kick propels an enemy against wall or ship railing",
+        "limitation": "collision geometry/target recognition unavailable"
+      },
+      {
+        "id": "GROUND_SWEEP",
+        "action": "ground_takedown",
+        "required": "enemy knocked prone by Sweep or explosion",
+        "limitation": "state persistence and input cue unknown"
+      },
+      {
+        "id": "BRUTE_UNPARRYABLE",
+        "action": "dodge",
+        "required": "incoming Brute unparryable attack",
+        "limitation": "do not treat B dodge and LB parry as interchangeable"
+      }
+    ],
+    "target_build_verified": false
+  },
+  "patch_fixes": [
+    {
+      "id": "106_RT_SPRINT_PARKOUR",
+      "version": "1.0.6",
+      "date": "2026-08-04",
+      "source_id": "tu106",
+      "type": "fixed_bug",
+      "surfaces": [
+        "high_profile_travel",
+        "manual_jump",
+        "climb_and_ledge"
+      ],
+      "precondition": "Sprint remapped to RT, RT held while attempting parkour",
+      "reported_behavior_before": "Unable to parkour",
+      "patch_claim": "Fixed inability to parkour with RT held after remap",
+      "runtime_verified": false
+    },
+    {
+      "id": "106_QUICK_ROPE_INTERRUPT",
+      "version": "1.0.6",
+      "date": "2026-08-04",
+      "source_id": "tu106",
+      "type": "fixed_bug",
+      "surfaces": [
+        "tools_aim_and_loadout",
+        "combat_incoming_attack",
+        "combat_finisher"
+      ],
+      "precondition": "Quick Use Rope Dart interrupted by an enemy attack or after a rope dart hang",
+      "reported_behavior_before": "Quick Use Rope Dart may no longer be usable",
+      "patch_claim": "Fixed loss of quick-rope ability after these interruptions",
+      "runtime_verified": false
+    },
+    {
+      "id": "106_SMOKE_POST_COMBAT_ASSASSINATION",
+      "version": "1.0.6",
+      "date": "2026-08-04",
+      "source_id": "tu106",
+      "type": "fixed_bug",
+      "surfaces": [
+        "stealth_assassination",
+        "combat_neutral",
+        "stealth_awareness"
+      ],
+      "precondition": "Drunk pirate in smoke after Edward entered combat",
+      "reported_behavior_before": "Sometimes unable to assassinate target",
+      "patch_claim": "Fixed assassination eligibility failure in that context",
+      "runtime_verified": false
+    },
+    {
+      "id": "106_TAKEDOWN_WHILE_VAULTING",
+      "version": "1.0.6",
+      "date": "2026-08-04",
+      "source_id": "tu106",
+      "type": "fixed_bug",
+      "surfaces": [
+        "combat_finisher",
+        "manual_jump",
+        "climb_and_ledge"
+      ],
+      "precondition": "Edward vaulting over a target",
+      "reported_behavior_before": "Takedown could trigger during vault",
+      "patch_claim": "Fixed unintended Takedown while vaulting",
+      "runtime_verified": false
+    },
+    {
+      "id": "106_SWEEP_AWARENESS",
+      "version": "1.0.6",
+      "date": "2026-08-04",
+      "source_id": "tu106",
+      "type": "fixed_bug",
+      "surfaces": [
+        "combat_counter_followup",
+        "stealth_awareness"
+      ],
+      "precondition": "Leg sweep of an attentive or suspicious enemy",
+      "reported_behavior_before": "Sometimes unable to sweep",
+      "patch_claim": "Fixed ability to perform leg sweep in these alertness states",
+      "runtime_verified": false
+    },
+    {
+      "id": "106_HOOD_LEAP",
+      "version": "1.0.6",
+      "date": "2026-08-04",
+      "source_id": "tu106",
+      "type": "fixed_bug",
+      "surfaces": [
+        "manual_jump",
+        "stealth_awareness"
+      ],
+      "precondition": "Attempting to toggle hood during Leap of Faith",
+      "reported_behavior_before": "Hood could not be toggled",
+      "patch_claim": "Fixed inability to toggle hood during Leap of Faith",
+      "runtime_verified": false
+    },
+    {
+      "id": "106_BENCH_BODY_AFTER_LOAD",
+      "version": "1.0.6",
+      "date": "2026-08-04",
+      "source_id": "tu106",
+      "type": "fixed_bug",
+      "surfaces": [
+        "interactions_context",
+        "stealth_nonlethal"
+      ],
+      "precondition": "Dead body on bench after save/load",
+      "reported_behavior_before": "Corpse could be looted/carried",
+      "patch_claim": "Fixed unintended body interaction after load",
+      "runtime_verified": false
+    },
+    {
+      "id": "107_SUSPICIOUS_BURNING_TAKEDOWN",
+      "version": "1.0.7",
+      "date": "2026-09-01",
+      "source_id": "tu107",
+      "type": "fixed_bug",
+      "surfaces": [
+        "combat_finisher",
+        "stealth_awareness"
+      ],
+      "precondition": "Diabolist pistol, enemy suspicious and on fire",
+      "reported_behavior_before": "Unable to perform a Takedown",
+      "patch_claim": "Fixed failed Takedown under these conditions",
+      "runtime_verified": false
+    },
+    {
+      "id": "107_HAYSTACK_ASSASSINATION",
+      "version": "1.0.7",
+      "date": "2026-09-01",
+      "source_id": "tu107",
+      "type": "fixed_bug",
+      "surfaces": [
+        "stealth_assassination",
+        "stealth_awareness"
+      ],
+      "precondition": "Enemy investigating haystack hiding Edward",
+      "reported_behavior_before": "Unable to assassinate target",
+      "patch_claim": "Fixed assassination from hiding spot",
+      "runtime_verified": false
+    },
+    {
+      "id": "107_AIR_ASSASSINATION_TARGET_DIES",
+      "version": "1.0.7",
+      "date": "2026-09-01",
+      "source_id": "tu107",
+      "type": "fixed_bug",
+      "surfaces": [
+        "stealth_assassination",
+        "manual_jump"
+      ],
+      "precondition": "Target killed by third party while Edward mid-air assassination",
+      "reported_behavior_before": "Edward could freeze mid-air",
+      "patch_claim": "Fixed freeze",
+      "runtime_verified": false
+    },
+    {
+      "id": "107_PHOTO_MODE_CROUCH",
+      "version": "1.0.7",
+      "date": "2026-09-01",
+      "source_id": "tu107",
+      "type": "fixed_bug",
+      "surfaces": [
+        "stealth_awareness",
+        "menu_map_ui"
+      ],
+      "precondition": "Exit Photo Mode while stealth-crouched",
+      "reported_behavior_before": "Crouch posture could be lost",
+      "patch_claim": "Fixed posture persistence",
+      "runtime_verified": false
+    },
+    {
+      "id": "108_WALK_TOGGLE_DIVE",
+      "version": "1.0.8",
+      "date": "2026-10-27",
+      "source_id": "tu108",
+      "type": "fixed_bug",
+      "surfaces": [
+        "surface_swimming",
+        "underwater"
+      ],
+      "precondition": "Keyboard+mouse Walk input changed from Hold to Toggle",
+      "reported_behavior_before": "Unable to dive underwater",
+      "patch_claim": "Fixed dive failure for changed input method",
+      "runtime_verified": false
+    },
+    {
+      "id": "108_AIM_HIT_CORNER_SMOKE",
+      "version": "1.0.8",
+      "date": "2026-10-27",
+      "source_id": "tu108",
+      "type": "fixed_bug",
+      "surfaces": [
+        "tools_aim_and_loadout",
+        "stealth_awareness"
+      ],
+      "precondition": "Edward hit while corner-covered and aiming smoke bomb",
+      "reported_behavior_before": "Aiming pose stuck",
+      "patch_claim": "Fixed persistent aim state",
+      "runtime_verified": false
+    },
+    {
+      "id": "108_SLEEP_BUSH_ASSASSINATION",
+      "version": "1.0.8",
+      "date": "2026-10-27",
+      "source_id": "tu108",
+      "type": "fixed_bug",
+      "surfaces": [
+        "stealth_assassination",
+        "stealth_awareness"
+      ],
+      "precondition": "Sleeping casualty collapsed in bush hiding spot",
+      "reported_behavior_before": "Unable to assassinate sleeping casualty",
+      "patch_claim": "Fixed inability in this geometry state",
+      "runtime_verified": false
+    },
+    {
+      "id": "108_NEW_TAKEDOWN_ANIMATIONS",
+      "version": "1.0.8",
+      "date": "2026-10-27",
+      "source_id": "tu108",
+      "type": "added_content",
+      "surfaces": [
+        "combat_finisher"
+      ],
+      "precondition": "Update 1.0.8 new takedown animations",
+      "reported_behavior_before": "Original animations not available in prior versions",
+      "patch_claim": "Added original-inspired animations (hidden blade, unarmed, single sword and gunblade); does not assert classic input dispatch",
+      "runtime_verified": false
+    },
+    {
+      "id": "108_NIGHTMARE_PARRY",
+      "version": "1.0.8",
+      "date": "2026-10-27",
+      "source_id": "tu108",
+      "type": "added_option",
+      "surfaces": [
+        "combat_incoming_attack",
+        "combat_counter_followup"
+      ],
+      "precondition": "Nightmare difficulty selected",
+      "reported_behavior_before": "Mode absent in target 1.0.6",
+      "patch_claim": "Nightmare reduces parry timing and removes white attack glint",
+      "runtime_verified": false
+    }
+  ],
+  "safety_invariants": [
+    "An archetype matchup label is NOT an executable eligibility boolean.",
+    "An official patch note asserting 'fixed' is NOT a proof the owner's actual game binary is matching or defect-free.",
+    "A fix first listed in 1.0.7/1.0.8 is NOT assumed present in 1.0.6; absence of a note does not prove absence of underlying behavior.",
+    "Never treat AC4 enemy archetype classes as equivalent to identically named Resynced archetypes.",
+    "Do not map AC4 brute B counter-as-dodge and Resynced LB parry/B dodge to a shared dispatcher until demonstrated.",
+    "A held input used to guard must not be swallowed while a timed counter/finisher/action is unknown.",
+    "Do not request owner to repeat shared-button Attack/Takedown remapping experiment."
+  ]
+}
