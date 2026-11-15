@@ -1,21 +1,22 @@
 # Roadmap
 
-The roadmap is ordered by **uncertainty reduction and observable gameplay value**, not calendar dates. Nothing is considered implemented until a reproducible test demonstrates it.
+The roadmap is ordered by **uncertainty reduction and observable gameplay value**, not calendar dates. A completed research deliverable is **not** a validated runtime capability.
 
 ## Phase 0 — Research and baseline (current)
 
-- [ ] Identify testable ACBFR build(s), original AC4 reference build, architecture and input paths.
-- [ ] Compare relevant actions and controller mappings in both games.
-- [ ] Investigate loader integration, API availability, possible hooks and coexistence risks.
-- [ ] Choose a legal and technically viable runtime integration approach.
-- [ ] Record exact unknowns, references, and reproducible failure scenarios in [RESEARCH](RESEARCH.md).
-- [ ] Define a version detection and safe disable strategy.
+- [x] Document the source-backed **original AC4 vs Resynced launch bindings**, known control conflicts and title-update caveats in [CONTROL_REFERENCE](CONTROL_REFERENCE.md).
+- [x] Inventory public **ASI modding examples, state-hook evidence, alternative data-mod route and reuse/license constraints** in [INTEGRATION_FINDINGS](INTEGRATION_FINDINGS.md).
+- [x] Create **source-labelled, explicitly unverified** test scenarios and validate their structure in GitHub Actions.
+- [ ] Establish which input API/game-action boundary is safe to integrate.
+- [ ] Prove or disprove the ability to read **finisher / assassination eligibility** (public evidence before runtime instrumentation).
+- [ ] Prove or disprove ability to dispatch an eligible action **independently of existing button mappings**.
+- [ ] Verify loader coexistence and fail-closed build identification without introducing fragile assumptions.
 
-**Exit:** documented feasibility decision for capturing input and dispatching actions, with no unsupported assumptions.
+**Exit:** documented and independently supported decision for the *specific* action-eligibility and dispatch integration, or a defined, combined diagnostic needed to settle it. **Current result:** enough to design a pure controller resolver, not enough to deliver a playable game integration.
 
 ## Phase 1 — Minimal instrumentation and control core
 
-- [ ] Establish a reproducible Windows build toolchain and CI.
+- [ ] Establish a reproducible Windows mod build toolchain (CI Windows job already exists but cannot compile a mod before CMake source exists).
 - [ ] Introduce an isolated, deterministic contextual-action resolver with synthetic test cases.
 - [ ] Add version-safe integration and disabled-by-default diagnostics.
 - [ ] Observe raw controller input, confirmed player context, and resolved actions.
@@ -25,21 +26,21 @@ The roadmap is ordered by **uncertainty reduction and observable gameplay value*
 
 ## Phase 2 — First playable milestone: X
 
-- [ ] Document AC4 and Resynced reference behaviors for attack, finisher, and assassination.
+- [x] Document baseline AC4 and Resynced controller mapping and **desired** attack, finisher, assassination cases (not yet verified in game).
 - [ ] Find an action-level dispatch mechanism instead of mapping multiple actions to X.
 - [ ] Implement priority rules only for contexts that can actually be detected.
 - [ ] Verify X attack + finisher + assassination scenarios and non-context behavior.
 - [ ] Validate no double-actions, stuck inputs or regressions after context transitions.
 
-**Exit:** X behaves consistently in the documented scenarios on an explicitly identified game build.
+**Exit:** X behaves consistently in documented scenarios on an explicitly identified game build.
 
 ## Phase 3 — Classic controller profile
 
-- [ ] Implement context-aware B defense actions.
-- [ ] Investigate direct A defense break.
-- [ ] Investigate RT/high-profile traversal and unwanted contextual movement.
+- [ ] Implement context-aware B defense actions (first establish original B counter/dodge details).
+- [ ] Investigate A defense-break equivalent (do not assume Resynced Sweep means AC4 guard-break).
+- [ ] Investigate RT/high-profile traversal and unintended contextual movement.
 - [ ] Add configurable profile, reversible activation and conflict handling.
-- [ ] Regression-test controller hold/repeat timing and interaction with other ASI mods.
+- [ ] Regression-test controller hold/repeat timing and other ASI-mod interactions.
 
 **Exit:** tested controls profile with a published limitations and compatibility matrix.
 
@@ -51,7 +52,7 @@ The roadmap is ordered by **uncertainty reduction and observable gameplay value*
 - [ ] Publish only files original to the project and components we are licensed to distribute.
 - [ ] Document known issues and tested loader combinations.
 
-**Exit:** first tagged release; no untested universal compatibility claim.
+**Exit:** first tagged *playable release*. Repository source versions already use Git tags, independent of public releases.
 
 ## Later / optional
 
