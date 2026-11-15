@@ -98,3 +98,26 @@ After confirming that the archive-wide deserializer writes extracted files, a na
 This is direct evidence that the selected archive entry is a structured container rather than one flat animation payload. The phase labels and record membership remain static metadata: no serialized transition edge, player input binding, eligibility condition, priority, or interruption rule has yet been decoded. The public report omits the exact local resource identifiers and names.
 
 
+### Input import and parser boundary update — 2026-11-15
+
+A read-only walk of each local executable's PE import directory found different declared input-related APIs. The original AC4 sample imports DirectInput 8 creation and Win32 keyboard/raw-input/message functions. The Resynced sample imports XInput state/set-state functions, HID APIs, and Win32 raw-input/keyboard functions. This proves static linkage only. It does not prove which device is polled in a given mode, which callback receives an event, or how an event reaches an action selector. The original sample's local directory contains a `dinput8.dll` proxy/mod, so the runtime implementation resolved for that import is not authenticated.
+
+The Toolkit v50 reader can safely enumerate the Resynced archive index by setting `CreateCache=true` and `stream=true`: IL shows that this chooses `ForgeDirectory.ReadEntries`/`ReadEntriesBFR`, while payload reads/writes are in separate methods. In that mode the installed Toolkit parsed the base archive index but did not resolve entry names. `ForgeDirectory.ReadEntries` obtains names through `GameFileList.GetOriginalFileName`; its lookup table is uninitialized here, and the expected local GFL sidecar was not found. Therefore the index is real and readable but cannot yet identify combat/parkour entries by name. This does not establish that those resources are absent.
+
+For the selected original combat container, the in-memory `DataFile` parser exposed a root record plus nested animation-class records. The installed Toolkit registry has an `Animation` class reader, but its `Animation.Read` method checks supported games, rejects the original Black Flag enum, and leaves the byte stream untouched. The root record's type is not registered in the Toolkit's compiled `ScimitarClassRegistry`. A generic reader attempt therefore did not decode the root into typed fields, edges, conditions, or transitions. The selected record has not been proved to be an action-selection graph or to be animation-only.
+
+### Input-to-action path status
+
+The best-confirmed chain now ends at platform input API linkage:
+
+`game executable import table → declared DirectInput / XInput / HID / Win32 raw-input APIs`
+
+No native callsite, game input event, context owner, eligibility predicate, selected action, or action-start transition has been recovered. It would be incorrect to extend this chain to Attack, Counter, Takedown, Assassinate or Parkour. The local samples remain modified/unverified; the Resynced Title Update and original release remain unknown.
+
+### Current blocker and next discriminating method
+
+No disassembler is available on the console path: checked Ghidra, IDA command-line names, LLVM objdump, dumpbin, objdump, Rizin/radare2, ILSpy and ildasm were absent; Python Capstone/LIEF modules are not installed. Recursive searches found no PDB files in either game installation. No protection bypass was attempted. The Resynced v50 index is now safely readable, but the missing GFL name map prevents finding named action resources. The original v27 selected payload is accessible in memory, but the installed Toolkit lacks a parser for its root class and rejects the child animation format for Black Flag.
+
+Next informative work requires either (a) a locally available, authorized native disassembler for the unprotected original AC4 executable and a GFL/name index for Resynced, or (b) a witnessed minimal gameplay observation. The static imports alone are not enough to claim an input-to-action path. Do not add hooks based on them.
+
+
