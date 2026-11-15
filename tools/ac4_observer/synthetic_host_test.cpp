@@ -16,11 +16,38 @@ int wmain(int argc, wchar_t** argv) {
     SetEnvironmentVariableW(L"AC4_OBSERVER_TEST_OUTPUT", output.c_str());
     HMODULE module = LoadLibraryW(asi.c_str());
     if (!module) return 4;
-    Sleep(250);
+    HANDLE journal_reader = INVALID_HANDLE_VALUE;
+    const std::wstring pid_suffix = L"-" + std::to_wstring(GetCurrentProcessId()) + L".jsonl";
+    for (unsigned attempt = 0; attempt < 40 && journal_reader == INVALID_HANDLE_VALUE; ++attempt) {
+        for (const auto& entry : std::filesystem::directory_iterator(output, error)) {
+            if (entry.path().extension() != L".jsonl" ||
+                entry.path().filename().wstring().size() < pid_suffix.size() ||
+                entry.path().filename().wstring().compare(
+                    entry.path().filename().wstring().size() - pid_suffix.size(),
+                    pid_suffix.size(), pid_suffix) != 0) continue;
+            journal_reader = CreateFileW(entry.path().c_str(), GENERIC_READ,
+                FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr,
+                OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+            if (journal_reader == INVALID_HANDLE_VALUE && GetLastError() != ERROR_SHARING_VIOLATION)
+                break;
+        }
+        if (journal_reader == INVALID_HANDLE_VALUE) Sleep(50);
+    }
+    if (journal_reader == INVALID_HANDLE_VALUE) {
+        std::wcerr << L"journal could not be read while the observer writer was active\n";
+        wchar_t failed_event_name[64]{};
+        swprintf_s(failed_event_name, L"Local\\AC4ControlObserver.Stop.%lu", GetCurrentProcessId());
+        HANDLE failed_stop = OpenEventW(EVENT_MODIFY_STATE, FALSE, failed_event_name);
+        if (failed_stop) { SetEvent(failed_stop); CloseHandle(failed_stop); }
+        Sleep(250);
+        FreeLibrary(module);
+        return 5;
+    }
+    CloseHandle(journal_reader);
     wchar_t event_name[64]{};
     swprintf_s(event_name, L"Local\\AC4ControlObserver.Stop.%lu", GetCurrentProcessId());
     HANDLE stop = OpenEventW(EVENT_MODIFY_STATE, FALSE, event_name);
-    if (!stop) { FreeLibrary(module); return 5; }
+    if (!stop) { FreeLibrary(module); return 6; }
     SetEvent(stop);
     CloseHandle(stop);
     Sleep(250);
@@ -39,8 +66,9 @@ int wmain(int argc, wchar_t** argv) {
     }
     if (!found_start || !found_safe_guard || !found_end) {
         std::cerr << "missing startup, mismatch guard or clean stop record\n";
-        return 6;
+        return 7;
     }
     std::cout << "ASI loaded; foreign executable was safely rejected; journal closed\n";
     return 0;
 }
+

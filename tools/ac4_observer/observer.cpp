@@ -9,6 +9,7 @@
 #include <cstdio>
 #include <cstring>
 #include <iterator>
+#include <share.h>
 #include <string>
 
 namespace {
@@ -382,7 +383,8 @@ bool open_journal() noexcept {
                 test_now.wYear, test_now.wMonth, test_now.wDay, test_now.wHour,
                 test_now.wMinute, test_now.wSecond, GetCurrentProcessId());
             const std::wstring test_path = test_dir + L"\\" + file_name;
-            if (_wfopen_s(&journal, test_path.c_str(), L"wb") != 0 || !journal) return false;
+            journal = _wfsopen(test_path.c_str(), L"wb", _SH_DENYWR);
+            if (!journal) return false;
             LARGE_INTEGER test_freq{}; QueryPerformanceFrequency(&test_freq);
             qpc_frequency = static_cast<uint64_t>(test_freq.QuadPart);
             QueryPerformanceCounter(&qpc_origin); GetSystemTimeAsFileTime(&utc_origin);
@@ -404,7 +406,8 @@ bool open_journal() noexcept {
     swprintf_s(file_name, L"session-%04u%02u%02u-%02u%02u%02u-%lu.jsonl",
         now.wYear, now.wMonth, now.wDay, now.wHour, now.wMinute, now.wSecond, GetCurrentProcessId());
     const std::wstring path = dir + L"\\" + file_name;
-    if (_wfopen_s(&journal, path.c_str(), L"wb") != 0 || !journal) return false;
+    journal = _wfsopen(path.c_str(), L"wb", _SH_DENYWR);
+    if (!journal) return false;
     LARGE_INTEGER freq{}; QueryPerformanceFrequency(&freq); qpc_frequency = static_cast<uint64_t>(freq.QuadPart);
     QueryPerformanceCounter(&qpc_origin); GetSystemTimeAsFileTime(&utc_origin);
     const int n = std::fprintf(journal,
@@ -525,3 +528,4 @@ BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, LPVOID) {
     }
     return TRUE;
 }
+

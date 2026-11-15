@@ -48,6 +48,7 @@ def watch(directory: Path, interval: float, report_interval: float) -> None:
     hook_status: int | None = None
     last_report = 0.0
     waiting_reported = False
+    last_error: str | None = None
 
     while True:
         try:
@@ -71,6 +72,7 @@ def watch(directory: Path, interval: float, report_interval: float) -> None:
 
             if active_path is not None and active_path.exists():
                 rows, offset, pending = read_appended(active_path, offset, pending)
+                last_error = None
                 for row in rows:
                     kind = row["record_type"]
                     if kind == "session_start":
@@ -98,7 +100,10 @@ def watch(directory: Path, interval: float, report_interval: float) -> None:
                     last_report = now
         except (OSError, json.JSONDecodeError, UnicodeDecodeError, ValueError) as error:
             # A briefly locked file or incomplete final write is retried next poll.
-            print(f"Journal read pending: {error}", flush=True)
+            message = str(error)
+            if message != last_error:
+                print(f"Journal read pending: {message}", flush=True)
+                last_error = message
             if active_path is not None and active_path.exists():
                 try:
                     size = active_path.stat().st_size

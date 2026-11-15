@@ -58,7 +58,7 @@ To watch the active journal without interacting with the game, run this read-onl
 python tools/ac4_observer/watch.py
 ```
 
-It follows the newest journal under the current Windows user's `%USERPROFILE%\AppData\Local\AC4ControlObserver` and prints compact event/source counts. Pass `--directory` if the game runs under another Windows profile. This only reads the ASI's flushed journal; the observer and its already-armed hooks must have loaded when the game process started. No second launch is needed to continue observing those sources during that process. Adding or changing native hook sources still requires a new build and a later game launch; this tailer never injects code or touches the game process.
+It follows the newest journal under the current Windows user's `%USERPROFILE%\AppData\Local\AC4ControlObserver` and prints compact event/source counts. Pass `--directory` if the game runs under another Windows profile. The ASI opens the journal with read sharing, and the tailer reads only flushed JSONL bytes; the observer and its already-armed hooks must have loaded when the game process started. No second launch is needed to continue observing those sources during that process. Adding or changing native hook sources still requires a new build and a later game launch; this tailer never injects code or touches the game process.
 
 If AC4 exits unexpectedly before the stop signal, the final line may be missing. The analyzer recovers complete JSONL records and marks the session incomplete.
 
@@ -76,4 +76,6 @@ If AC4 exits unexpectedly before the stop signal, the final line may be missing.
 Static cross-check for this exact build: `FUN_01AB59D0` only stores the result from `FUN_01AA3990` when it is not `-1`. A `-1` dispatch return therefore means that call produced no candidate result; other return values remain unnamed. This interpretation is static evidence, not an action label or proof that a gameplay action started.
 
 A short private run on the installed x86 build confirmed `native_hook_status=1` and real XInput, logical input, callback, resolver, and dispatch records while the game remained controllable. The journal stayed on the user's machine. It contained only a temporal XInput-button/logical-slot association, not a causal physical-input-to-action proof; dispatch results were unlabeled and did not prove that an action started. Therefore this is evidence that the ASI loads and observes internal paths, but it does not satisfy the full control-study readiness gate. The session had no `session_end` record and is analyzed as incomplete.
+
+The initial live-tail attempt found that the already-installed writer denied concurrent readers. The updated writer uses `_SH_DENYWR` so it shares read access while preventing a second writer; the Windows synthetic-host test opens the journal with read/write/delete sharing while the ASI still holds its writer handle. The updated binary must be loaded on a subsequent ordinary game launch before live tailing can read a growing journal.
 
