@@ -1,0 +1,102 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  repository-contract:
+    name: repository-contract
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify docs and required project structure
+        run: python3 scripts/check_repo.py
+
+  unit-tests:
+    name: unit-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run deterministic, off-game tests
+        run: python3 -m unittest discover -s tests -v
+
+  windows-build:
+    name: windows-build
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Detect buildable source
+        id: source
+        shell: pwsh
+        run: |
+          if (Test-Path CMakeLists.txt) {
+            "available=true" >> $env:GITHUB_OUTPUT
+          } else {
+            "available=false" >> $env:GITHUB_OUTPUT
+            Write-Host "Research/documentation phase: no CMakeLists.txt; no game mod is built."
+          }
+
+      - name: Configure Windows x64
+        if: steps.source.outputs.available == 'true'
+        run: cmake -S . -B build -A x64
+
+      - name: Compile Windows x64
+        if: steps.source.outputs.available == 'true'
+        run: cmake --build build --config Release --parallel
+
+      - name: Test Windows build
+        if: steps.source.outputs.available == 'true'
+        run: ctest --test-dir build -C Release --output-on-failure --no-tests=error
+
+      - name: Stage project-owned distribution files
+        if: steps.source.outputs.available == 'true'
+        run: cmake --install build --config Release --prefix staging
+
+      - name: Create installable archive
+        if: steps.source.outputs.available == 'true'
+        shell: pwsh
+        run: |
+          if (-not (Test-Path staging)) { throw "CMake install produced no staging directory." }
+          $payload = @(Get-ChildItem staging -Recurse -File)
+          if ($payload.Count -eq 0) { throw "CMake install produced no distributable payload." }
+          Copy-Item README.md, LICENSE.md -Destination staging -Force
+          New-Item -ItemType Directory -Path dist -Force | Out-Null
+          Compress-Archive -Path staging/* -DestinationPath "dist/acbf-resynced-classic-$env:GITHUB_SHA.zip" -Force
+
+      - name: Upload Windows build artifact
+        if: steps.source.outputs.available == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: acbf-resynced-classic-${{ github.sha }}
+          path: dist/acbf-resynced-classic-*.zip
+          if-no-files-found: error
+          retention-days: 14
+
+  version-main:
+    name: version-main
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [repository-contract, unit-tests, windows-build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: read
+    concurrency:
+      group: publish-main-versions
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - name: Tag a validated squash merge (not a GitHub Release)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/publish_version.py

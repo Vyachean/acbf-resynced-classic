@@ -44,3 +44,9 @@ Include scenario ID, exact versions, steps (maximum reproducible case), expected
 ## Release gate
 
 No release should claim a scenario passes unless it was tested on the corresponding game version with the stated controller and loader conditions.
+
+## Game-launch budget
+
+**Zero launches by default**: exhaust public sources, CI builds, synthetic input traces and unit tests first. If in-game behavior cannot be established, create a single **GitHub Actions-built diagnostic package** covering the maximum set of unresolved scenarios in one launch. It should automatically save one sanitized report and require nothing from the player beyond copying mod files, launching the game and performing interactions that cannot be safely automated.
+
+No in-game feature is considered verified by synthetic tests alone. See [Single-session test strategy](TEST_STRATEGY.md).

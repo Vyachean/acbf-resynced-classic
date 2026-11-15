@@ -64,6 +64,16 @@ There are **no installation or build instructions yet**, because no loader/API/t
 
 Technical observations or reproducible control conflicts can be filed through [GitHub Issues](https://github.com/Vyachean/acbf-resynced-classic/issues). Do not upload game binaries, copyrighted assets, personal data, or crash dumps containing secrets.
 
+## Development workflow and automation
+
+**No game launch by default.** We research and test with public evidence and automated synthetic tests before requesting any in-game diagnostics. When a game start is unavoidable, the target is **one CI-prepared, comprehensively instrumented session** with minimal player interaction and one sanitized report.
+
+- [Development and versioning policy](docs/WORKFLOW.md): feature branches, **squash-only PR merges**, one version tag per completed merge, GitHub Actions as the sole automation/build service.
+- [Single-session diagnostic strategy](docs/TEST_STRATEGY.md): offline-first testing and maximal evidence per game launch.
+- [GitHub Actions CI](.github/workflows/ci.yml): documentation checks, offline tests, and a Windows build/package pipeline that activates once actual source exists.
+
+**Project versions are Git tags, not necessarily public releases.** There is no playable mod in this repository yet.
+
 ## Legal and licensing
 
 **Copyright (c) 2026 Vyachean. All rights reserved.**
