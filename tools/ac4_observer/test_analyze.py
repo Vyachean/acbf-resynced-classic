@@ -72,6 +72,25 @@ class AnalyzerTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 load_journals([path])
 
+    def test_compact_native_events_inherit_session_from_journal(self):
+        rows = [
+            {"record_type": "session_start", "session_id": "native-session",
+             "qpc_frequency": 1000},
+            {"record_type": "event", "seq": 0, "qpc": 1,
+             "source": "status", "event": "native_hook_status", "state": 1},
+            {"record_type": "event", "seq": 1, "qpc": 2,
+             "source": "native_dispatch", "event": "candidate_dispatch",
+             "command_id": 7, "correlation_id": 12},
+        ]
+        for i, row in enumerate(rows, 1):
+            row.update(_file="native.jsonl", _line=i)
+        report = analyze(rows, [])
+        self.assertEqual(len(report["sessions"]), 1)
+        self.assertEqual(report["sessions"][0]["session_id"], "native-session")
+        self.assertEqual(report["sessions"][0]["event_count"], 2)
+        self.assertEqual(report["candidate_dispatch_events"][0]["candidate_id"], 7)
+
 
 if __name__ == "__main__":
     unittest.main()
+

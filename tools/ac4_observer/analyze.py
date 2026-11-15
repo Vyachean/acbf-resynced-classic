@@ -37,15 +37,23 @@ def load_journals(paths: list[Path]) -> tuple[list[dict[str, Any]], list[dict[st
 def analyze(records: list[dict[str, Any]], issues: list[dict[str, Any]]) -> dict[str, Any]:
     sessions: dict[str, dict[str, Any]] = {}
     events: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    active_session_by_file: dict[str, str] = {}
     for row in records:
-        sid = str(row.get("session_id", "unknown"))
+        file_name = str(row.get("_file", "unknown"))
         if row["record_type"] == "session_start":
+            sid = str(row.get("session_id", "unknown"))
+            active_session_by_file[file_name] = sid
             sessions.setdefault(sid, {"session_id": sid, "start": row,
                                       "end": None, "events": []})
         elif row["record_type"] == "session_end":
+            sid = str(row.get("session_id", active_session_by_file.get(file_name, "unknown")))
             sessions.setdefault(sid, {"session_id": sid, "start": None,
                                       "end": row, "events": []})["end"] = row
+            active_session_by_file.pop(file_name, None)
         elif row["record_type"] == "event":
+            # The native writer omits session_id from each compact event row.
+            # Attribute it to the preceding session_start in the same journal.
+            sid = str(row.get("session_id", active_session_by_file.get(file_name, "unknown")))
             events[sid].append(row)
     for sid, rows in events.items():
         sessions.setdefault(sid, {"session_id": sid, "start": None,
@@ -196,3 +204,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
