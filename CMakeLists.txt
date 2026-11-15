@@ -41,7 +41,16 @@ if(WIN32)
     # exercises report generation, then requests a graceful worker stop.
     add_executable(acbf_diagnostic_smoke tests/diagnostic_smoke.cpp)
     target_compile_features(acbf_diagnostic_smoke PRIVATE cxx_std_17)
+    # A deterministic in-process XInput test double is injected ONLY into
+    # the synthetic CI host; it is NEVER installed or distributed.
+    add_library(acbf_mock_xinput SHARED tests/mock_xinput.cpp)
+    set_target_properties(acbf_mock_xinput PROPERTIES
+        PREFIX "" OUTPUT_NAME "xinput1_4" SUFFIX ".dll"
+    )
+    target_compile_features(acbf_mock_xinput PRIVATE cxx_std_17)
     add_test(NAME diagnostic_asi_smoke
-        COMMAND acbf_diagnostic_smoke $<TARGET_FILE:acbf_readonly_diagnostics>)
+        COMMAND acbf_diagnostic_smoke
+            $<TARGET_FILE:acbf_readonly_diagnostics>
+            $<TARGET_FILE:acbf_mock_xinput>)
     set_tests_properties(diagnostic_asi_smoke PROPERTIES TIMEOUT 40)
 endif()

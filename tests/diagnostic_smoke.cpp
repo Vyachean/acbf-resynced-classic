@@ -16,7 +16,7 @@ bool fail(const char* reason) {
 }
 
 int wmain(int argc, wchar_t** argv) {
-    if (argc < 2) return fail("missing absolute ASI path") ? 0 : 1;
+    if (argc < 3) return fail("missing ASI and test XInput paths") ? 0 : 1;
 
     wchar_t folder[MAX_PATH] = {};
     DWORD count = GetTempPathW(MAX_PATH, folder);
@@ -27,6 +27,11 @@ int wmain(int argc, wchar_t** argv) {
         return 3;
     if (!SetEnvironmentVariableW(L"ACBF_CLASSIC_TEST_OUTPUT", dir.c_str())) return 4;
 
+    // Load a fake XInput library before the ASI. The diagnostic probe must
+    // select this already-loaded module via GetModuleHandleW and report the
+    // scripted controller edges without touching real devices.
+    HMODULE fake_xinput = LoadLibraryW(argv[2]);
+    if (!fake_xinput) return fail("fake XInput DLL did not load") ? 0 : 10;
     HMODULE module = LoadLibraryW(argv[1]);
     if (!module) return fail("ASI did not load") ? 0 : 5;
 
@@ -63,7 +68,18 @@ int wmain(int argc, wchar_t** argv) {
     ok &= require("\"native_game_action_dispatch\": \"NOT_IMPLEMENTED\"");
     ok &= require("\"recent_controller_edges\": [");
     ok &= require("\"local_asi_modules\": [");
+    ok &= require("\"xinput_api\": true");
+    ok &= require("\"controller_connections\": 1");
+    ok &= require("\"controller_disconnects\": 0");
+    // Four independent presses/releases prove edge sampling end-to-end.
+    // A high-frequency poll must not create additional pressed events.
+    ok &= require("\"total_edges\": 8");
+    for (const std::string button : {"X", "B", "A", "RT"}) {
+        ok &= require("\"button\":\"" + button + "\",\"edge\":\"pressed\"");
+        ok &= require("\"button\":\"" + button + "\",\"edge\":\"released\"");
+    }
     FreeLibrary(module);
+    FreeLibrary(fake_xinput);
 
     // Keep the report for inspection inside the CI job only, not the playable artifact.
     std::wcout << L"CI synthetic host report: " << report << L'\n';

@@ -37,7 +37,7 @@ This is a **single JSON file** with no usernames, full paths, arbitrary keystrok
 
 ## Test boundary
 
-GitHub Actions compiles the real x64 ASI, then a **synthetic Windows host executable** loads it with `LoadLibraryW` and checks the generated report; the host never executes game code. CTest also exercises the pure control resolver. This proves neither that a particular ASI loader loads the module nor that semantic game hooks work.
+GitHub Actions compiles the real x64 ASI, then a **synthetic Windows host executable** loads it with `LoadLibraryW` alongside a **test-only fake `xinput1_4.dll`**. The fake device generates four button down/up cycles (X, B, A and RT). CTest verifies the report includes **exactly eight transitions** (no duplicate presses during held polls), controller-connection counters, and explicit semantic-availability limitations. The fake XInput DLL is **never included** in installation archives, nor placed in the game folder. The host never executes game code. CTest also exercises the pure control resolver. This proves neither that a particular ASI loader loads the module nor that semantic game hooks work.
 
 ## Safety
 

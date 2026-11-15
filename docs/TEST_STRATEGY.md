@@ -11,7 +11,7 @@ Do not run ACBFR or original AC4 merely because development is uncertain. Perfor
 | Deterministic candidate context -> action resolver cases | **Yes: C++/CTest in Windows Actions** | No |
 | Synthetic controller event streams, held/released inputs, double-activation detection | Yes, once implemented | No |
 | Windows offline core build/test | **Yes: CMake/CTest in GitHub Actions** | No |
-| Read-only ASI diagnostics + synthetic DLL host | **Yes: Windows CMake/CTest and distinct diagnostic artifact** | No; game compatibility remains unknown |
+| Read-only ASI diagnostics + synthetic DLL host and scripted XInput press/release cycles | **Yes: Windows CMake/CTest and distinct diagnostic artifact** | No; game compatibility remains unknown |
 | Game integration and verified semantic action dispatch | **Not available** | Yes for final gameplay verification |
 | Loader compatibility and actual player-state observation | Only with lawful game execution environment | Usually yes |
 | Verifying in-game attack/finisher/parkour outcomes | No credible automated substitute is currently known | Yes |

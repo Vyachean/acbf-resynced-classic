@@ -7,7 +7,7 @@ This document is **normative** for all future work in this repository.
 1. All work happens in a short-lived **feature, fix, research, or chore branch**.
 2. A pull request must represent **one logically complete, reviewable increment** with an explicit outcome: verified result, completed research decision, or a self-contained infrastructure change. Do not merge partially implemented runtime features.
 3. Merge pull requests to `main` using **Squash and merge only**. No direct pushes, merge commits, or rebase merges. The single squash commit is the unit of project history and versioning.
-4. Changes in `main` should pass repository checks, off-game unit tests, and applicable Windows build/packaging tests before merge.
+4. Before each squash merge, the maintainer **manually verifies that all applicable GitHub Actions PR jobs finished successfully** (`repository-contract`, `unit-tests`, `windows-build`). A skipped `version-main` job on PRs is expected; it runs only after merging. **Never merge when CI is queued, running, failed, canceled, or unavailable.**
 5. Close or update the linked issue with actual evidence and any unresolved constraints. A failed hypothesis is a valid completed research increment if the outcome is documented.
 6. Do not add speculative game compatibility claims, guessed offsets, or copied copyrighted game code.
 
@@ -61,9 +61,9 @@ No unchecked TODO is silently represented as a completed game feature.
 **Documentation and CI cannot enforce branch protection by themselves.** The repository administrator must configure the following once:
 
 - **Settings → General → Pull Requests**: enable **Allow squash merging**; disable **Allow merge commits** and **Allow rebase merging**. Optional: automatically delete head branches.
-- **Settings → Rules → Rulesets** (or applicable branch protection): target `main`, require a pull request before merging, require passing `CI` checks, block force pushes and branch deletion, and avoid bypasses. If using individual required checks, select the jobs that actually appear after the workflow has run: `repository-contract`, `unit-tests`, `windows-build`.
+- **Settings → Rules → Rulesets** (or applicable branch protection): target `main`, require a pull request, block force pushes and branch deletion, and avoid bypasses. The repository currently uses **manual verification of CI before merging**, rather than mandatory status checks in the ruleset (by owner decision). This is a process guard, not an enforceable GitHub merge restriction; a careless or unauthorized merger could still merge failing checks. A future change may enable required status checks when practical.
 - **Settings → Actions → General**: permit workflows and ensure `GITHUB_TOKEN` has permission to create tags as needed. The versioning job explicitly requests `contents: write`.
-- Confirm Actions succeeded on the branch and after the squash merge. Until repository rules are configured, these are a **project policy**, not a GitHub-enforced restriction.
+- The owner configured squash-only repository merge methods and an active PR-only ruleset. **Required CI status checks are intentionally not configured**; inspect the actual workflow jobs in Actions before every merge, and verify version tagging after.
 
 ## Security and compatibility
 
