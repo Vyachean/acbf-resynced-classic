@@ -66,6 +66,7 @@ No DRM bypass or unauthorized game redistribution is part of this project. Users
 - [Research register](docs/RESEARCH.md) — evidence and outstanding technical questions
 - [Whole control-system audit](docs/CONTROL_SYSTEM_AUDIT.md) — 25 gameplay surfaces, multi-step actions, source quality and blocking unknowns (**mandatory**)
 - [Audit coverage ledger](research/control_system_ledger.json) — machine-readable action/gesture catalog, transition hypotheses, hazards and source registry
+- [Combat action conditions](docs/COMBAT_CONDITIONS.md) — original AC4 enemy-class matchup caveats and officially documented Resynced TU1.0.6/TU1.0.7/TU1.0.8 state fixes; **not runtime eligibility**
 - [Control reference](docs/CONTROL_REFERENCE.md) — older compact AC4 vs Resynced button map, **not** a full behavior model
 - [Integration findings](docs/INTEGRATION_FINDINGS.md) — public modding evidence, licensing, compatibility gates
 - [Puppet Native ABI](docs/PUPPET_NATIVE.md) — public plugin API and CI-tested lifecycle bridge, not a gameplay hook

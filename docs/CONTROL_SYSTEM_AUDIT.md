@@ -5,7 +5,7 @@ Tracked in [issue #18](https://github.com/Vyachean/acbf-resynced-classic/issues/
 
 **Scope:** primarily Xbox-style controller gameplay in *Assassin's Creed IV: Black Flag (2013)* vs. *Black Flag Resynced* (launch July 2026 public documentation, with **no validated 1.0.6-specific action priority**). Single-player is the active target. Modern-day and multiplayer portions of AC4, special activities and menus are inventoried as independent control surfaces so an input hook will never accidentally affect them.
 
-The complete [machine-readable audit ledger](../research/control_system_ledger.json) currently contains **25 surfaces, 150+ action rows, 45 described/hypothesized transitions, 21 cross-context hazards, and 10 P0 unknowns**. These are an *inventory*, **not** 150 independently verified in-game behaviors.
+The complete [machine-readable audit ledger](../research/control_system_ledger.json) currently contains **25 surfaces, 150+ action rows, 45 described/hypothesized transitions, 27 cross-context hazards, and 12 P0 unknowns**. These are an *inventory*, **not** 150 independently verified in-game behaviors.
 
 ## Stop-the-line rule
 
@@ -140,6 +140,16 @@ The largest newly identified risks are AC4's *automatic double counter*, its *A 
 | **Menus / specialized modes** | Soft-locks UI or side activity | Mandatory unknown-mode pass-through |
 
 User **already observed** Attack and Takedown assigned to the same button producing Attack, not Takedown. This is evidence of that tested configuration, **not** proof that every eligible Takedown condition was present. No repeat is requested.
+
+## Combat eligibility and exact-title-update boundaries
+
+The [source-labelled combat condition register](COMBAT_CONDITIONS.md) and its [machine-readable matrix](../research/combat_conditions.json) identify a missing dimension in the earlier audit: **enemy archetype and attack type**.
+
+- Original AC4 enemy guide distinguishes **Soldier, Scout, Gunner, Brute, Captain** and 10 move effectiveness categories (50 guide classifications). For **Brute**, the original counter input can select a **dodge rather than the counter follow-up**. The same guide is internally inconsistent about whether Captain can be affected by Break Defense, which is explicitly unresolved.
+- The official **Resynced TU1.0.6** patch notes themselves document affected **vault→takedown, RT-sprint→parkour, rope dart interrupted→ability, combat→smoke assassination and enemy awareness→sweep** transitions. These are not general engine priority APIs or proof every bug is absent in the owner's installed binary.
+- **TU1.0.7 / TU1.0.8** notes describe additional target-state/geometry/input-mode changes absent from TU1.0.6 documentation. Do not use newer mods or footage as authoritative behavior for TU1.0.6.
+
+The previous `Snapshot` includes only global tri-state `can_counter/can_attack/can_takedown` flags, **without enemy archetype, attack type, prompt state, vaulting or interruptions**. It is thus *structurally insufficient* as a complete original/Resynced gameplay description; it must remain an offline hypothesis. No consuming game hook is permitted until the required state is verifiably available.
 
 ## 5. What remains to make this a trustworthy, complete model
 

@@ -98,6 +98,26 @@
       "kind": "community_report",
       "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2825526131",
       "scope": "2022 advanced AC4 player combat guide corroborates that simultaneous double counters are initiated with B alone"
+    },
+    "ac4_prima_archetypes": {
+      "kind": "original_game_guide",
+      "url": "https://primagames.com/eguides/assassins-creed-iv-black-flag-eguide/reference-analysis/enemy-archetypes",
+      "scope": "AC4 enemy class weakness/immunity guide; no game action API and prose/table Captain defense-break contradiction"
+    },
+    "bfr_ubisoft_tu106": {
+      "kind": "official_design_document",
+      "url": "https://www.ubisoft.com/en-gb/game/assassins-creed/news/5c72WnN2ot90ii8d9Le1Wt/ac-black-flag-resynced-title-update-106-patch-notes",
+      "scope": "Official TU1.0.6 August 4 bug fixes; reported fixed, not local runtime verification"
+    },
+    "bfr_ubisoft_tu107": {
+      "kind": "official_design_document",
+      "url": "https://www.ubisoft.com/de-de/game/assassins-creed/news/24bBcwoOoYNZ2gt2yi3HdH/ac-black-flag-resynced-title-update-107-patch-notes",
+      "scope": "Official September 1 TU1.0.7 changes; NOT assumed available in user target TU1.0.6"
+    },
+    "bfr_ubisoft_tu108": {
+      "kind": "official_design_document",
+      "url": "https://www.ubisoft.com/en-us/game/assassins-creed/news/5Z1RxwznM6CcrkSEVoibmh/ac-black-flag-resynced-title-update-108-patch-notes",
+      "scope": "Official October 27 TU1.0.8 changes; not automatically available in TU1.0.6"
     }
   },
   "surfaces": [
@@ -2534,6 +2554,103 @@
       ],
       "risk": "An overly broad gesture handler can remove camera, awareness or HUD commands",
       "engine_arbitration_verified": false
+    },
+    {
+      "id": "AC4_BRUTE_COUNTER_RESELECTS_DODGE",
+      "priority": "P0",
+      "game": "AC4",
+      "statement": "2013 Prima enemy guide describes B counter against a Brute producing evasive dodge rather than a conventional counter selection",
+      "surface_ids": [
+        "combat_incoming_attack",
+        "combat_counter_followup"
+      ],
+      "source_ids": [
+        "ac4_prima_archetypes"
+      ],
+      "risk": "Single B counter command can lead to damage or remove a Brute's valid evasive response; target class required",
+      "engine_arbitration_verified": false
+    },
+    {
+      "id": "AC4_CAPTAIN_DEFENSE_CONTRADICTION",
+      "priority": "P0",
+      "game": "AC4",
+      "statement": "Prima prose suggests Captain ground finish after repeated Break Defense, but its enemy matrix marks Captain immune to Break Defense; conflict unresolved",
+      "surface_ids": [
+        "combat_neutral",
+        "combat_finisher"
+      ],
+      "source_ids": [
+        "ac4_prima_archetypes"
+      ],
+      "risk": "Do not claim Captain break-defense eligibility from contradictory guide text",
+      "engine_arbitration_verified": false
+    },
+    {
+      "id": "BFR_106_VAULT_TAKEDOWN_SCOPE",
+      "priority": "P0",
+      "game": "ACBFR",
+      "statement": "TU1.0.6 officially fixed unintended Takedown occurring during vault over enemy; vaulting is a pre-action exclusion context",
+      "surface_ids": [
+        "combat_finisher",
+        "climb_and_ledge",
+        "manual_jump"
+      ],
+      "source_ids": [
+        "bfr_ubisoft_tu106"
+      ],
+      "risk": "Overriding X based only on near/eligible target can reintroduce a vaulting Takedown bug",
+      "engine_arbitration_verified": false
+    },
+    {
+      "id": "BFR_106_RT_SPRINT_CLIMBING",
+      "priority": "P0",
+      "game": "ACBFR",
+      "statement": "TU1.0.6 officially fixed RT-held remapped sprint blocking parkour",
+      "surface_ids": [
+        "high_profile_travel",
+        "climb_and_ledge",
+        "manual_jump"
+      ],
+      "source_ids": [
+        "bfr_ubisoft_tu106"
+      ],
+      "risk": "Custom high-profile implementation could reintroduce native remapping vs parkour collision",
+      "engine_arbitration_verified": false
+    },
+    {
+      "id": "BFR_106_INTERRUPTED_TOOL_STEALTH",
+      "priority": "P0",
+      "game": "ACBFR",
+      "statement": "TU1.0.6 fixed loss of Quick Rope Dart after interruption/hang, assassination after combat in smoke, and sweep on suspicious enemy",
+      "surface_ids": [
+        "tools_aim_and_loadout",
+        "combat_incoming_attack",
+        "stealth_awareness",
+        "stealth_assassination"
+      ],
+      "source_ids": [
+        "bfr_ubisoft_tu106"
+      ],
+      "risk": "An input hook must preserve interruption cleanup and target awareness transitions",
+      "engine_arbitration_verified": false
+    },
+    {
+      "id": "BFR_107_108_VERSION_DELTA",
+      "priority": "P0",
+      "game": "ACBFR",
+      "statement": "TU1.0.7 and TU1.0.8 officially altered multiple takedown/assassination contexts and input modes; not safe to transplant into TU1.0.6",
+      "surface_ids": [
+        "combat_finisher",
+        "stealth_assassination",
+        "surface_swimming",
+        "underwater"
+      ],
+      "source_ids": [
+        "bfr_ubisoft_tu107",
+        "bfr_ubisoft_tu108"
+      ],
+      "risk": "Guide/video/mod built against newer version can assume game states absent or buggy in 1.0.6",
+      "engine_arbitration_verified": false
     }
   ],
   "critical_unknowns": [
@@ -2637,6 +2754,30 @@
         "all_runtime_overrides"
       ],
       "needs": "real target version settings when appropriate single-session validation"
+    },
+    {
+      "id": "AC4_TARGET_ARCHETYPE_ACTION",
+      "priority": "P0",
+      "statement": "Original enemy class determines whether basic attack, counter kill, parry or guard break applies; captain break-defense source conflict unresolved",
+      "blocked_features": [
+        "X_attack",
+        "X_takedown",
+        "B_counter",
+        "A_break"
+      ],
+      "needs": "source-backed class-specific outcomes are documented but actual target type, target animation and exact native eligibility API remain unavailable"
+    },
+    {
+      "id": "BFR_106_POST_INTERRUPT_ACTION",
+      "priority": "P0",
+      "statement": "TU1.0.6 explicitly fixed action eligibility across vault/rope dart interrupt/combat smoke/suspicious enemy and RT sprint remap; no native state API verified",
+      "blocked_features": [
+        "X_takedown",
+        "X_assassinate",
+        "B_counter",
+        "RT_parkour"
+      ],
+      "needs": "verify target-build-specific input, interrupt and action availability across each affected state before consuming any input"
     }
   ],
   "global_invariants": [
@@ -2658,7 +2799,10 @@
     "User confirmed only normal Attack fired when Attack and Takedown shared a physical button in Resynced; exact available prompt at that moment unknown.",
     "Additional guide-described exception: original AC4 B alone can produce a double counter kill when two enemy attack warnings overlap; exact eligibility and timing remain unknown.",
     "Original AC4 A may be human shield at gunfire warning despite being break-defense in normal combat and jump in traversal; documented Xbox control, runtime priority not verified.",
-    "Resynced LB press parry / hold Observe, RB press attack / hold heavy / perch hang enemy, and R3 press target lock / hold Eagle Vision / double-tap HUD are independent context/gesture overlaps in the July 2026 table; TU1.0.6 behavior not verified."
+    "Resynced LB press parry / hold Observe, RB press attack / hold heavy / perch hang enemy, and R3 press target lock / hold Eagle Vision / double-tap HUD are independent context/gesture overlaps in the July 2026 table; TU1.0.6 behavior not verified.",
+    "Official TU1.0.6 release notes fix Takedown while vaulting, RT-held sprint remap preventing parkour, Quick Rope Dart interruption, and combat-to-smoke assassination; these are direct evidence that controller actions depend on finer states than simple Combat/Traversal.",
+    "2013 Prima original AC4 enemy matrix has 5 archetypes and 10 move types. Brute counter action may become a dodge; Captain Break Defense table contradicts its own prose. Matchup table is not a native action eligibility API.",
+    "TU1.0.7 and TU1.0.8 changes are explicitly later than user's reported 1.0.6 and must not be treated as evidence of already-fixed behavior or classic button arbitration."
   ],
   "transitions": [
     {
@@ -3491,5 +3635,6 @@
       "engine_priority_verified": false,
       "version_specific_verified": false
     }
-  ]
+  ],
+  "combat_condition_catalog": "research/combat_conditions.json"
 }
