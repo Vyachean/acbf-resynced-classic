@@ -1,6 +1,15 @@
 cmake_minimum_required(VERSION 3.20)
 project(acbf_resynced_classic LANGUAGES CXX)
 
+# PE import-table parser is entirely offline/read-only. Synthetic PE inputs
+# are tested without the game or Windows memory hooks.
+add_library(acbf_pe_imports STATIC src/pe_imports.cpp)
+target_include_directories(acbf_pe_imports PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
+target_compile_features(acbf_pe_imports PUBLIC cxx_std_17)
+add_executable(acbf_pe_imports_tests tests/pe_imports_tests.cpp)
+target_link_libraries(acbf_pe_imports_tests PRIVATE acbf_pe_imports)
+add_test(NAME pe_imports_parser COMMAND acbf_pe_imports_tests)
+
 # Portable, pure contextual decision engine: never invokes game actions.
 add_library(acbf_control_core STATIC
     src/classic_control.cpp
@@ -12,8 +21,10 @@ target_compile_features(acbf_control_core PUBLIC cxx_std_17)
 
 if(MSVC)
     target_compile_options(acbf_control_core PRIVATE /W4 /WX /permissive-)
+    target_compile_options(acbf_pe_imports PRIVATE /W4 /WX /permissive-)
 else()
     target_compile_options(acbf_control_core PRIVATE -Wall -Wextra -Wpedantic -Werror)
+    target_compile_options(acbf_pe_imports PRIVATE -Wall -Wextra -Wpedantic -Werror)
 endif()
 
 enable_testing()
@@ -30,7 +41,7 @@ if(WIN32)
         PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include")
     target_compile_features(acbf_readonly_diagnostics PRIVATE cxx_std_17)
     target_link_libraries(acbf_readonly_diagnostics
-        PRIVATE acbf_control_core bcrypt psapi)
+        PRIVATE acbf_control_core acbf_pe_imports bcrypt psapi)
     target_compile_definitions(acbf_readonly_diagnostics PRIVATE WIN32_LEAN_AND_MEAN)
     set_target_properties(acbf_readonly_diagnostics PROPERTIES
         PREFIX "" OUTPUT_NAME "ACBFClassicDiagnostics" SUFFIX ".asi"

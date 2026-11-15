@@ -12,12 +12,14 @@ Provide a minimal, original runtime observer that can later be **combined with v
 
 - Process executable class (`ACBlackFlag.exe`, `ACBlackFlag_Plus.exe`, or `other`), **SHA-256 of the current executable** and hash status (no file is uploaded).
 - Names (never paths) of loaded `.asi` files and selected local proxy DLLs: `version.dll`, `dinput8.dll`, `winmm.dll`, `dxgi.dll`.
+- **Static import table** of the current executable (read-only PE import directory): input-related DLL names such as `GameInput.dll`, `XInput*.dll` or `dinput8.dll`, plus a parse status. A packed/virtualized PE may produce no usable import information.
+- **Loaded input DLLs before the observer opens its own XInput library**; this distinguishes preexisting modules from the observer's own probes. Module presence can also be due to other mods, overlays or game launchers.
 - Whether a system XInput API is accessible; connected/disconnected controller counts.
 - **X, B, A and RT** pressed/released edges from **XInput polling**, 4 controller slots, maximum 256 recent events, total count.
 - Explicit `NOT_OBSERVABLE` markers for in-game semantics and `NOT_IMPLEMENTED` for action dispatch.
 - Updates the report every ~2 seconds while running. Maximum logged detailed events is bounded; no network telemetry.
 
-**Limitations:** XInput polling is **not** proof the game receives or interprets the same button events. The mod cannot currently distinguish a finisher from an ordinary attack, examine enemy eligibility, record real parry windows or map any game action. GameInput/DirectInput-only controllers may not appear. Module enumeration can miss modules loaded later or from non-game directories. Hashing a large executable may temporarily perform substantial read-only disk I/O. The diagnostic report does not declare any gameplay test `PASS`.
+**Limitations:** PE imports and loaded DLLs are **hints, not proof** of the game's chosen input API. Dynamic loading, code protection and other mods may hide or alter the evidence. A missing input DLL does not prove the game cannot use that API. XInput polling is **not** proof the game receives or interprets the same button events. The mod cannot currently distinguish a finisher from an ordinary attack, examine enemy eligibility, record real parry windows or map any game action. GameInput/DirectInput-only controllers may not appear. Module enumeration can miss modules loaded later or from non-game directories. Hashing a large executable may temporarily perform substantial read-only disk I/O. The diagnostic report does not declare any gameplay test `PASS`.
 
 ## Report
 
@@ -37,7 +39,7 @@ This is a **single JSON file** with no usernames, full paths, arbitrary keystrok
 
 ## Test boundary
 
-GitHub Actions compiles the real x64 ASI, then a **synthetic Windows host executable** loads it with `LoadLibraryW` alongside a **test-only fake `xinput1_4.dll`**. The fake device generates four button down/up cycles (X, B, A and RT). CTest verifies the report includes **exactly eight transitions** (no duplicate presses during held polls), controller-connection counters, and explicit semantic-availability limitations. The fake XInput DLL is **never included** in installation archives, nor placed in the game folder. The host never executes game code. CTest also exercises the pure control resolver. This proves neither that a particular ASI loader loads the module nor that semantic game hooks work.
+GitHub Actions compiles the real x64 ASI, then a **synthetic Windows host executable** loads it with `LoadLibraryW` alongside a **test-only fake `xinput1_4.dll`**. The fake device generates four button down/up cycles (X, B, A and RT). CTest verifies the report includes **exactly eight transitions** (no duplicate presses during held polls), controller-connection counters, and explicit semantic-availability limitations. The fake XInput DLL is **never included** in installation archives, nor placed in the game folder. The separate PE-import parser is exercised against independently generated valid/malformed synthetic PE fixtures in CTest. The host never executes game code. CTest also exercises the pure control resolver. This proves neither that a particular ASI loader loads the module nor that semantic game hooks work.
 
 ## Safety
 

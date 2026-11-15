@@ -69,6 +69,10 @@ int wmain(int argc, wchar_t** argv) {
     ok &= require("\"recent_controller_edges\": [");
     ok &= require("\"local_asi_modules\": [");
     ok &= require("\"xinput_api\": true");
+    ok &= require("\"pe_import_status\": \"OK\"");
+    ok &= require("\"input_api_evidence\": \"HINT_ONLY_NOT_PROOF_OF_GAME_USAGE\"");
+    ok &= require("\"imported_input_dlls\": [");
+    ok &= require("\"loaded_input_dlls_before_probe\": [\"xinput1_4.dll\"]");
     ok &= require("\"controller_connections\": 1");
     ok &= require("\"controller_disconnects\": 0");
     // Four independent presses/releases prove edge sampling end-to-end.
