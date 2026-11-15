@@ -209,3 +209,44 @@ The native code confirms that the original game's input layer contains device-sp
 
 The next static step is to trace readers/consumers of the logical input arrays and edge timestamps, rather than inspect more producer functions. If that does not expose the player action selector, the selected v27 resource needs a valid root-schema decoder. Resynced investigation still needs a legitimate name-map/single-entry path; its protected executable will not be unpacked or bypassed. Runtime confirmation remains unavailable under the current no-launch constraint.
 
+
+
+## Open resource-map and actor-template follow-up (2026-11-15)
+
+This section supersedes the earlier resource-name limitation for the checks described here. It does not establish action semantics or runtime ownership.
+
+### Method and safety
+
+The published resource lists were parsed with the installed AnvilToolkit 1.3.7.0 implementation, not a new GFL parser. The Toolkit's built-in list parser loaded both the original and Resynced GFL files. For archive validation, the original archive was opened through its index-only v27 path; the Resynced base archive was opened through the v50 index reader. Before either call, the corresponding Toolkit code path was inspected: these selected routes read index metadata and selected byte ranges only; they do not extract the archive or write game files. No full archive or game installation was copied.
+
+The local Resynced title update is unknown. Therefore the successful match below proves one mapping against the installed archive, not compatibility of every published mapping, either FGFL snapshot, or the full unknown update.
+
+### Results
+
+| Evidence item | Result | Confidence and limit |
+|---|---|---|
+| Original public GFL | Toolkit parser loaded 664,387 entries, including Forge and DataFile labels. | Confirmed static parser result; list itself is not proof that each entry exists in the installed build. |
+| Resynced public GFL | Toolkit parser loaded 1,924,462 entries. A selected generic human/AI EntityBuilder mapping resolved to a parent record in the local v50 archive index; one selected parent DataFile was read and contained the mapped key, whose Toolkit type resolved to EntityBuilder. | Confirmed for this one mapping and local archive. Installed update remains unknown; no whole-list compatibility claim. |
+| Original Edward candidate | A selected player-character candidate resolved through the public GFL to the local v27 archive index. One parent DataFile was read; it contained the mapped key and the Toolkit classified the payload as EntityBuilder. | Confirms a real local EntityBuilder resource candidate, not that this template is instantiated as Edward at runtime. |
+| Original ordinary soldier candidate | The same index-plus-single-parent procedure found the selected soldier candidate and its key; Toolkit classified it as EntityBuilder. | Confirms resource type and mapping only; it does not establish NPC behavior or component membership. |
+| FGFL/refmap | The public original FGFL and reference map were inspected. For one player-template candidate, the FGFL text association differs from the GFL association; the installed local archive index agrees with the GFL path for the checked record. | This is a concrete mapping discrepancy; it warns against treating a list name or one FGFL snapshot as authoritative. No complete cross-version validation was done. |
+| BhvAssassin ownership | Not established. | The selected EntityBuilder payloads were not decoded into a verified component list. |
+| Action selection | Not established from these templates. | No input-to-component-to-handler association or action-priority rule was recovered. |
+
+### Typed-decoding boundary
+
+The installed Toolkit contains an EntityBuilder type, but its supported-game declaration excludes Resynced. The original and Resynced selected payloads carry an inner serialized class type that the installed runtime registry does not resolve to a concrete class. The available embedded schema data did not provide type/field definitions sufficient to decode the component graph. The selected original payload therefore falls back to a failed base ScimitarClass decode, and the Resynced EntityBuilder decoder is not declared compatible with that game.
+
+This is a limitation of the installed decoder/schema coverage, not evidence that the resources are malformed or that they lack components. No speculative parser was written. Public maps solved resource discovery and single-record identity checks, but not actor ownership, runtime class binding, virtual implementation, or action semantics.
+
+### Open-source mod source review
+
+- [AC4Tools](https://github.com/45hgv43whgf/AC4Tools) documents a strict executable-build and image-base gate for gameplay addresses, with per-site byte checks. Its addresses must not be transferred to an unverified local executable. It does not provide a proven input-to-action dispatcher for this installation.
+- [AC4Coop](https://github.com/Kamzik123/AC4Coop) exposes useful research leads in source: wrappers for EntityBuilder/CharacterActionSet and action playback through the engine's action controller. Its README describes disabling the puppet behavior component and replaying action aliases. This is evidence of a mod's use of those interfaces on its own target build, not proof that Edward's local actor uses BhvAssassin, nor a verified mapping to the static dispatcher in this report.
+- The reviewed [universal-modder](https://github.com/rehan-remade/universal-modder) material did not resolve the missing AC4-specific template-to-runtime-class link.
+
+### Conclusion and next useful check
+
+The open maps remove the previous Resynced resource-name barrier for selective lookup, and they validate concrete original player/NPC EntityBuilder candidates against the installed v27 index. They do not remove the blocker that stopped static action analysis: component payload schemas/runtime type registration are missing for these selected resources.
+
+The next static avenue should be a version-matched, existing decoder or an independently verified runtime class-registration source. If neither exists, the highest-information next step is a short, read-only dynamic observation session in the original game, but it remains outside this stage's no-launch constraint. Observe the already identified candidate resolver and its indirect target while Edward performs one controlled context action, and record actor vtable/class identity plus the command/message discriminator. That single trace would test ownership, concrete virtual dispatch, and one action path without changing game logic. Dynamic observation would still be required to establish behavior, and no runtime claim is made here.
