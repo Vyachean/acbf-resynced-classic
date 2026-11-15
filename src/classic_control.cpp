@@ -107,6 +107,10 @@ Decision resolve(Button button, Edge edge, const Snapshot& context) noexcept {
     case Button::RT:
         // High-profile / RT action semantics are deliberately unimplemented.
         return pass_through(Reason::NotImplemented);
+    case Button::Y:
+    case Button::LB:
+    case Button::RB:
+    case Button::LT:
     case Button::Other:
         return pass_through(Reason::NotImplemented);
     }
@@ -117,9 +121,13 @@ Edge EdgeTracker::observe(Button button, bool pressed) noexcept {
     std::size_t index = 0;
     switch (button) {
     case Button::X: index = 0; break;
-    case Button::B: index = 1; break;
-    case Button::A: index = 2; break;
-    case Button::RT: index = 3; break;
+    case Button::Y: index = 1; break;
+    case Button::B: index = 2; break;
+    case Button::A: index = 3; break;
+    case Button::LB: index = 4; break;
+    case Button::RB: index = 5; break;
+    case Button::LT: index = 6; break;
+    case Button::RT: index = 7; break;
     case Button::Other: return Edge::Idle;
     }
     const bool previous = down_[index];

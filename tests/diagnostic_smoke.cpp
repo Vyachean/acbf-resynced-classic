@@ -75,10 +75,10 @@ int wmain(int argc, wchar_t** argv) {
     ok &= require("\"loaded_input_dlls_before_probe\": [\"xinput1_4.dll\"]");
     ok &= require("\"controller_connections\": 1");
     ok &= require("\"controller_disconnects\": 0");
-    // Four independent presses/releases prove edge sampling end-to-end.
+    // Eight independent presses/releases prove edge sampling end-to-end.
     // A high-frequency poll must not create additional pressed events.
-    ok &= require("\"total_edges\": 8");
-    for (const std::string button : {"X", "B", "A", "RT"}) {
+    ok &= require("\"total_edges\": 16");
+    for (const std::string button : {"X", "Y", "B", "A", "LB", "RB", "LT", "RT"}) {
         ok &= require("\"button\":\"" + button + "\",\"edge\":\"pressed\"");
         ok &= require("\"button\":\"" + button + "\",\"edge\":\"released\"");
     }

@@ -72,3 +72,7 @@ See [Testing protocol](TESTING.md) and [Development policy](WORKFLOW.md).
 ### Host consolidation
 
 The project now builds **two alternative diagnostic delivery hosts** using the same worker: standalone ASI and Puppet Native v1 DLL. The Puppet variant avoids a second `version.dll` when the existing Puppet Native setup is actually functional. Both are tested with synthetic input in Windows Actions. Neither can yet observe action eligibility, so no separate game-start request is justified.
+
+### Combat input trace completeness
+
+Before an eventual one-session game check, the reporter now observes Xbox X/Y/A/B, shoulder LB/RB and thresholded triggers LT/RT. This explicitly covers Resynced's default attack/takedown buttons and the proposed shared-X layout. No keyboard keys, unrelated controller inputs or gameplay state are captured. GitHub Actions verifies **16 press/release edges** through a synthetic provider in both ASI and Puppet Native hosts. **Button events alone cannot prove a takedown was eligible or executed.**

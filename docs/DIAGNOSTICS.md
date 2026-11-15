@@ -15,7 +15,7 @@ Provide a minimal, original runtime observer that can later be **combined with v
 - **Static import table** of the current executable (read-only PE import directory): input-related DLL names such as `GameInput.dll`, `XInput*.dll` or `dinput8.dll`, plus a parse status. A packed/virtualized PE may produce no usable import information.
 - **Loaded input DLLs before the observer opens its own XInput library**; this distinguishes preexisting modules from the observer's own probes. Module presence can also be due to other mods, overlays or game launchers.
 - Whether a system XInput API is accessible; connected/disconnected controller counts.
-- **X, B, A and RT** pressed/released edges from **XInput polling**, 4 controller slots, maximum 256 recent events, total count.
+- **X, Y, B, A, LB, RB, LT and RT** pressed/released edges from **XInput polling**, 4 controller slots, maximum 512 recent events, total count.
 - Explicit `NOT_OBSERVABLE` markers for in-game semantics and `NOT_IMPLEMENTED` for action dispatch.
 - Updates the report every ~2 seconds while running. Maximum logged detailed events is bounded; no network telemetry.
 
@@ -39,7 +39,7 @@ This is a **single JSON file** with no usernames, full paths, arbitrary keystrok
 
 ## Test boundary
 
-GitHub Actions compiles both the real x64 ASI and the Puppet Native DLL; synthetic Windows host programs load them with `LoadLibraryW` alongside a test-only fake `xinput1_4.dll`. The fake device generates four button down/up cycles (X, B, A and RT). CTest verifies the report includes **exactly eight transitions** (no duplicate presses during held polls), controller-connection counters, and explicit semantic-availability limitations. The fake XInput DLL is **never included** in installation archives, nor placed in the game folder. The separate PE-import parser is exercised against independently generated valid/malformed synthetic PE fixtures in CTest. The host never executes game code. CTest also exercises the pure control resolver. This proves neither that a particular ASI loader loads the module nor that semantic game hooks work.
+GitHub Actions compiles both the real x64 ASI and the Puppet Native DLL; synthetic Windows host programs load them with `LoadLibraryW` alongside a test-only fake `xinput1_4.dll`. The fake device generates eight button down/up cycles (X, Y, B, A, LB, RB, LT and RT). CTest verifies the report includes **exactly 16 transitions** (no duplicate presses during held polls), controller-connection counters, and explicit semantic-availability limitations. The fake XInput DLL is **never included** in installation archives, nor placed in the game folder. The separate PE-import parser is exercised against independently generated valid/malformed synthetic PE fixtures in CTest. The host never executes game code. CTest also exercises the pure control resolver. This proves neither that a particular ASI loader loads the module nor that semantic game hooks work.
 
 ## Safety
 
