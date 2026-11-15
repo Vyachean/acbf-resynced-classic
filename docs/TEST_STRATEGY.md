@@ -1,5 +1,9 @@
 # Single-session game testing strategy
 
+## Global audit gate before game-facing integration
+
+[Control-system audit #18](CONTROL_SYSTEM_AUDIT.md) is a **P0 prerequisite** for any physical-input suppression or action override. CI tests of a synthetic X action bridge are not proof the original game behavior has been reconstructed. Preserve guard/counter follow-ups, high/low profile, parkour settings and ship/water/menu behavior before proposing a gameplay test. No further duplicate owner remapping experiments.
+
 ## Primary constraint: avoid game launches
 
 Do not run ACBFR or original AC4 merely because development is uncertain. Perform **all possible testing without either game** first.

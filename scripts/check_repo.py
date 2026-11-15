@@ -12,6 +12,8 @@ REQUIRED = [
     "CONTRIBUTING.md",
     "docs/SCOPE.md",
     "docs/ROADMAP.md",
+    "docs/CONTROL_SYSTEM_AUDIT.md",
+    "research/control_system_ledger.json",
     "docs/ARCHITECTURE.md",
     "docs/TESTING.md",
     "docs/TEST_STRATEGY.md",

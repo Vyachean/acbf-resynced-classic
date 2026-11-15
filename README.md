@@ -5,6 +5,10 @@
 > [!IMPORTANT]
 > **Experimental diagnostic-only ASI and offline control core.** No playable mod, validated loader, compatible game build, or working action hook exists yet. The Windows diagnostic ASI makes **no game modifications** and is not yet intended for user installation.
 
+## Priority: audit the ENTIRE input systems before gameplay work
+
+**Gameplay input interception is frozen under [issue #18](https://github.com/Vyachean/acbf-resynced-classic/issues/18).** The earlier controller map covered only high-level button labels; it omitted AC4's **hold B block / tap B counter / second face-button follow-up**, high/low profile effects, tool and ship modes, and Resynced gesture conflicts. See [the whole-system behavior audit](docs/CONTROL_SYSTEM_AUDIT.md) and [its machine-readable source/transition/unknown ledger](research/control_system_ledger.json). The audit is **INCOMPLETE**; only offline research, non-game observability and design validation may proceed. No new gameplay hook is allowed until affected surfaces and fallbacks have been justified.
+
 ## Goal
 
 Resynced changes how familiar controller inputs map to combat and traversal actions. This project aims to make **Assassin's Creed Black Flag Resynced (ACBFR)** behave more like **Assassin's Creed IV: Black Flag (AC4)**, without requiring players to fight the control scheme.
@@ -60,7 +64,9 @@ No DRM bypass or unauthorized game redistribution is part of this project. Users
 - [Proposed architecture](docs/ARCHITECTURE.md) — preliminary design, not yet implemented
 - [Test protocol](docs/TESTING.md) — focused player testing and diagnostic reports
 - [Research register](docs/RESEARCH.md) — evidence and outstanding technical questions
-- [Control reference](docs/CONTROL_REFERENCE.md) — AC4 vs Resynced default bindings, discrepancies and unknowns
+- [Whole control-system audit](docs/CONTROL_SYSTEM_AUDIT.md) — 25 gameplay surfaces, multi-step actions, source quality and blocking unknowns (**mandatory**)
+- [Audit coverage ledger](research/control_system_ledger.json) — machine-readable action/gesture catalog, transition hypotheses, hazards and source registry
+- [Control reference](docs/CONTROL_REFERENCE.md) — older compact AC4 vs Resynced button map, **not** a full behavior model
 - [Integration findings](docs/INTEGRATION_FINDINGS.md) — public modding evidence, licensing, compatibility gates
 - [Puppet Native ABI](docs/PUPPET_NATIVE.md) — public plugin API and CI-tested lifecycle bridge, not a gameplay hook
 - [Reference cases](research/reference_scenarios.json) — machine-readable design cases (**not tested in game**)

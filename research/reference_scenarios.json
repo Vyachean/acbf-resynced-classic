@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project": "acbf-resynced-classic",
-  "note": "Design targets and research scenarios ONLY; no in-game pass/fail data.",
+  "note": "Design targets and research scenarios ONLY; no in-game pass/fail data. See full control audit: AC4 B guard/counter is multistage; the earlier one-step B design was not accurate.",
   "verified_game_behavior": false,
   "cases": [
     {
@@ -53,8 +53,8 @@
       "id": "B-01",
       "surface": "on_foot_combat",
       "input": "B_press",
-      "situation": "counter_window",
-      "desired_intent": "counter_when_validated",
+      "situation": "enemy attack warning: AC4 B hold guards, tap B enters timed counter follow-up using a second face button",
+      "desired_intent": "preserve_block_and_multistage_counter",
       "source_status": "design_target",
       "engine_eligibility": "unknown"
     },
@@ -62,8 +62,8 @@
       "id": "B-02",
       "surface": "on_foot_combat",
       "input": "B_press",
-      "situation": "dodge_needed",
-      "desired_intent": "dodge_only_when_validated",
+      "situation": "AC4 dodge/evade mapping unresolved; do not equate Resynced B dodge with original B counter",
+      "desired_intent": "unknown_dodge_reference_no_override",
       "source_status": "design_target",
       "engine_eligibility": "unknown"
     },

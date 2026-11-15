@@ -2,7 +2,22 @@
 
 The roadmap is ordered by **uncertainty reduction and observable gameplay value**, not calendar dates. A completed research deliverable is **not** a validated runtime capability.
 
-## Phase 0 — Research and baseline (current)
+## Phase 0 — Whole-system controls audit (ACTIVE P0)
+
+**New mandatory gate — [issue #18](https://github.com/Vyachean/acbf-resynced-classic/issues/18).** The earlier per-button baseline and mock-only resolver are NOT a verified AC4 behavior model. All game-facing input interception, remapping, action suppression, native action hooks, and playable distribution are **blocked** until the full-surface audit is complete.
+
+- [x] Build a source-labelled [control-system audit](CONTROL_SYSTEM_AUDIT.md) that distinguishes documented functions from runtime priority.
+- [x] Inventory 25 control surfaces across AC4 and Resynced, including combat phases, stealth, traversal, water, helm/gunnery, UI and special modes.
+- [x] Inventory cross-surface collision hazards, explicit unknowns and source-backed/hypothesized transitions in a [CI-validated control ledger](../research/control_system_ledger.json).
+- [ ] Independently resolve actual AC4 second-stage counter button mappings, guard hold vs counter tap, and original contextual X priorities.
+- [ ] Reconstruct the Resynced control graph for TU 1.0.6: input gestures, modifiers, combat states, parkour configuration and collision precedence.
+- [ ] Cover missing tools, interaction prompts, special mission/minigame modes and transitions, or make those modes explicit passthrough.
+- [ ] Verify that existing mock policies for X/B/A do not eliminate original AC4 counter, finishing or traversal actions.
+- [ ] Approve every planned input interception point by target mode, version, action, gesture, cancel/release and fallback; no global remapping.
+
+**Gate exit:** issue #18 explicitly closed with evidence for the first affected action *and* safety for all other affected surfaces. Broad features that remain unverified must stay permanently native passthrough. This gate takes precedence over work on #2, #4 and #10.
+
+## Earlier Phase 0 — Research and baseline (partially completed)
 
 - [x] Document the source-backed **original AC4 vs Resynced launch bindings**, known control conflicts and title-update caveats in [CONTROL_REFERENCE](CONTROL_REFERENCE.md).
 - [x] Inventory public **ASI modding examples, state-hook evidence, alternative data-mod route and reuse/license constraints** in [INTEGRATION_FINDINGS](INTEGRATION_FINDINGS.md).
@@ -31,9 +46,9 @@ The roadmap is ordered by **uncertainty reduction and observable gameplay value*
 
 **Exit:** a harmless diagnostic build and testable action resolver (not necessarily playable gameplay changes).
 
-## Phase 2 — First playable milestone: X
+## Phase 2 — First playable milestone: X (BLOCKED by full control audit #18)
 
-**Immediate decision gate:** run the single-session, no-mod [X-001 native remapping comparison](X_INPUT_EXPERIMENT.md) (or reuse the existing observation if the complete published profile was already tested). Its result determines whether invasive game hooks are needed at all for Attack/Takedown. **Do not expand generic diagnostic instrumentation until this question is answered.**
+**The earlier X-001 proposed remapping-only test is DEFERRED.** The owner already observed ordinary Attack winning over Takedown when sharing one button. Do not repeat that experiment. More important, **no isolated X fix is safe** until the entire control surface and multi-stage action interactions have been inventoried (issue #18).
 
 - [x] Document baseline AC4 and Resynced controller mapping and **desired** attack, finisher, assassination cases (not yet verified in game).
 - [x] Document a controlled one-launch comparison of native Y takedown and shared-X mapping, with explicit pass/fail/inconclusive decision gates (not yet executed).
@@ -45,7 +60,7 @@ The roadmap is ordered by **uncertainty reduction and observable gameplay value*
 
 **Exit:** X behaves consistently in documented scenarios on an explicitly identified game build.
 
-## Phase 3 — Classic controller profile
+## Phase 3 — Classic controller profile (BLOCKED by full control audit #18)
 
 - [ ] Implement context-aware B defense actions (first establish original B counter/dodge details).
 - [ ] Investigate A defense-break equivalent (do not assume Resynced Sweep means AC4 guard-break).

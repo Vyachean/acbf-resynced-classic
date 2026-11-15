@@ -67,6 +67,18 @@ No unchecked TODO is silently represented as a completed game feature.
 - **Settings → Actions → General**: permit workflows and ensure `GITHUB_TOKEN` has permission to create tags as needed. The versioning job explicitly requests `contents: write`.
 - The owner configured squash-only repository merge methods and an active PR-only ruleset. **Required CI status checks are intentionally not configured**; inspect the actual workflow jobs in Actions before every merge, and verify version tagging after.
 
+## Mandatory pre-implementation audit gate
+
+**Issue [#18](https://github.com/Vyachean/acbf-resynced-classic/issues/18) blocks gameplay-facing input changes.** Before accepting a PR that installs an input hook, disables native input, remaps player actions, or marks a version playable, require:
+
+- [Source-labelled control-system audit](CONTROL_SYSTEM_AUDIT.md) updated for **every affected surface**, including ship, water, menus and special states.
+- All input gestures, RT/LT modifiers, tap/hold/release, secondary counter commands and mode transitions that share the button inventoried.
+- All candidate AC4-vs-Resynced semantic equivalences verified, *especially* B hold-block / tap-counter submenu and separate Resynced parry/dodge.
+- Exact executable/version gates and native fallback when current game mode or action eligibility is unknown.
+- No unexplained behavior changes to unrelated original actions.
+
+The current offline C++ resolver is a **hypothesis**, not a reference implementation. Passing synthetic CTest does not satisfy this gate. A research PR may add evidence and coverage without opening the gate; do not close #18 prematurely.
+
 ## Security and compatibility
 
 Unrecognized game builds must fail closed. Any future runtime module must provide an easy disable/uninstall path and must not enable diagnostic collection without an explicit testing build/configuration. No unsolicited network reporting.
