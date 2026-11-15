@@ -89,6 +89,10 @@ jobs:
           if (-not (Test-Path staging)) { throw "No staging directory." }
           $asi = @(Get-ChildItem staging -Recurse -Filter "*.asi" -File)
           if ($asi.Count -ne 1) { throw "Expected exactly one ASI; got $($asi.Count)." }
+          # The synthetic XInput DLL is a TEST FIXTURE, never a mod dependency.
+          $nonAsi = @(Get-ChildItem staging -Recurse -File |
+            Where-Object { $_.Extension -ne ".asi" })
+          if ($nonAsi.Count -ne 0) { throw "Unexpected files in staged ASI distribution." }
           $forbidden = @(Get-ChildItem staging -Recurse -File |
             Where-Object { $_.Extension -in @(".exe", ".forge", ".fat", ".pak") -or $_.Name -eq "version.dll" })
           if ($forbidden.Count -ne 0) { throw "Forbidden third-party or game payload in staging." }
