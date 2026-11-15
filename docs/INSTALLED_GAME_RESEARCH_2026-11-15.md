@@ -165,3 +165,47 @@ The strongest chain still ends at the executable import table. The success crite
 ### Published-history review
 
 Commit `1521d4c` includes local executable/archive fingerprints and proprietary resource-index metadata (including resource identifiers/offset details and binary string labels) that are omitted from the current report. It did not include game binaries, full archive payloads, or full-file SHA-256 digests. The details are retained only in the permitted local research note. The current branch tip’s report omits them, but the commit remains in published PR history. Cleaning that history requires a branch history rewrite and may not remove cached or unreachable GitHub objects; no force-push or rewrite was performed.
+
+## Native input trace update — 2026-11-15 (Ghidra)
+
+This section supersedes earlier statements that the original sample had no usable disassembler, that analysis ended at the import table, or that no native input callsite was found. Exact local function labels and addresses remain in the private local research note because the PR's history review identified local executable fingerprints and resource-index identifiers as unsuitable for public publication.
+
+**Title/build scope:** the locally installed original AC4 executable, PE32 x86; exact release unknown and installation modified/unverified. AnvilToolkit/game resources were not modified. Ghidra 12.1.4 was used in a separate research project. The game was not launched, so all findings below are **confirmed static analysis**, not dynamic behavior.
+
+### Confirmed input path
+
+- Cross-references from the executable's input imports lead to actual native callsites: DirectInput 8 creation is called on a conditional initialization path, and an XInput state poller calls `XInputGetState`. This establishes code-level use in this binary sample, not which provider wins at runtime. The local installation includes a DirectInput proxy/mod.
+- The XInput poller checks the API result, reads axis/trigger/button state, converts it into per-device fields, normalizes analog values, then calls a shared edge tracker.
+- The edge tracker copies prior state and compares current flags with prior flags. A false-to-true transition records a timestamp in per-control event data. This confirms press-edge recording in native code; it does not establish release/hold/double semantics or map a particular slot to a gameplay action.
+- A separate DirectInput path obtains device state through its interface, reads configured mapping records, fills logical button/axis arrays, and calls the same edge tracker.
+- The profile loader reads the selected input profile, resolves device sections using VendorID/ProductID with a default-map fallback, loads button/stick/shoulder slots, and reads a High Profile toggle setting. The installed default map contains device-facing slots such as Button1–Button4 and movement/tool controls; it does not encode Attack/Counter/Finish precedence. The runtime toggle code changes mapped input state using elapsed-time checks, but the affected gameplay action is not identified.
+
+The evidence therefore reaches:
+
+`physical device state → per-device state fields → configured logical input slots → press-edge timestamp`
+
+It does **not** yet reach player-context ownership, a target/eligibility predicate, selection between combat/stealth/traversal actions, action start, or cancellation.
+
+### Candidate action dispatch rejected as evidence
+
+A code path associated with an attack-related script/event wrapper was also cross-referenced. Its observed caller performs an internal sequence/probability choice and does not read the controller-state or logical input arrays. It is therefore not evidence of the player-input-to-attack path. Likewise, an engine frame profiler marker for an animation action-manager phase only identifies a scheduled phase; the marker alone does not prove arbitration logic.
+
+### Evidence and remaining unknowns
+
+| Mechanism | Evidence level | What the binary confirms | Still unknown |
+|---|---|---|---|
+| DirectInput initialization | **Confirmed static analysis** | A conditional native callsite and device-interface setup | Whether this provider is used in the unmodified retail runtime |
+| XInput polling | **Confirmed static analysis** | A callsite, success check, state conversion and downstream edge tracking | Runtime device precedence and action ownership |
+| Press edge | **Confirmed static analysis** | Current/prior comparison and timestamp write on false-to-true transition | Release/hold/double interpretation and consumer behavior |
+| High/Low profile mapping | **Confirmed static analysis, partial** | Config profile selection, device-ID fallback and input-toggle handling | Which gameplay action a mapped slot controls and when the game switches context |
+| Attack/Counter/Finisher arbitration | **Unknown** | No traced player-input branch or action-resource edge | Target checks, priority, state transitions, interruption and action-start interface |
+| Resynced equivalence | **Unknown** | No new Resynced action-dispatch trace in this update | Exact local TU remains unauthenticated; named resource lookup and safe single-entry reader remain unresolved |
+
+Full Ghidra auto-analysis is incomplete: repeated runs exhausted heap in Ghidra's x86 constant-reference, stack and string-model analyzers. Relevant function-level xrefs/decompilations were captured from the live partial analysis, but a complete saved analysis database has not been established. No function-count from that transient run is treated as a result.
+
+### Consequence for restoration
+
+The native code confirms that the original game's input layer contains device-specific polling, profile mapping, logical-state generation and edge timing. That is more than a button table, but it still does not show how a particular logical slot wins between Attack, a grounded finisher, kill-streak follow-up, assassination, or parkour. A remap-only restoration is therefore **not demonstrated**; a minimum safe modification seam also remains unknown. No hook or input suppression is supported yet.
+
+The next static step is to trace readers/consumers of the logical input arrays and edge timestamps, rather than inspect more producer functions. If that does not expose the player action selector, the selected v27 resource needs a valid root-schema decoder. Resynced investigation still needs a legitimate name-map/single-entry path; its protected executable will not be unpacked or bypassed. Runtime confirmation remains unavailable under the current no-launch constraint.
+
