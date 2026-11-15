@@ -6,6 +6,9 @@
 #define WIN32_LEAN_AND_MEAN
 #endif
 #include "acbf/diagnostic_exports.h"
+#ifdef ACBF_PUPPET_EMBEDDED
+#include "acbf/readonly_diagnostics.h"
+#endif
 #include "acbf/pe_imports.h"
 #include "acbf/classic_control.h"
 
@@ -61,6 +64,11 @@ struct ProbeState {
 
 std::atomic<bool> stop_requested{false};
 HANDLE worker_handle = nullptr;
+#ifdef ACBF_PUPPET_EMBEDDED
+// Retain a module reference from PN_Init until the worker exits; this prevents
+// PuppetNative's FreeLibrary from unloading code while an I/O is finishing.
+HMODULE embedded_worker_module = nullptr;
+#endif
 
 std::wstring current_exe_path() {
     std::wstring result(32768, L'\0');
@@ -419,9 +427,11 @@ DWORD WINAPI diagnostic_worker(void*) {
 
     // Keep the DLL alive during the worker lifetime, even if a loader
     // releases its original reference. Do not intercept game APIs.
+#ifndef ACBF_PUPPET_EMBEDDED
     HMODULE own_ref = nullptr;
     GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,
                        reinterpret_cast<LPCWSTR>(&diagnostic_worker), &own_ref);
+#endif
 
     state.sha256 = file_sha256(exe_path, state.hash_status);
     scan_executable_imports(state, exe_path);
@@ -451,12 +461,50 @@ DWORD WINAPI diagnostic_worker(void*) {
     if (xinput.owned && xinput.module) FreeLibrary(xinput.module);
 
     // Drop the temporary ref on this thread when safe to exit.
+#ifdef ACBF_PUPPET_EMBEDDED
+    // PN_Shutdown may have completed or timed out. Either way, the loader
+    // cannot unload this worker's code until this reference is released.
+    if (embedded_worker_module) FreeLibraryAndExitThread(embedded_worker_module, 0);
+#else
     if (own_ref) FreeLibraryAndExitThread(own_ref, 0);
+#endif
     return 0;
 }
 
 }  // namespace
 
+#ifdef ACBF_PUPPET_EMBEDDED
+namespace acbf::diagnostics {
+bool start() noexcept {
+    if (worker_handle) return false;
+    stop_requested.store(false);
+    HMODULE self = nullptr;
+    if (!GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,
+                            reinterpret_cast<LPCWSTR>(&start), &self))
+        return false;
+    embedded_worker_module = self;
+    worker_handle = CreateThread(nullptr, 0, diagnostic_worker, nullptr, 0, nullptr);
+    if (!worker_handle) {
+        embedded_worker_module = nullptr;
+        FreeLibrary(self);
+        return false;
+    }
+    return true;
+}
+
+bool stop(DWORD timeout_ms) noexcept {
+    if (!worker_handle) return true;
+    stop_requested.store(true);
+    const HANDLE handle = worker_handle;
+    const DWORD result = WaitForSingleObject(handle, timeout_ms);
+    CloseHandle(handle);
+    worker_handle = nullptr;
+    // If timed out, the running worker holds a private DLL reference. Its
+    // completion will write the final report and drop that reference itself.
+    return result == WAIT_OBJECT_0;
+}
+} // namespace acbf::diagnostics
+#else
 extern "C" __declspec(dllexport)
 DWORD WINAPI ACBFClassicDiagnostics_StopAndWait(DWORD timeout_ms) {
     stop_requested.store(true);
@@ -480,3 +528,5 @@ BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, LPVOID) {
     }
     return TRUE;
 }
+
+#endif // ACBF_PUPPET_EMBEDDED

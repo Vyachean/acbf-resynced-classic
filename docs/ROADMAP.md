@@ -74,3 +74,9 @@ The roadmap is ordered by **uncertainty reduction and observable gameplay value*
 2. Prefer changes that can be verified using synthetic tests and short in-game scenarios.
 3. Avoid invasive animation/combat redesign until the control layer is understood.
 4. A failed feasibility study is a valid documented outcome; do not silently broaden scope.
+
+## Diagnostic host consolidation (v0.1.7 candidate)
+
+- [x] Reuse the same read-only diagnostic worker under Puppet Native ABI v1 and standalone ASI without duplicating the game observer.
+- [x] Add separate, CI-generated packaging for two mutually exclusive diagnostic hosts.
+- [ ] Confirm the actual target loader/executable and collect native *pre-action eligibility* evidence before any controller override.

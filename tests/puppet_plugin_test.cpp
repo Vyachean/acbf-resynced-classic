@@ -7,6 +7,9 @@
 #include <windows.h>
 #include <iostream>
 #include <cstring>
+#include <fstream>
+#include <iterator>
+#include <string>
 
 namespace {
 int failures = 0;
@@ -37,7 +40,17 @@ PN_Api valid_api() {
 }
 
 int wmain(int argc, wchar_t** argv) {
-    if (argc != 2) return 1;
+    if (argc != 3) return 1;
+    wchar_t base[MAX_PATH] = {};
+    DWORD n = GetTempPathW(MAX_PATH, base);
+    if (!n || n >= MAX_PATH) return 5;
+    const std::wstring dir = std::wstring(base) +
+        L"acbf-puppet-ci-" + std::to_wstring(GetCurrentProcessId());
+    if (!CreateDirectoryW(dir.c_str(), nullptr) && GetLastError() != ERROR_ALREADY_EXISTS)
+        return 6;
+    if (!SetEnvironmentVariableW(L"ACBF_CLASSIC_TEST_OUTPUT", dir.c_str())) return 7;
+    HMODULE fake_xinput = LoadLibraryW(argv[2]);
+    if (!fake_xinput) return 8;
     HMODULE plugin = LoadLibraryW(argv[1]);
     if (!plugin) {
         std::cerr << "Failed LoadLibraryW\n";
@@ -73,8 +86,29 @@ int wmain(int argc, wchar_t** argv) {
     expect(init(&api), "accept ABI v1 game module/base");
     expect(log_calls == 1, "log successful init once");
     expect(!init(&api), "reject double initialization");
+    // The fake XInput provider emits 8 down/up transitions in its first
+    // 32 poll iterations; no real game/controller is required.
+    Sleep(1800);
     shutdown();
     expect(log_calls == 2, "log shutdown");
+    const auto path = dir + L"\\diagnostics.json";
+    std::ifstream report(path, std::ios::binary);
+    expect(report.is_open(), "PN plugin wrote diagnostics.json");
+    if (report.is_open()) {
+        const std::string json(std::istreambuf_iterator<char>{report},
+                               std::istreambuf_iterator<char>{});
+        for (const auto& fragment : {
+                "\"mode\": \"read_only_diagnostic\"",
+                "\"complete\": true",
+                "\"gameplay_modifications\": false",
+                "\"exe_sha256_status\": \"OK\"",
+                "\"total_edges\": 8",
+                "\"xinput_api\": true",
+                "\"game_semantics\": \"NOT_OBSERVABLE\"",
+                "\"native_game_action_dispatch\": \"NOT_IMPLEMENTED\""}) {
+            expect(json.find(fragment) != std::string::npos, fragment);
+        }
+    }
     shutdown();
     expect(log_calls == 2, "shutdown idempotent");
     expect(init(&api), "reinitialize after clean shutdown");
@@ -82,6 +116,7 @@ int wmain(int argc, wchar_t** argv) {
     expect(log_calls == 4, "reload cycle logs");
 
     FreeLibrary(plugin);
+    FreeLibrary(fake_xinput);
     std::cout << "Puppet Native ABI contract failures: " << failures << "\n";
     return failures == 0 ? 0 : 4;
 }
