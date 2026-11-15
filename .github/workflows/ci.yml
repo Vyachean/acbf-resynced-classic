@@ -56,23 +56,35 @@ jobs:
         if: steps.source.outputs.available == 'true'
         run: ctest --test-dir build -C Release --output-on-failure --no-tests=error
 
+      - name: Check if an installable ASI distribution is available
+        id: installable
+        shell: pwsh
+        run: |
+          if ((Test-Path "packaging/installable.json") -and (Test-Path "CMakeLists.txt")) {
+            "available=true" >> $env:GITHUB_OUTPUT
+          } else {
+            "available=false" >> $env:GITHUB_OUTPUT
+            Write-Host "Offline core/test-only build: no installable game mod. Skipping distribution packaging."
+          }
+
       - name: Stage project-owned distribution files
-        if: steps.source.outputs.available == 'true'
+        if: steps.installable.outputs.available == 'true'
         run: cmake --install build --config Release --prefix staging
 
       - name: Create installable archive
-        if: steps.source.outputs.available == 'true'
+        if: steps.installable.outputs.available == 'true'
         shell: pwsh
         run: |
           if (-not (Test-Path staging)) { throw "CMake install produced no staging directory." }
           $payload = @(Get-ChildItem staging -Recurse -File)
           if ($payload.Count -eq 0) { throw "CMake install produced no distributable payload." }
+          if (@(Get-ChildItem staging -Recurse -Filter "*.asi" -File).Count -eq 0) { throw "No ASI in staged package; refusing to label offline code as a playable mod." }
           Copy-Item README.md, LICENSE.md -Destination staging -Force
           New-Item -ItemType Directory -Path dist -Force | Out-Null
           Compress-Archive -Path staging/* -DestinationPath "dist/acbf-resynced-classic-$env:GITHUB_SHA.zip" -Force
 
       - name: Upload Windows build artifact
-        if: steps.source.outputs.available == 'true'
+        if: steps.installable.outputs.available == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: acbf-resynced-classic-${{ github.sha }}

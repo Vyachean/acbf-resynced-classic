@@ -1,6 +1,6 @@
-# Proposed architecture (not implemented)
+# Architecture: offline resolver implemented; game integration not implemented
 
-> This is a **candidate** architecture. No ACBFR input API, hook target, memory layout, or compatible loader has been verified.
+> The **pure C++ decision core and sampled-input edge tracker** are now implemented and tested offline. **No ACBFR input API, hook target, memory layout, action invocation, compatible loader, or runtime integration has been verified.**
 
 ## Design objective
 
@@ -29,17 +29,25 @@ Supporting modules: per-build compatibility policy, configuration, sanitized dia
 
 ## Responsibilities
 
-**Input adapter:** collect button press/release and, if needed, hold/edge information. Input APIs and interception mode remain to be researched. Do not assume XInput/DirectInput is sufficient.
+**Input adapter (not implemented):** collect button state through a **verified** game-compatible input path, then pass discrete transitions to the edge tracker. Input APIs and interception mode remain to be researched. Do not assume XInput/DirectInput is sufficient or that event suppression is safe.
 
 **Context provider:** expose only game state that has been validated by evidence, with explicit unknown/unavailable values. Hypothetical inputs may include combat state, action eligibility, targeted enemy, and traversal state, but none of these are assumed to be readable today.
 
-**Resolver:** pure and testable function mapping (input, context, policy) to zero or one selected intent. Must define behavior when context is unknown, when more than one action is eligible, and when press vs hold or release matter.
+**Resolver (implemented):** [`resolve`](../include/acbf/classic_control.h) is a pure function of abstract button input, physical edge and an explicit context/eligibility snapshot. For X it proposes combat takedown before ordinary attack, stealth assassination before ordinary attack. For B it proposes available counter before dodge. These are **design priorities**, not reverse-engineered game facts. No action is emitted when relevant eligibility is unknown. [`EdgeTracker`](../include/acbf/classic_control.h) provides one press edge per sampled down/up cycle.
+
+**Decision states:** `Selected` = candidate intent, **not** executed; `NoAction` = complete negative eligibility for the handled context; `PassThrough` = leave native game handling alone; `Unresolved` = insufficient trusted data, **do not install/enable a consuming override**; `Ignored` = not a new press. Input-release propagation and safety remain the adapter's responsibility. No game adapter exists yet.
 
 **Game action adapter:** perform an action through the safest validated integration available, without fake key combinations when action-level dispatch is necessary. Integration feasibility is a milestone, not an assumption.
 
 **Compatibility guard:** identify the specific supported build before enabling invasive operations. Fail closed for mismatched/unknown versions.
 
 **Diagnostics:** produce a small event timeline (input -> context availability -> decision -> execution result). Must be configurable and avoid dumping raw memory, keys, identifiers, or personal data.
+
+## Offline testability
+
+The pure module is built with C++17/CMake in GitHub Actions on Windows. `ctest` exercises synthetic combat, stealth, B/A decisions, unknown eligibility, button holds, releases, repeat suppression, menus, swimming and naval passthrough. **A green test does not imply game integration or safety inside Resynced.**
+
+There is no `install()` target and no packaging manifest: **the CI must not offer the static library as an installable game mod.** The CI packaging stage requires an explicit future `packaging/installable.json` plus a staged `.asi` file.
 
 ## Risk register
 

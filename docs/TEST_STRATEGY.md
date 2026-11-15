@@ -8,9 +8,10 @@ Do not run ACBFR or original AC4 merely because development is uncertain. Perfor
 | --- | --- | --- |
 | Research review and behavior specification | No execution required | No |
 | Parsing/building configuration and policy files | Yes | No |
-| Deterministic context -> action resolver cases | Yes | No |
+| Deterministic candidate context -> action resolver cases | **Yes: C++/CTest in Windows Actions** | No |
 | Synthetic controller event streams, held/released inputs, double-activation detection | Yes, once implemented | No |
-| Windows cross-component build, install/staging and package validation | Yes, once implemented | No |
+| Windows offline core build/test | **Yes: CMake/CTest in GitHub Actions** | No |
+| Game integration build + staging/install package | **Only after an actual ASI module + manifest exists** | No for compiling; yes for behavior verification |
 | Loader compatibility and actual player-state observation | Only with lawful game execution environment | Usually yes |
 | Verifying in-game attack/finisher/parkour outcomes | No credible automated substitute is currently known | Yes |
 

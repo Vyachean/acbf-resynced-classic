@@ -3,7 +3,7 @@
 **Restore the feel of the original Assassin's Creed IV: Black Flag in Black Flag Resynced — starting with controller behavior.**
 
 > [!IMPORTANT]
-> **Planning / research stage.** No playable mod, compatible loader, supported game build, or working hook is claimed yet.
+> **Offline control-core prototype.** C++ action-resolution logic and tests exist, but there is **no playable mod, compatible loader integration, supported game build, or working gameplay hook** yet.
 
 ## Goal
 
@@ -41,7 +41,7 @@ Public research confirms a plausible x64 ASI distribution path and published **m
 
 ## Status and compatibility
 
-**Status:** specification and repository setup only. There is no distributable mod yet.
+**Status:** offline-tested C++ control core only. There is **no distributable game mod** yet.
 
 | Target | Status |
 | --- | --- |
@@ -63,11 +63,12 @@ No DRM bypass or unauthorized game redistribution is part of this project. Users
 - [Control reference](docs/CONTROL_REFERENCE.md) — AC4 vs Resynced default bindings, discrepancies and unknowns
 - [Integration findings](docs/INTEGRATION_FINDINGS.md) — public modding evidence, licensing, compatibility gates
 - [Reference cases](research/reference_scenarios.json) — machine-readable design cases (**not tested in game**)
+- [C++ control core](include/acbf/classic_control.h) — pure, provisional action resolver (no game integration)
 - [Contributing](CONTRIBUTING.md) — issue reports and contribution rules
 
 ## Getting started
 
-There are **no installation or build instructions yet**, because no loader/API/toolchain has been validated. Avoid downloading purported releases from third parties claiming to represent this project.
+There are **no game installation instructions yet**. The isolated C++ control core is built and tested automatically in GitHub Actions but cannot be installed into Resynced. An installable archive is generated **only after** a real ASI integration and explicit distribution manifest are added. Avoid downloading purported playable releases from third parties.
 
 Technical observations or reproducible control conflicts can be filed through [GitHub Issues](https://github.com/Vyachean/acbf-resynced-classic/issues). Do not upload game binaries, copyrighted assets, personal data, or crash dumps containing secrets.
 
@@ -79,7 +80,7 @@ Technical observations or reproducible control conflicts can be filed through [G
 - [Single-session diagnostic strategy](docs/TEST_STRATEGY.md): offline-first testing and maximal evidence per game launch.
 - [GitHub Actions CI](.github/workflows/ci.yml): documentation checks, offline tests, and a Windows build/package pipeline that activates once actual source exists.
 
-**Project versions are Git tags, not necessarily public releases.** There is no playable mod in this repository yet.
+**Project versions are Git tags, not necessarily public releases.** The core is not an installable ASI mod. GitHub Actions compiles/tests the offline core without asking users to install compilers or run scripts.
 
 ## Legal and licensing
 
