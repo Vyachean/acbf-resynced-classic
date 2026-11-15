@@ -43,3 +43,14 @@ The candidate resolver has a local, confirmed fallback order: candidate resolver
 The typed router branches on operation categories and forwards handle-based operations into a generic message queue. Static inspection reached queue insertion but did not identify the consuming subscriber or an action-start function for this specific message. The numeric candidate and operation categories therefore remain **unlabeled**; no Attack, Finisher, Counter, Assassination, or named interaction can be assigned from this evidence.
 
 **Result:** the path is confirmed from logical edge through ordered candidate checks to typed message submission. The remaining semantic boundary is the actor-template attachment and message recipient/action implementation. The best next static step is to inspect one controlled-player actor template and one comparable NPC template with a supported single-resource parser, then resolve the candidate event handles. No game was launched.
+
+
+## Follow-up: virtual action decision boundary
+
+A targeted read of the caller after candidate resolution found conditional virtual dispatch in the same single-caller action helper. Three internal resolver labels select different method slots on a component interface. For each label, the code checks candidate validity, resolver status, one or more interface predicates, and the corresponding primary/secondary input flag before invoking one of the selected virtual methods. This establishes a concrete conditional handler selection after input and candidate resolution.
+
+The actual target methods are indirect. Their concrete implementations depend on the runtime component class, which has not been mapped to a controlled-player or NPC actor resource. The numeric state labels remain unlabeled internal values; they cannot be identified as attack, takedown, counter, assassination, or movement from this evidence.
+
+The generic queue was also checked more narrowly. The queue append method is reached through a wrapper with 801 static callers, confirming shared engine message plumbing. No unique BhvAssassin message consumer or action-start routine was identified. Further enumeration of queue callers is therefore low-information until a concrete component/resource mapping is available.
+
+**Updated status:** static evidence now reaches conditional virtual-handler selection, but still stops short of a named gameplay action and actor ownership. The discriminating next static method is to resolve component composition and concrete vtable targets from one controlled-player and one NPC actor resource using a validated bounded parser. The game remains unlaunched under the current constraint; no runtime confirmation is claimed.
