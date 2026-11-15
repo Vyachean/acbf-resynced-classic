@@ -63,7 +63,8 @@ thread_local bool connected[4]{};
 
 using CallbackFn = uint32_t(__thiscall*)(void*, uintptr_t);
 using ResolverFn = void(__thiscall*)(void*, uintptr_t, int*, char);
-using DispatchFn = int(__thiscall*)(void*, uint32_t, uint32_t, int*);
+// FUN_01AA3990 consumes four stack arguments and ends in RET 0x10.
+using DispatchFn = int(__thiscall*)(void*, uint32_t, uint32_t, int*, uintptr_t);
 using GateFn = uint32_t(__thiscall*)(void*, uint32_t);
 using EdgeFn = uint32_t(__thiscall*)(void*, uint32_t, uintptr_t, uintptr_t);
 using HoldFn = uint32_t(__thiscall*)(void*, uint32_t, uintptr_t, uintptr_t, uintptr_t);
@@ -281,8 +282,9 @@ void __fastcall resolver_hook(void* self, void*, uintptr_t flags, int* output, c
          reinterpret_cast<uintptr_t>(output), static_cast<int32_t>(flags), corr);
 }
 
-int __fastcall dispatch_hook(void* self, void*, uint32_t flag_a, uint32_t flag_b, int* handler) {
-    const int result = original_dispatch(self, flag_a, flag_b, handler);
+int __fastcall dispatch_hook(void* self, void*, uint32_t flag_a, uint32_t flag_b,
+                             int* handler, uintptr_t opaque_arg4) {
+    const int result = original_dispatch(self, flag_a, flag_b, handler, opaque_arg4);
     push(4, 4, 0, (flag_a & 1u) | ((flag_b & 1u) << 1), reinterpret_cast<uintptr_t>(self),
          reinterpret_cast<uintptr_t>(handler), result, active_correlation);
     return result;
