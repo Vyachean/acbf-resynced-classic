@@ -121,3 +121,47 @@ No disassembler is available on the console path: checked Ghidra, IDA command-li
 Next informative work requires either (a) a locally available, authorized native disassembler for the unprotected original AC4 executable and a GFL/name index for Resynced, or (b) a witnessed minimal gameplay observation. The static imports alone are not enough to claim an input-to-action path. Do not add hooks based on them.
 
 
+
+
+## Follow-up: bounded resource reads and parser limits — 2026-11-15
+
+This section supersedes earlier statements in this document about the v50 reader not being invoked and the selected AC4 resource not yet being parsed. The game installations remain read-only; no game was launched.
+
+### Original AC4 selected-resource parse
+
+**Game/version:** local original AC4 sample; exact release unknown and installation modified/unverified.
+
+**Source and method:** one small, previously indexed combat resource was read by its bounded byte range and passed in memory to AnvilToolkit 1.3.7.0 `DataFile(Byte[], Game.BlackFlag)`. No archive-wide deserialize, output path, extraction, or writer was used.
+
+**Confirmed:** the parsed container has one root record and twelve nested records. The nested type maps to `Animation` in the Toolkit's compiled registry. The root type is not registered there. A generic typed read failed after the hashed-data lookup was initialized with an empty map; direct Animation parsing rejects the original Black Flag game enum and leaves the nested bytes unread. These are observed parser outcomes, not proof of malformed game data.
+
+**Not confirmed:** the root record’s field schema; whether the container is an action graph; any input binding, state identifier, condition, transition, priority, cancellation, or target selection. Phase-like animation labels are not logic evidence. Further work on this resource stops until a valid schema/decoder is available.
+
+### Resynced v50 index read
+
+**Game/version:** local Resynced sample; exact Title Update unknown and installation modified/unverified.
+
+**Source and method:** AnvilToolkit 1.3.7.0 IL was inspected before calling `ForgeFile.Deserialize50`. With `UseDepsFile=false`, `CreateCache=true`, an empty output-folder argument and `stream=true`, IL routes into the index-entry readers; `CreateCache=true` bypasses directory creation, and the selected route does not invoke payload read/write methods. The call was made in memory against the base archive index only. It returned 126,249 entries; no payload or output file was written. The Toolkit printed a misleading “Writing files...” console message despite this metadata-only path.
+
+The index entries had no names because `GameFileList.GetOriginalFileName` depends on a game file-list map. The expected local Resynced GFL map was not found in the checked game/project locations. Consequently, the v50 index is safely enumerable, but combat and traversal resources cannot yet be selected by name. This does not show that those resources are absent.
+
+### Input API linkage and native dispatcher
+
+Read-only PE import-table parsing confirms that the inspected original executable declares DirectInput 8 creation plus Win32 keyboard/raw-input APIs. The inspected Resynced executable declares XInput state APIs, HID and Win32 raw-input/keyboard APIs. This proves declared static linkage only—not which API is called at runtime, event phase handling, context ownership, or action selection. The original local install includes an input proxy/mod, so the runtime provider for its DirectInput import remains uncertain.
+
+No native callsite or branch from a physical event through player/target eligibility to a selected action was recovered. The original sample is 32-bit x86, the Resynced sample is 64-bit x64, both are modified/unverified, no local PDBs were found, and no ordinary disassembler was available in the checked console/tool paths. Resynced also has protected/virtualized executable sections. No unpacking, protection bypass, or DRM change was attempted. Therefore no action-priority rule or safe mod interface is confirmed.
+
+### Evidence status and next useful step
+
+| Claim | Evidence level | Limit |
+|---|---|---|
+| A bounded selected AC4 resource is a structured container with a root and nested typed records | **Confirmed static analysis** | Root schema and semantics unresolved |
+| The installed Toolkit’s v50 metadata-only route can enumerate the Resynced base archive index without writing payloads | **Confirmed static analysis + bounded execution** | Names are unavailable without the GFL map; no payload decoded |
+| The executables declare different input-related OS APIs | **Confirmed static file property** | No runtime callsite or input-to-action edge |
+| Any button event selects Attack, Counter, Takedown, Assassinate, Parkour, or another specific action under a stated condition | **Unknown** | No selector branch, action graph edge, or witnessed gameplay trace |
+
+The strongest chain still ends at the executable import table. The success criterion—one verified path from input/state condition to chosen action—has not been met. The next static step is to obtain an authorized native disassembler for ordinary original AC4 code and a Resynced name map plus a safe single-entry reader. Stop on Resynced executable analysis if it would require defeating protection. If those inputs are unavailable, a narrowly witnessed run is the next discriminating method, but it has not been performed in this console-only pass.
+
+### Published-history review
+
+Commit `1521d4c` includes local executable/archive fingerprints and proprietary resource-index metadata (including resource identifiers/offset details and binary string labels) that are omitted from the current report. It did not include game binaries, full archive payloads, or full-file SHA-256 digests. The details are retained only in the permitted local research note. The current branch tip’s report omits them, but the commit remains in published PR history. Cleaning that history requires a branch history rewrite and may not remove cached or unreachable GitHub objects; no force-push or rewrite was performed.
