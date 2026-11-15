@@ -88,6 +88,13 @@ No priority rule is verified. The next useful static step for original AC4 is to
 - Game versions: original release unknown; Resynced Title Update unknown. Both local samples are modified/unverified.
 - Toolkit: AnvilToolkit 1.3.7.0; reflection and IL inspection only; extraction method not invoked.
 - Archive utility: 7-Zip 25.01; listing returned `Cannot open the file as archive` on tested Forge files.
-- Index method: bounded read-only parser; validated entry tables and returned metadata; graph payloads were not decoded.
+- Index method: bounded read-only parser; validated entry tables and returned metadata. One selected combat container was parsed in memory; its transition schema remains undecoded.
 - Runtime validation: none. Action dispatch, priority and integration interfaces remain unknown. No hook or input suppression is supported by this evidence.
+
+### Selected-resource in-memory parse
+
+After confirming that the archive-wide deserializer writes extracted files, a narrower route was tested: one already indexed, small original combat-resource byte range was read into memory and passed to AnvilToolkit's `DataFile(Byte[], Game)` overload. The constructor returned a parsed container with a root combat/graph-like record and a dozen nested records, including named animation resources labelled for start, positioning, wait/settle, and death/final phases. Only the selected byte range was read; no archive-wide deserializer, extraction method, or file writer was called, and no output path was supplied.
+
+This is direct evidence that the selected archive entry is a structured container rather than one flat animation payload. The phase labels and record membership remain static metadata: no serialized transition edge, player input binding, eligibility condition, priority, or interruption rule has yet been decoded. The public report omits the exact local resource identifiers and names.
+
 
