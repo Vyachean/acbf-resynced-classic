@@ -17,11 +17,15 @@ The roadmap is ordered by **uncertainty reduction and observable gameplay value*
 ## Phase 1 — Minimal instrumentation and control core
 
 - [x] Establish a reproducible **Windows offline core** build and `ctest` in GitHub Actions (not an installable mod).
-- [ ] Establish and validate the actual **ASI/DLL game integration build**.
+- [x] Build an original, read-only x64 **diagnostic ASI** and exercise DLL loading/report generation in a **synthetic CI host**.
+- [ ] Validate the actual **ASI loader and Resynced game integration**, as part of a future combined session.
 - [x] Introduce an isolated, deterministic **candidate** contextual-action resolver and press edge tracker with synthetic test cases (not connected to a game).
-- [ ] Add version-safe integration and disabled-by-default diagnostics.
-- [ ] Observe raw controller input, confirmed player context, and resolved actions.
-- [ ] Make instrumentation opt-in and log only necessary, sanitizable data.
+- [x] Add a **non-modifying** diagnostic module that reports executable SHA-256, loaded local ASIs/proxies and XInput edges; **not** native gameplay context.
+- [ ] Add version-safe, semantic game-state observation and fail-closed action hook integration.
+- [x] Observe XInput button transitions in an external read-only observer (tested only in a synthetic host).
+- [ ] Observe **verified in-game** player context/action eligibility and actual action dispatch.
+- [x] Cap local JSON diagnostics (only X/B/A/RT edges, no paths or network), and require explicit installation of the ASI.
+- [ ] Add validated semantic event telemetry for the **single comprehensive game test**; no game launch before that.
 
 **Exit:** a harmless diagnostic build and testable action resolver (not necessarily playable gameplay changes).
 

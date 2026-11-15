@@ -3,7 +3,7 @@
 **Restore the feel of the original Assassin's Creed IV: Black Flag in Black Flag Resynced — starting with controller behavior.**
 
 > [!IMPORTANT]
-> **Offline control-core prototype.** C++ action-resolution logic and tests exist, but there is **no playable mod, compatible loader integration, supported game build, or working gameplay hook** yet.
+> **Experimental diagnostic-only ASI and offline control core.** No playable mod, validated loader, compatible game build, or working action hook exists yet. The Windows diagnostic ASI makes **no game modifications** and is not yet intended for user installation.
 
 ## Goal
 
@@ -41,7 +41,7 @@ Public research confirms a plausible x64 ASI distribution path and published **m
 
 ## Status and compatibility
 
-**Status:** offline-tested C++ control core only. There is **no distributable game mod** yet.
+**Status:** Windows Actions builds and tests the C++ controller core **and a read-only diagnostic ASI**, including a synthetic host loading the actual DLL. There is **no playable gameplay mod** and **no in-game validation** yet.
 
 | Target | Status |
 | --- | --- |
@@ -64,11 +64,12 @@ No DRM bypass or unauthorized game redistribution is part of this project. Users
 - [Integration findings](docs/INTEGRATION_FINDINGS.md) — public modding evidence, licensing, compatibility gates
 - [Reference cases](research/reference_scenarios.json) — machine-readable design cases (**not tested in game**)
 - [C++ control core](include/acbf/classic_control.h) — pure, provisional action resolver (no game integration)
+- [Diagnostic ASI](docs/DIAGNOSTICS.md) — experimental read-only Windows observer, built by Actions and tested only with a synthetic host
 - [Contributing](CONTRIBUTING.md) — issue reports and contribution rules
 
 ## Getting started
 
-There are **no game installation instructions yet**. The isolated C++ control core is built and tested automatically in GitHub Actions but cannot be installed into Resynced. An installable archive is generated **only after** a real ASI integration and explicit distribution manifest are added. Avoid downloading purported playable releases from third parties.
+There is **no playable mod to install yet**. A read-only diagnostic ASI is produced as a distinct **diagnostic** GitHub Actions artifact (not a release or gameplay modification). **Do not launch the game for this initial diagnostic build**; it is waiting for further semantic probes so a later test can gather maximum information in one session. It does not include or replace an ASI loader. See [diagnostics](docs/DIAGNOSTICS.md).
 
 Technical observations or reproducible control conflicts can be filed through [GitHub Issues](https://github.com/Vyachean/acbf-resynced-classic/issues). Do not upload game binaries, copyrighted assets, personal data, or crash dumps containing secrets.
 
@@ -80,7 +81,7 @@ Technical observations or reproducible control conflicts can be filed through [G
 - [Single-session diagnostic strategy](docs/TEST_STRATEGY.md): offline-first testing and maximal evidence per game launch.
 - [GitHub Actions CI](.github/workflows/ci.yml): documentation checks, offline tests, and a Windows build/package pipeline that activates once actual source exists.
 
-**Project versions are Git tags, not necessarily public releases.** The core is not an installable ASI mod. GitHub Actions compiles/tests the offline core without asking users to install compilers or run scripts.
+**Project versions are Git tags, not necessarily public releases.** GitHub Actions builds/tests the Windows observer and offline core, and packages the diagnostic ASI separately. A green diagnostic build is **not** proof of game support.
 
 ## Legal and licensing
 

@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "kind": "diagnostic",
+  "gameplay_modification": false,
+  "has_loader": false,
+  "has_game_content": false,
+  "requires_game_launch_for_ci": false,
+  "capabilities": [
+    "process_executable_sha256",
+    "local_asi_and_proxy_inventory",
+    "xinput_button_edge_observation",
+    "bounded_local_report"
+  ],
+  "unsupported": [
+    "game_context",
+    "finisher_eligibility",
+    "assassination_eligibility",
+    "action_dispatch",
+    "input_suppression"
+  ],
+  "publish_policy": "CI artifact for future coordinated diagnostic only; not a playable gameplay mod"
+}
