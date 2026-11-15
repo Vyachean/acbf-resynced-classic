@@ -52,6 +52,14 @@ $logs = Get-ChildItem "$env:LOCALAPPDATA\AC4ControlObserver\session-*.jsonl" | F
 python tools/ac4_observer/analyze.py $logs -o ac4-control-map.json
 ```
 
+To watch the active journal without interacting with the game, run this read-only tailer in a separate terminal:
+
+```powershell
+python tools/ac4_observer/watch.py
+```
+
+It follows the newest journal under the current Windows user's `%USERPROFILE%\AppData\Local\AC4ControlObserver` and prints compact event/source counts. Pass `--directory` if the game runs under another Windows profile. This only reads the ASI's flushed journal; the observer and its already-armed hooks must have loaded when the game process started. No second launch is needed to continue observing those sources during that process. Adding or changing native hook sources still requires a new build and a later game launch; this tailer never injects code or touches the game process.
+
 If AC4 exits unexpectedly before the stop signal, the final line may be missing. The analyzer recovers complete JSONL records and marks the session incomplete.
 
 ## Limits and failure behavior
@@ -62,3 +70,8 @@ If AC4 exits unexpectedly before the stop signal, the final line may be missing.
 - The ASI does not capture frames, sound, arbitrary keyboard input, save files, or memory dumps.
 - The synthetic Windows test verifies DLL loading, profile-mismatch refusal, queue/report startup, and clean stop. It is not evidence that AC4 loads the ASI or that a logged candidate is a particular action.
 - Do not begin the main session unless the short readiness check links physical input, logical edge, and candidate-dispatch evidence while ordinary control remains stable.
+
+## Private runtime smoke status
+
+A short private run on the installed x86 build confirmed `native_hook_status=1` and real XInput, logical input, callback, resolver, and dispatch records while the game remained controllable. The journal stayed on the user's machine. It contained only a temporal XInput-button/logical-slot association, not a causal physical-input-to-action proof; dispatch results were unlabeled and did not prove that an action started. Therefore this is evidence that the ASI loads and observes internal paths, but it does not satisfy the full control-study readiness gate. The session had no `session_end` record and is analyzed as incomplete.
+
