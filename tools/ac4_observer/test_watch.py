@@ -32,6 +32,15 @@ class WatchTests(unittest.TestCase):
             rows, _, _ = read_appended(path, offset, b"")
             self.assertEqual(rows[0]["session_id"], "new")
 
+    def test_reads_file_while_writer_handle_remains_open(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "session.jsonl"
+            with path.open("wb") as writer:
+                writer.write(b'{"record_type":"session_start","session_id":"live"}\n')
+                writer.flush()
+                rows, _, _ = read_appended(path, 0, b"")
+            self.assertEqual(rows[0]["session_id"], "live")
+
 
 if __name__ == "__main__":
     unittest.main()
