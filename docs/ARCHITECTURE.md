@@ -61,6 +61,17 @@ The pure module is built with C++17/CMake in GitHub Actions on Windows. `ctest` 
 
 The Windows build packages **diagnostic-only** ASI/Puppet Native host alternatives, not the native action bridge. The action bridge links with the pure core; its fake native sink is compiled only into its CTest executable. No playable mod is currently packaged.
 
+## Physical-button collision prerequisite
+
+[Input impact analyzer](INPUT_IMPACT.md) derives every documented X/B/A/RT
+and modifier use across both games from the central control ledger, including
+known-unbound actions that may overlap. A candidate in
+`XActionBridge` must never be considered installable merely because
+it owns a matching input edge or synthetic eligibility snapshot. The
+future game-facing adapter must first identify and preserve every
+cross-mode shared action, press/hold/double-tap/chord and claimed release.
+The analysis is **read-only** and denies every override until proven.
+
 ## Risk register
 
 | Risk | Impact | Mitigation / research |

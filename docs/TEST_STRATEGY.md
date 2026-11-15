@@ -90,3 +90,7 @@ Before an eventual one-session game check, the reporter now observes Xbox X/Y/A/
 ### Research pivot: owner already confirmed the dual-binding collision
 
 The owner tested binding Attack and Takedown to one button; ordinary Attack won. X-001 is **deferred**, not a requirement to repeat that binding. The recorded prompt/eligibility condition is unknown, but extending raw XInput logs does not resolve it. The immediate engineering effort is identification of game action availability and a callable native dispatcher. A new [offline two-phase X bridge](../include/acbf/action_bridge.h) now has unit-tested safety gates, but **no corresponding game APIs exist in this repo**.
+
+### Required physical-button impact query for any future gameplay PR
+
+Before a PR that consumes an X/Y/A/B/LB/RB/LT/RT (or stick/D-pad) input is reviewed, run [the offline impact report](INPUT_IMPACT.md) against **the same input in both games**. Review every exact and unknown mapping, including ship, water, tools, foot combat, counter follow-up and menus. All unverified binding/priority cases must remain **native pass-through**, not be silently dropped. The tool's decision is always `DENIED_UNVERIFIED_GAME_CONTEXT`; it only identifies potential regressions and does not certify an implementation. Current #18 audit remains open.
