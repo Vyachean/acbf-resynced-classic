@@ -33,6 +33,23 @@ target_link_libraries(acbf_control_core_tests PRIVATE acbf_control_core)
 add_test(NAME classic_control_core COMMAND acbf_control_core_tests)
 
 if(WIN32)
+    # A standalone host-compatible Puppet Native PluginLoader DLL.
+    # Built and tested on Windows CI, intentionally NOT installed or
+    # packaged until its target game/loader combination is validated.
+    add_library(acbf_puppet_plugin SHARED src/puppet_plugin.cpp)
+    target_include_directories(acbf_puppet_plugin PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include")
+    target_compile_features(acbf_puppet_plugin PRIVATE cxx_std_17)
+    set_target_properties(acbf_puppet_plugin PROPERTIES
+        OUTPUT_NAME "ACBFClassicPuppetPlugin"
+    )
+
+    add_executable(acbf_puppet_plugin_test tests/puppet_plugin_test.cpp)
+    target_include_directories(acbf_puppet_plugin_test PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include")
+    target_compile_features(acbf_puppet_plugin_test PRIVATE cxx_std_17)
+    add_test(NAME puppet_native_abi_contract
+             COMMAND acbf_puppet_plugin_test $<TARGET_FILE:acbf_puppet_plugin>)
+    set_tests_properties(puppet_native_abi_contract PROPERTIES TIMEOUT 20)
+
     # An ASI is a DLL with a nonstandard extension, loaded by a SEPARATELY
     # installed compatible ASI loader. No loader or game binary is bundled.
     # This target observes its host process; it never patches or hooks the game.
