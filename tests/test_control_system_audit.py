@@ -29,6 +29,9 @@ CRITICAL_HAZARDS = {
     "BFR_RT_A_B_ABILITIES", "BFR_Y_OVERLAP", "BFR_UNPARRYABLE_ATTACK",
     "BFR_SHARED_BUTTON_OBSERVED", "BFR_WATER_SHIP",
     "BFR_PARKOUR_SETTINGS", "BFR_VERSION_PROFILE",
+    "AC4_A_HUMAN_SHIELD", "AC4_AUTOMATIC_DOUBLE_COUNTER",
+    "BFR_LB_HOLD_OBSERVE", "BFR_RB_PERCH_HANG",
+    "BFR_R3_PRESS_HOLD_DOUBLE",
 }
 CRITICAL_UNKNOWN_IDS = {
     "AC4_COUNTER_TIMING_INTERRUPTS", "AC4_X_PRIORITY",
@@ -160,6 +163,45 @@ class ControlSystemAuditContract(unittest.TestCase):
                 self.assertEqual(actions[name]["evidence"],
                                  "source_described_not_runtime_verified")
                 self.assertIn("ac4_prima_advanced_tips", actions[name]["sources"])
+
+    def test_documented_exceptions_keep_engine_priority_unverified(self):
+        l = self.ledger
+        ids = [entry["id"] for entry in l["context_exceptions"]]
+        self.assertEqual(len(ids), len(set(ids)))
+        self.assertEqual(set(ids), {
+            "AC4_DOUBLE_COUNTER_AUTOMATIC", "AC4_A_HUMAN_SHIELD_GUNFIRE",
+            "AC4_A_DOUBLE_GUARD_BREAK", "AC4_COUNTER_FOUR_WAY",
+            "AC4_KILL_STREAK_INTERRUPTS", "BFR_LB_PARRY_OBSERVE",
+            "BFR_RB_ATTACK_PERCH", "BFR_R3_GESTURE_MODAL",
+            "BFR_Y_PRESS_HOLD_CONTEXT",
+        })
+        surfaces = {s["id"] for s in l["surfaces"]}
+        sources = set(l["source_registry"])
+        for entry in l["context_exceptions"]:
+            with self.subTest(exception=entry["id"]):
+                self.assertIn(entry["game"], GAME_IDS)
+                self.assertEqual(entry["priority"], "P0")
+                self.assertTrue(set(entry["surfaces"]) <= surfaces)
+                self.assertTrue(set(entry["sources"]) <= sources)
+                self.assertIs(entry["engine_priority_verified"], False)
+                self.assertIs(entry["version_specific_verified"], False)
+                self.assertTrue(entry["trigger"]["condition"])
+                self.assertTrue(entry["outcome"])
+                self.assertTrue(entry["preserve"])
+
+        def find_action(surface_id, game, action_name):
+            for action in next(s for s in l["surfaces"] if s["id"] == surface_id)[game]["actions"]:
+                if action["action"] == action_name:
+                    return action
+            self.fail(f"missing {surface_id}.{game}.{action_name}")
+
+        self.assertEqual(find_action("combat_incoming_attack","AC4","human_shield")["input"],"A")
+        self.assertEqual(find_action("combat_incoming_attack","AC4","simultaneous_double_counterkill")["input"],"B")
+        self.assertEqual(find_action("combat_lockon_and_camera","ACBFR","observe")["gesture"],"hold")
+        self.assertEqual(find_action("combat_lockon_and_camera","ACBFR","observe")["input"],"LB")
+        self.assertEqual(find_action("stealth_assassination","ACBFR","hang_enemy_below")["input"],"RB")
+        self.assertEqual(find_action("combat_lockon_and_camera","ACBFR","eagle_vision")["input"],"R3")
+        self.assertGreaterEqual(len(l["transitions"]),45)
 
     def test_original_counter_and_profiles_not_equated_to_new_system(self):
         l = self.ledger

@@ -5,7 +5,7 @@ Tracked in [issue #18](https://github.com/Vyachean/acbf-resynced-classic/issues/
 
 **Scope:** primarily Xbox-style controller gameplay in *Assassin's Creed IV: Black Flag (2013)* vs. *Black Flag Resynced* (launch July 2026 public documentation, with **no validated 1.0.6-specific action priority**). Single-player is the active target. Modern-day and multiplayer portions of AC4, special activities and menus are inventoried as independent control surfaces so an input hook will never accidentally affect them.
 
-The complete [machine-readable audit ledger](../research/control_system_ledger.json) currently contains **25 surfaces, 150+ action rows, 42 described/hypothesized transitions, 16 cross-context hazards, and 10 P0 unknowns**. These are an *inventory*, **not** 150 independently verified in-game behaviors.
+The complete [machine-readable audit ledger](../research/control_system_ledger.json) currently contains **25 surfaces, 150+ action rows, 45 described/hypothesized transitions, 21 cross-context hazards, and 10 P0 unknowns**. These are an *inventory*, **not** 150 independently verified in-game behaviors.
 
 ## Stop-the-line rule
 
@@ -44,9 +44,11 @@ Original documented combat has several distinct phases:
 
 1. **Neutral combat:** X attack, A break defense; target is selected by stick direction. Holding B blocks/parries incoming melee.
 2. **Incoming enemy attack:** **tap B**, during a visible opponent attack warning, to initiate a counter. **Do not hold**, because hold produces ordinary guard.
-3. **Counter-selection phase:** a successful counter opens a brief slow-motion state with **four face-button follow-ups**. A separate 2013 Prima [advanced tips article](https://primagames.com/tips/assassins-creed-4-black-flag-advanced-tips) states the Xbox mapping explicitly: **X = counter kill, B = throw, A = disarm/stun, Y = use selected tool**. The control names are documented, but **the exact engine timing window, input buffering, cancellation and second-press suppression are NOT established**.
-4. **Kill streak:** after a combo kill or Counter Kill, direction plus an attack timed during the previous killing animation can continue the chain. It terminates on damage, target out of range, or other interrupt.
-5. **Disengage:** High Profile can release the combat targeting stance and restore normal directional movement.
+3. **Simultaneous double counter exception:** when **two enemies telegraph attacks at once**, Prima describes an automatic double counter kill from the counter input alone, *without* the usual second-face-button choice. Exact eligibility and timing are unverified.
+4. **Human shield:** while a gunner's attack warning is visible and a nearby enemy is available, **A** can seize a human shield instead of performing the usual guard break. An isolated A-remap could disable this defense.
+5. **Counter-selection phase:** a successful counter opens a brief slow-motion state with **four face-button follow-ups**. A separate 2013 Prima [advanced tips article](https://primagames.com/tips/assassins-creed-4-black-flag-advanced-tips) states the Xbox mapping explicitly: **X = counter kill, B = throw, A = disarm/stun, Y = use selected tool**. The control names are documented, but **the exact engine timing window, input buffering, cancellation and second-press suppression are NOT established**.
+6. **Kill streak:** after a combo kill or Counter Kill, direction plus an attack timed during the previous killing animation can continue the chain. It terminates on damage, target out of range, or other interrupt.
+7. **Disengage:** High Profile can release the combat targeting stance and restore normal directional movement.
 
 **Consequences:** the current provisional \`resolve_b()\` with a one-stage "counter if available, else dodge" policy is *not* an accurate implementation of original AC4 counter interactions. AC4's kill streak is also **not equivalent** to Resynced's separate Takedown/Chain Takedown system.
 
@@ -78,7 +80,7 @@ Sources: [Shacknews launch mappings](https://canary.shacknews.com/article/149927
 
 ### 2.2 Resynced combat is a separate action system
 
-Published default: **RB normal attack / hold RB heavy attack; LB parry; B dodge (double B roll); Y takedown and human shield; hold Y assassination**. **RT + X kick, RT + A sweep, RT + B quick rope dart**, **LT + D-pad equipment**, plus other tool combinations. The same face button under RT/LT can mean an ability instead of parkour. Several community reports explicitly warn that remapping RT sprint while leaving abilities on A/B can override parkour inputs; the exact arbitration on 1.0.6 remains unknown.
+Published default: **RB normal attack / hold RB heavy attack; LB press parry / hold LB Observe; B dodge (double B roll); Y takedown and human shield; hold Y assassination**. **RB on a perch can hang an enemy below**, which is another distinct context of the ordinary attack button. **RT + X kick, RT + A sweep, RT + B quick rope dart**, **LT + D-pad equipment**, plus other tool combinations. The same face button under RT/LT can mean an ability instead of parkour. Several community reports explicitly warn that remapping RT sprint while leaving abilities on A/B can override parkour inputs; the exact arbitration on 1.0.6 remains unknown.
 
 Ubisoft's combat design differs substantially from AC4:
 - Ordinary attacks/heavy attacks remove an enemy's **defense**; exposed enemies can receive a **Takedown**.
@@ -115,6 +117,12 @@ See [JSON ledger](../research/control_system_ledger.json) for each action, raw i
 
 The per-surface inventory is **not yet exhaustive**: exact gameplay-state IDs, precedence and 1.0.6-specific overrides remain unknown. "150+ action rows" is a catalog, not proof of completeness.
 
+### Source-described exceptions to ordinary action flow
+
+The ledger now includes **9 explicit control exceptions** where the same physical input can have different outcomes by combat prompt, timing, target position or gesture. This is not a game-engine state graph: all `engine_priority_verified` and `version_specific_verified` fields remain false. An exception that is not independently observable in the target build **blocks a consuming override** for that input.
+
+The largest newly identified risks are AC4's *automatic double counter*, its *A human shield* during gunfire, Resynced *LB hold Observe* versus parry, and *RB perch hang-enemy* versus ground attack. These cases require no additional user gameplay test yet; they are source-backed research facts with unverified runtime arbitration.
+
 ## 4. High-risk conflicts (do not implement yet)
 
 | Conflict | Potential silent regression | Required evidence |
@@ -122,9 +130,10 @@ The per-surface inventory is **not yet exhaustive**: exact gameplay-state IDs, p
 | **AC4 hold B guard / tap B counter → follow-up** | Loses guarding or second-stage counter choices | Exact state sequence and second-button behavior |
 | **AC4 X attack / high-profile assassination / kill streak** | Breaks stealth and combo chain | Target eligibility, profile and animation phases |
 | **AC4 RT high-profile / tool fire** | Replaces movement modifier with mere sprint | Distinguish movement, aiming and profile modes |
-| **AC4 A guard break / jump** | Eliminates critical traversal action | Context/target/geometry gates |
-| **Resynced RB press/hold and Y press/hold** | Disables heavy strike, assassination, shield, interaction | Same-button gesture and action priority |
+| **AC4 A human shield / guard break / jump** | Eliminates critical traversal action | Context/target/geometry gates |
+| **Resynced RB press/hold/perch hang and Y press/hold** | Disables heavy strike, assassination, shield, interaction | Same-button gesture and action priority |
 | **Resynced RT+A/B/X ability chords** | Blocks parkour / kick / sweep / quick rope | Full modifier conflict matrix per setting |
+| **Resynced LB press parry / hold Observe** | Loses Observe or changes defensive timing | Distinct gesture/context, verified engine priority unknown |
 | **Brute unparryable attacks** | Swallows the one defensive action that works | Enemy archetype, attack class and dodge eligibility |
 | **Ship X/A/B/RB/LB/Y** | Breaks bracing, sailing, gunnery or boarding | Ship and sub-mode-specific input ownership |
 | **Water A/B** | Blocks dive or ascent, creates unresponsive swimming | Water state / ledge vs dive transition |

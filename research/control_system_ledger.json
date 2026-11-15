@@ -88,6 +88,16 @@
       "kind": "original_game_guide",
       "url": "https://primagames.com/tips/assassins-creed-4-black-flag-advanced-tips",
       "scope": "2013 Prima Xbox counter follow-ups: X kill, Y tool, A disarm/stun, B throw; button names corroborated by 2013-era guide"
+    },
+    "ac4_xbox_achievements": {
+      "kind": "secondary_reference",
+      "url": "https://www.xboxachievements.com/game/assassins-creed-4-black-flag-xbox-one/guide/",
+      "scope": "2013 Xbox One scenario guide: during gunner warning press A near an enemy for human shield; not an internal priority proof"
+    },
+    "ac4_steam_double_counter": {
+      "kind": "community_report",
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2825526131",
+      "scope": "2022 advanced AC4 player combat guide corroborates that simultaneous double counters are initiated with B alone"
     }
   },
   "surfaces": [
@@ -461,6 +471,16 @@
               "ac4_prima_combat"
             ],
             "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "guard_break_followup_knockdown",
+            "input": "A + A",
+            "gesture": "two_consecutive_presses",
+            "when": "guarded enemy; two successful break-defense actions knock enemy down, creating a ground finish opportunity",
+            "sources": [
+              "ac4_prima_combat"
+            ],
+            "evidence": "source_described_not_runtime_verified"
           }
         ],
         "engine_priority": "UNKNOWN"
@@ -530,6 +550,28 @@
             "when": "enemy attack indicator active",
             "sources": [
               "ac4_prima_combat"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "simultaneous_double_counterkill",
+            "input": "B",
+            "gesture": "timed_press",
+            "when": "two opponents' melee attack warnings simultaneously visible; counter may automatically kill both without second face-button input",
+            "sources": [
+              "ac4_prima_combat",
+              "ac4_steam_double_counter"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "human_shield",
+            "input": "A",
+            "gesture": "timed_press",
+            "when": "gunfire warning with nearby enemy available to grab",
+            "sources": [
+              "ac4_prima_combat",
+              "ac4_xbox_achievements"
             ],
             "evidence": "source_described_not_runtime_verified"
           }
@@ -846,6 +888,26 @@
               "bfr_ubisoft_combat"
             ],
             "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "observe",
+            "input": "LB",
+            "gesture": "hold",
+            "when": "on-foot Observe action per July 2026 mapping; overlap with press-LB parry",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
+          },
+          {
+            "action": "eagle_vision",
+            "input": "R3",
+            "gesture": "hold",
+            "when": "on-foot Eagle Vision while R3 press means target lock and double tap means HUD toggle",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
           }
         ],
         "engine_priority": "UNKNOWN",
@@ -1007,6 +1069,16 @@
               "bfr_ubisoft_parkour"
             ],
             "evidence": "feature_described_binding_unverified"
+          },
+          {
+            "action": "hang_enemy_below",
+            "input": "RB",
+            "gesture": "press",
+            "when": "perched directly above eligible enemy; different from ordinary RB attack/hold-heavy",
+            "sources": [
+              "bfr_shacknews"
+            ],
+            "evidence": "source_described_not_runtime_verified"
           }
         ],
         "engine_priority": "UNKNOWN",
@@ -2383,6 +2455,85 @@
       ],
       "risk": "Unknown modes must bypass any override to prevent soft locks",
       "engine_arbitration_verified": false
+    },
+    {
+      "id": "AC4_A_HUMAN_SHIELD",
+      "priority": "P0",
+      "game": "AC4",
+      "statement": "A triggers human shield during gunfire warning near a nearby enemy, despite normal A guard-break and jump semantics",
+      "surface_ids": [
+        "combat_incoming_attack",
+        "combat_neutral",
+        "manual_jump"
+      ],
+      "source_ids": [
+        "ac4_prima_combat",
+        "ac4_xbox_achievements"
+      ],
+      "risk": "A-only defense break hook could cause gunshot damage by losing an available human shield",
+      "engine_arbitration_verified": false
+    },
+    {
+      "id": "AC4_AUTOMATIC_DOUBLE_COUNTER",
+      "priority": "P0",
+      "game": "AC4",
+      "statement": "Two simultaneous attack warnings can trigger immediate double kill on B alone; second-stage counter menu not always required",
+      "surface_ids": [
+        "combat_incoming_attack",
+        "combat_counter_followup",
+        "combat_finisher"
+      ],
+      "source_ids": [
+        "ac4_prima_combat",
+        "ac4_steam_double_counter"
+      ],
+      "risk": "Always waiting for second face button may block the automatic counter double kill",
+      "engine_arbitration_verified": false
+    },
+    {
+      "id": "BFR_LB_HOLD_OBSERVE",
+      "priority": "P0",
+      "game": "ACBFR",
+      "statement": "On-foot LB parry press and LB Observe hold share button but differ in gesture and context",
+      "surface_ids": [
+        "combat_incoming_attack",
+        "combat_lockon_and_camera"
+      ],
+      "source_ids": [
+        "bfr_shacknews"
+      ],
+      "risk": "Press-only or consuming LB remap may disable Observe and distort parry timing",
+      "engine_arbitration_verified": false
+    },
+    {
+      "id": "BFR_RB_PERCH_HANG",
+      "priority": "P0",
+      "game": "ACBFR",
+      "statement": "Perched RB contextual hang-enemy action overlaps ground RB ordinary attack and hold-heavy strike",
+      "surface_ids": [
+        "combat_neutral",
+        "stealth_assassination"
+      ],
+      "source_ids": [
+        "bfr_shacknews"
+      ],
+      "risk": "Global RB attack remap could disable perch/ledge stealth handling",
+      "engine_arbitration_verified": false
+    },
+    {
+      "id": "BFR_R3_PRESS_HOLD_DOUBLE",
+      "priority": "P0",
+      "game": "ACBFR",
+      "statement": "R3 press target lock, hold Eagle Vision, double tap HUD toggle",
+      "surface_ids": [
+        "combat_lockon_and_camera",
+        "menu_map_ui"
+      ],
+      "source_ids": [
+        "bfr_shacknews"
+      ],
+      "risk": "An overly broad gesture handler can remove camera, awareness or HUD commands",
+      "engine_arbitration_verified": false
     }
   ],
   "critical_unknowns": [
@@ -2504,7 +2655,10 @@
     "Resynced Takedown after defense break/perfect parry, normal/perfect dodge and enemy archetype limits are separate systems from original AC4 kill streaks.",
     "Controller maps from July 2026 do not establish exact input priority or bindings on the owner's TU 1.0.6.",
     "Every feature described with an unconfirmed binding is explicitly marked feature_described_binding_unverified.",
-    "User confirmed only normal Attack fired when Attack and Takedown shared a physical button in Resynced; exact available prompt at that moment unknown."
+    "User confirmed only normal Attack fired when Attack and Takedown shared a physical button in Resynced; exact available prompt at that moment unknown.",
+    "Additional guide-described exception: original AC4 B alone can produce a double counter kill when two enemy attack warnings overlap; exact eligibility and timing remain unknown.",
+    "Original AC4 A may be human shield at gunfire warning despite being break-defense in normal combat and jump in traversal; documented Xbox control, runtime priority not verified.",
+    "Resynced LB press parry / hold Observe, RB press attack / hold heavy / perch hang enemy, and R3 press target lock / hold Eagle Vision / double-tap HUD are independent context/gesture overlaps in the July 2026 table; TU1.0.6 behavior not verified."
   ],
   "transitions": [
     {
@@ -3094,6 +3248,248 @@
       "engine_verified": false,
       "interrupt_priority": "UNKNOWN",
       "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-43",
+      "game": "AC4",
+      "from": "combat_incoming_attack",
+      "to": "combat_finisher",
+      "trigger": "two simultaneous melee warnings, tap B; possible automatic double kill without face follow-up",
+      "sources": [
+        "ac4_prima_combat",
+        "ac4_steam_double_counter"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-44",
+      "game": "AC4",
+      "from": "combat_incoming_attack",
+      "to": "combat_neutral",
+      "trigger": "gunfire warning with nearby enemy, timed A to grab human shield",
+      "sources": [
+        "ac4_prima_combat",
+        "ac4_xbox_achievements"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    },
+    {
+      "id": "TR-45",
+      "game": "AC4",
+      "from": "combat_neutral",
+      "to": "combat_finisher",
+      "trigger": "repeat A break-defense on susceptible enemy to knock down then X floor finish",
+      "sources": [
+        "ac4_prima_combat"
+      ],
+      "evidence": "guide_described",
+      "engine_verified": false,
+      "interrupt_priority": "UNKNOWN",
+      "release_cancellation": "UNKNOWN"
+    }
+  ],
+  "context_exceptions": [
+    {
+      "id": "AC4_DOUBLE_COUNTER_AUTOMATIC",
+      "game": "AC4",
+      "surfaces": [
+        "combat_incoming_attack",
+        "combat_counter_followup",
+        "combat_finisher"
+      ],
+      "trigger": {
+        "input": "B",
+        "gesture": "timed_press",
+        "condition": "two incoming melee attack warnings overlap"
+      },
+      "outcome": "automatic double counter kill may occur without a second face-button selection",
+      "preserve": "Do not always require the four-way follow-up after successful B counter",
+      "sources": [
+        "ac4_prima_combat",
+        "ac4_steam_double_counter"
+      ],
+      "priority": "P0",
+      "engine_priority_verified": false,
+      "version_specific_verified": false
+    },
+    {
+      "id": "AC4_A_HUMAN_SHIELD_GUNFIRE",
+      "game": "AC4",
+      "surfaces": [
+        "combat_incoming_attack",
+        "combat_neutral"
+      ],
+      "trigger": {
+        "input": "A",
+        "gesture": "timed_press",
+        "condition": "incoming gunshot indicator and enemy in grab range"
+      },
+      "outcome": "human shield instead of ordinary A guard break",
+      "preserve": "Do not universally map A to defense break and consume the ranged prompt",
+      "sources": [
+        "ac4_prima_combat",
+        "ac4_xbox_achievements"
+      ],
+      "priority": "P0",
+      "engine_priority_verified": false,
+      "version_specific_verified": false
+    },
+    {
+      "id": "AC4_A_DOUBLE_GUARD_BREAK",
+      "game": "AC4",
+      "surfaces": [
+        "combat_neutral",
+        "combat_finisher"
+      ],
+      "trigger": {
+        "input": "A",
+        "gesture": "two_consecutive_presses",
+        "condition": "guarded enemy still vulnerable to repeated break-defense actions"
+      },
+      "outcome": "knockdown exposes immediate finishing opportunity",
+      "preserve": "Do not assume A is strictly one unchained action in combat",
+      "sources": [
+        "ac4_prima_combat"
+      ],
+      "priority": "P0",
+      "engine_priority_verified": false,
+      "version_specific_verified": false
+    },
+    {
+      "id": "AC4_COUNTER_FOUR_WAY",
+      "game": "AC4",
+      "surfaces": [
+        "combat_incoming_attack",
+        "combat_counter_followup"
+      ],
+      "trigger": {
+        "input": "B → X/B/A/Y",
+        "gesture": "timed_two_phase",
+        "condition": "single successful counter entry within temporary follow-up window"
+      },
+      "outcome": "X counter kill, B throw, A disarm/stun, Y selected tool",
+      "preserve": "After counter, second input must be routed to submenu rather than ordinary world action",
+      "sources": [
+        "ac4_prima_combat",
+        "ac4_prima_advanced_tips"
+      ],
+      "priority": "P0",
+      "engine_priority_verified": false,
+      "version_specific_verified": false
+    },
+    {
+      "id": "AC4_KILL_STREAK_INTERRUPTS",
+      "game": "AC4",
+      "surfaces": [
+        "combat_finisher",
+        "combat_incoming_attack"
+      ],
+      "trigger": {
+        "input": "X + target_direction",
+        "gesture": "timed_sequence",
+        "condition": "already in kill streak animation"
+      },
+      "outcome": "next kill may be buffered; taking damage, failing range or countering may end or restart sequence",
+      "preserve": "Never swallow the counter needed to interrupt a kill streak",
+      "sources": [
+        "ac4_prima_combat"
+      ],
+      "priority": "P0",
+      "engine_priority_verified": false,
+      "version_specific_verified": false
+    },
+    {
+      "id": "BFR_LB_PARRY_OBSERVE",
+      "game": "ACBFR",
+      "surfaces": [
+        "combat_incoming_attack",
+        "combat_lockon_and_camera"
+      ],
+      "trigger": {
+        "input": "LB",
+        "gesture": "press_vs_hold",
+        "condition": "ordinary parry press versus on-foot Observe hold"
+      },
+      "outcome": "documented distinct actions share LB depending on gesture/context",
+      "preserve": "Do not replace LB with a parry-only tap handler; observe may be lost",
+      "sources": [
+        "bfr_shacknews"
+      ],
+      "priority": "P0",
+      "engine_priority_verified": false,
+      "version_specific_verified": false
+    },
+    {
+      "id": "BFR_RB_ATTACK_PERCH",
+      "game": "ACBFR",
+      "surfaces": [
+        "combat_neutral",
+        "stealth_assassination"
+      ],
+      "trigger": {
+        "input": "RB",
+        "gesture": "press_or_hold",
+        "condition": "on-foot normal attack / heavy hold versus hanging enemy below when perched"
+      },
+      "outcome": "contextual RB action changes with ledge/perch and hold gesture",
+      "preserve": "Do not globally treat RB as attack in every on-foot spatial state",
+      "sources": [
+        "bfr_shacknews"
+      ],
+      "priority": "P0",
+      "engine_priority_verified": false,
+      "version_specific_verified": false
+    },
+    {
+      "id": "BFR_R3_GESTURE_MODAL",
+      "game": "ACBFR",
+      "surfaces": [
+        "combat_lockon_and_camera",
+        "menu_map_ui"
+      ],
+      "trigger": {
+        "input": "R3",
+        "gesture": "press_hold_double_tap",
+        "condition": "combat focus versus Eagle Vision versus HUD toggle"
+      },
+      "outcome": "R3 press locks target, hold invokes Eagle Vision, double tap toggles HUD according to July mapping",
+      "preserve": "Do not suppress R3 because lock-on/hud/eagle-vision are separate gestures",
+      "sources": [
+        "bfr_shacknews"
+      ],
+      "priority": "P0",
+      "engine_priority_verified": false,
+      "version_specific_verified": false
+    },
+    {
+      "id": "BFR_Y_PRESS_HOLD_CONTEXT",
+      "game": "ACBFR",
+      "surfaces": [
+        "interactions_context",
+        "combat_finisher",
+        "stealth_assassination",
+        "combat_incoming_attack"
+      ],
+      "trigger": {
+        "input": "Y",
+        "gesture": "press_vs_hold",
+        "condition": "interaction, shield prompt, takedown prompt, stealth eligible target"
+      },
+      "outcome": "press Y may interact, shield or takedown; hold Y may assassinate",
+      "preserve": "X remap must not consume or disable original Y interaction/shield/assassination on unrelated states",
+      "sources": [
+        "bfr_shacknews",
+        "bfr_prima"
+      ],
+      "priority": "P0",
+      "engine_priority_verified": false,
+      "version_specific_verified": false
     }
   ]
 }
