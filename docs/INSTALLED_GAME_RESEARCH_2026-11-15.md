@@ -60,53 +60,34 @@ No game-facing hook or input suppression is supported by the present evidence. I
 
 ## Local static inspection update — 2026-11-15 (review follow-up)
 
-### Executable and archive provenance
+### What was checked
 
-| Sample | Relative executable | PE machine / optional magic | PE format | File size | Provenance limit |
-|---|---|---:|---|---:|---|
-| Original AC4 | `AC4BFSP.exe` | `0x014C` / `0x010B` | PE32 x86 | 45,056,040 bytes | Local directory has mod/loader files; clean retail status and exact release are unknown. |
-| Black Flag Resynced | `ACBlackFlag.exe` | `0x8664` / `0x020B` | PE32+ x64 | 478,845,792 bytes | Local directory has mod/loader files; exact Title Update is unknown. |
+Read-only PE parsing reconfirmed the two local samples' architecture difference: the original sample is 32-bit x86 (PE32), while Resynced is 64-bit x64 (PE32+). The local directories contain additional mod/loader files, and the original release and Resynced Title Update could not be authenticated. These PE properties do not identify a retail build or explain action dispatch.
 
-These are PE file properties, not authenticated build identifiers. The PE timestamps are not treated as release evidence. No full-file digest or unique local fingerprint is published.
+In-place reads of representative Forge headers identified the `scimitar` container family and two format generations: v27 in the original sample and v50 in Resynced. 7-Zip 25.01 listing attempts returned `Cannot open the file as archive` for the tested files. This is a limitation of that listing attempt, not proof that other readers cannot parse the archives.
 
-Relevant archive headers read in place identify the `scimitar` container family. The local original `DataPC.forge` is 194,641,920 bytes and `DataPC_patch.forge` is 17,170,432 bytes; each header reports format version 27. Resynced `DataPC_boot.forge` is 25,640,534,016 bytes and `DataPC_boot_patch_01.forge` is 1,915,453,440 bytes; those headers report format version 50. Names, sizes and header versions are observed only for these local samples; they do not authenticate a clean build or establish data semantics.
+AnvilToolkit 1.3.7.0 is present with the original sample. Read-only reflection confirmed a v50 deserializer. IL inspection showed that this path creates an output directory and calls archive-directory constructors; the directory type includes a disk-writing method. Since no single-entry-only contract was established, the deserializer was not invoked. No CLI listing command was found. No game data was extracted or written.
 
-### Tool behavior and bounded resource indexing
+A bounded read-only index parser validated entries in several original v27 archives, including a character archive. It returned names, IDs and sizes for candidate combat animation-graph resources, including basic attack, combo, counter and stun-kill categories. The resource payloads were not decoded. Consequently, these names and categories do not establish player ownership, input binding, transition edges, eligibility, priority, timing or cancellation. Exact local resource identifiers and fingerprints are intentionally omitted from this public report.
 
-AnvilToolkit 1.3.7.0 is installed alongside the original sample. Read-only .NET reflection confirmed that its `ForgeFile` type exposes `Deserialize50` as well as `Deserialize27`. Inspection of the `Deserialize50` IL shows it creates an output directory and invokes `ForgeDirectory` constructors after reading the header. `ForgeDirectory` exposes `WriteFileToDisk`. Because the call path is an extraction path and no selected-entry-only contract was established, it was not invoked. This is the exact safety blocker for using that installed API for a single-resource read; no CLI listing command was found. Reflection inspected toolkit metadata only and did not modify the install.
+String inspection of both executables found candidate identifiers related to counter/parry/assassination in the original sample and Takedown/parry/parkour in Resynced. No cross-references, native branches or dispatcher conditions were recovered. String presence is not action-selection evidence. No unpacking or protection bypass was attempted.
 
-7-Zip 25.01 `7z l` was tried against the local original `DataPC.forge` and `DataPC_patch.forge`, and Resynced boot archives. Each returned `Cannot open the file as archive`; this establishes only that this 7-Zip build did not recognize these Forge files.
+### Prioritized questions and status
 
-A bounded, read-only index parser validated 265 records in original `DataPC.forge` and 56 in `DataPC_patch.forge`. On `DataPC_extra_chr.forge` it indexed 3,855 records and found these candidate player combat graph resources:
-
-| Archive / resource | Resource ID | Indexed size | Evidence scope |
-|---|---:|---:|---|
-| `DataPC_extra_chr.forge` / `Fight_ACGA_Dual_Basic` | `0x5C3758241` | 572,278 bytes | Resource name/ID/size from parsed Forge index only. |
-| `DataPC_extra_chr.forge` / `Fight_ACGA_Dual_Combo` | `0x5C3758242` | 1,014,060 bytes | Same. |
-| `DataPC_extra_chr.forge` / `Fight_ACGA_Dual_Counter` | `0x5C3758243` | 1,034,929 bytes | Same. |
-| `DataPC_extra_chr.forge` / `Fight_ACGA_Dual_Stunkill` | `0x5C3758244` | 73,670 bytes | Same. |
-
-These are useful candidates for subsequent graph/resource decoding, not decoded graphs. No payload was extracted or uploaded. Their labels do not establish which input selects them, whether the player can enter them, whether a counter transitions to them, or their priority/cancel rules. The small `Dual_Stunkill` entry remains a candidate for a safely bounded in-memory decoder, but no suitable decoder has yet been validated.
-
-The Resynced executable contains candidate identifiers including `ParryWindow`, `Key_Takedown`, `Pad_Takedown`, `FightLogicOperationInflictTakedownDamage`, `ActorContextHumanNonLethalTakedownAttacker`, and `Parkour_Passement_Entry`. Static string presence is confirmed; their call sites, conditions, runtime meaning and priority are not. The `.vmp0`–`.vmp4` section names and absent local PDB mean no ordinary source-level dispatch path was recovered. No unpacking/protection bypass was attempted. Original AC4 likewise has candidate strings for contextual counter, parry reversal, ground finish, and assassination action maps, but no decoded cross-reference or branch.
-
-### Prioritized action questions and current evidence
-
-| Question | Direct static evidence obtained | What is not established |
+| Question | Direct file evidence | Unknown |
 |---|---|---|
-| Original X contextual attack/assassination | No decoded input binding or action map; only candidate assassination/action-map identifiers in the local executable. | X mapping, context eligibility, target checks, and precedence. |
-| Original B guard → counter → follow-up | `Fight_ACGA_Dual_Counter` and `Fight_ACGA_Dual_Combo` are indexed graph-resource candidates; executable strings include candidate counter/parry map names. | Whether these resources are player-facing, transition links, B-selected, sequential stages, or enemy-only; timing and interruption. |
-| Resynced Attack vs Takedown | Local executable has candidate Takedown/inflict-damage identifiers. Existing owner report remains the only direct outcome evidence: the shared binding yielded ordinary Attack, with exact build/eligibility state unknown. | Eligibility signals, selector branch order, and an alternate native dispatch route. The same experiment was not repeated. |
-| Resynced RT parkour collision | `Parkour_Passement_Entry` is a candidate identifier; no RT binding or branch was recovered. | RT input ownership, parkour state gates and fallback. |
+| Original contextual attack/assassination | Candidate action-map identifiers only. | Input mapping, target/context checks, precedence and native dispatch. |
+| Original guard → counter → follow-up | Indexed combat graph candidates and candidate counter/parry identifiers. | Whether the resources are player-facing, how nodes connect, input ownership, timing and interruption. |
+| Resynced Attack vs Takedown | Candidate Takedown-related identifiers. Existing owner report remains the only outcome evidence: shared binding yielded ordinary Attack; build and eligibility state are unknown. | Selector order, eligibility signals and alternate native route. That same experiment was not repeated. |
+| Resynced RT parkour collision | Candidate parkour identifier only. | RT binding, state gates, fallback and interaction with combat actions. |
 
-No action-priority row is promoted to confirmed. The smallest decisive next static step is to decode one selected original v27 graph resource in memory and identify its internal node/transition schema, then locate a verified player input-to-node edge. For Resynced v50, first establish a library/API that can list and read one selected resource without bulk extraction; do not call `Deserialize50` as currently inspected. If either resource format requires unsafe unpacking or bypass, stop and use a narrowly witnessed gameplay observation instead. The current record still does not identify a safe mod interface or justify hooks/input suppression.
+No priority rule is verified. The next useful static step for original AC4 is to decode one selected v27 graph resource in memory and identify a verified player-input-to-node edge. For Resynced, first establish a reader that can list and inspect one selected v50 resource without bulk extraction. If that requires unsafe unpacking or bypassing protection, stop and use a narrowly scoped witnessed observation.
 
 ### Evidence record
 
-- Original AC4 local sample: `AC4BFSP.exe`, PE32 x86; local game version unknown and directory is modified/unverified.
-- Resynced local sample: `ACBlackFlag.exe`, PE32+ x64; local Title Update unknown and directory is modified/unverified.
-- Toolkit: AnvilToolkit file/product version 1.3.7.0; reflection and IL inspection in place. No extraction method invoked.
-- Archive tool: 7-Zip 25.01 listing attempts failed with `Cannot open the file as archive`.
-- Index method: custom bounded read-only parser; validates record bounds/counts and returns names/IDs/sizes only. It did not decode graph payloads.
-- Dynamic game validation: not performed or required for the static facts above. All dispatch claims remain unverified and require an appropriately state-labelled witnessed run or safe, authenticated-build disassembly.
+- Game versions: original release unknown; Resynced Title Update unknown. Both local samples are modified/unverified.
+- Toolkit: AnvilToolkit 1.3.7.0; reflection and IL inspection only; extraction method not invoked.
+- Archive utility: 7-Zip 25.01; listing returned `Cannot open the file as archive` on tested Forge files.
+- Index method: bounded read-only parser; validated entry tables and returned metadata; graph payloads were not decoded.
+- Runtime validation: none. Action dispatch, priority and integration interfaces remain unknown. No hook or input suppression is supported by this evidence.
 
