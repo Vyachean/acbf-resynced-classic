@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "project": "acbf-resynced-classic",
+  "note": "Design targets and research scenarios ONLY; no in-game pass/fail data.",
+  "verified_game_behavior": false,
+  "cases": [
+    {
+      "id": "X-01",
+      "surface": "on_foot_combat",
+      "input": "X_press",
+      "situation": "ordinary_attack_available",
+      "desired_intent": "attack",
+      "source_status": "design_target",
+      "engine_eligibility": "unknown"
+    },
+    {
+      "id": "X-02",
+      "surface": "on_foot_combat",
+      "input": "X_press",
+      "situation": "finisher_available",
+      "desired_intent": "takedown",
+      "source_status": "design_target",
+      "engine_eligibility": "unknown"
+    },
+    {
+      "id": "X-03",
+      "surface": "on_foot_stealth",
+      "input": "X_press",
+      "situation": "assassination_available",
+      "desired_intent": "assassinate",
+      "source_status": "design_target",
+      "engine_eligibility": "unknown"
+    },
+    {
+      "id": "X-04",
+      "surface": "on_foot",
+      "input": "X_press",
+      "situation": "no_safe_action",
+      "desired_intent": "safe_fallback",
+      "source_status": "design_target",
+      "engine_eligibility": "unknown"
+    },
+    {
+      "id": "X-05",
+      "surface": "on_foot",
+      "input": "X_press_release_sequence",
+      "situation": "attack_to_finisher_or_stealth_transition",
+      "desired_intent": "at_most_one_intent_per_press",
+      "source_status": "design_target",
+      "engine_eligibility": "unknown"
+    },
+    {
+      "id": "B-01",
+      "surface": "on_foot_combat",
+      "input": "B_press",
+      "situation": "counter_window",
+      "desired_intent": "counter_when_validated",
+      "source_status": "design_target",
+      "engine_eligibility": "unknown"
+    },
+    {
+      "id": "B-02",
+      "surface": "on_foot_combat",
+      "input": "B_press",
+      "situation": "dodge_needed",
+      "desired_intent": "dodge_only_when_validated",
+      "source_status": "design_target",
+      "engine_eligibility": "unknown"
+    },
+    {
+      "id": "A-01",
+      "surface": "on_foot_combat",
+      "input": "A_press",
+      "situation": "guard_break_target",
+      "desired_intent": "ac4_break_defense_semantics",
+      "source_status": "design_target",
+      "engine_eligibility": "unknown"
+    },
+    {
+      "id": "RT-01",
+      "surface": "on_foot_traversal",
+      "input": "RT_hold",
+      "situation": "high_profile_movement",
+      "desired_intent": "ac4_high_profile_semantics",
+      "source_status": "design_target",
+      "engine_eligibility": "unknown"
+    },
+    {
+      "id": "M-01",
+      "surface": "any",
+      "input": "load_disable_unload",
+      "situation": "supported_and_unsupported_build",
+      "desired_intent": "fail_closed_and_reversible",
+      "source_status": "design_target",
+      "engine_eligibility": "unknown"
+    }
+  ]
+}

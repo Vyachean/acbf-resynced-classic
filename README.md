@@ -35,6 +35,10 @@ These mappings express **design targets**, not claims that the target game's int
 - **Modular boundaries.** Input handling, state detection, action decisions, and game integration should remain separable.
 - **Rare, purposeful manual testing.** Use focused builds and diagnostic logs rather than repeated guesswork.
 
+## Current technical conclusion (2026-11-15)
+
+Public research confirms a plausible x64 ASI distribution path and published **movement-state** instrumentation in an unrelated mod. It **does not confirm** a safe way to detect takedown/assassination eligibility or invoke either action independently. Built-in shared-button remapping has contradictory community reports; no runtime integration is yet implemented. See the [evidence register](docs/RESEARCH.md).
+
 ## Status and compatibility
 
 **Status:** specification and repository setup only. There is no distributable mod yet.
@@ -56,6 +60,9 @@ No DRM bypass or unauthorized game redistribution is part of this project. Users
 - [Proposed architecture](docs/ARCHITECTURE.md) — preliminary design, not yet implemented
 - [Test protocol](docs/TESTING.md) — focused player testing and diagnostic reports
 - [Research register](docs/RESEARCH.md) — evidence and outstanding technical questions
+- [Control reference](docs/CONTROL_REFERENCE.md) — AC4 vs Resynced default bindings, discrepancies and unknowns
+- [Integration findings](docs/INTEGRATION_FINDINGS.md) — public modding evidence, licensing, compatibility gates
+- [Reference cases](research/reference_scenarios.json) — machine-readable design cases (**not tested in game**)
 - [Contributing](CONTRIBUTING.md) — issue reports and contribution rules
 
 ## Getting started
