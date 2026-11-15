@@ -3265,7 +3265,7 @@
       "release_cancellation": "UNKNOWN"
     },
     {
-      "id": "TR-43",
+      "id": "TR-44",
       "game": "AC4",
       "from": "combat_incoming_attack",
       "to": "combat_neutral",
@@ -3280,7 +3280,7 @@
       "release_cancellation": "UNKNOWN"
     },
     {
-      "id": "TR-43",
+      "id": "TR-45",
       "game": "AC4",
       "from": "combat_neutral",
       "to": "combat_finisher",
