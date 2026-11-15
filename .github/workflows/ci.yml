@@ -56,39 +56,56 @@ jobs:
         if: steps.source.outputs.available == 'true'
         run: ctest --test-dir build -C Release --output-on-failure --no-tests=error
 
-      - name: Check if an installable ASI distribution is available
-        id: installable
+      - name: Select artifact type
+        id: payload
         shell: pwsh
         run: |
-          if ((Test-Path "packaging/installable.json") -and (Test-Path "CMakeLists.txt")) {
-            "available=true" >> $env:GITHUB_OUTPUT
+          $diagnostic = Test-Path "packaging/diagnostic.json"
+          $playable = Test-Path "packaging/installable.json"
+          if ($diagnostic -and $playable) {
+            throw "Only one package type can be enabled in a commit."
+          }
+          if ($diagnostic) {
+            $meta = Get-Content "packaging/diagnostic.json" -Raw | ConvertFrom-Json
+            if ($meta.kind -ne "diagnostic" -or $meta.gameplay_modification) {
+              throw "Invalid read-only diagnostic manifest."
+            }
+            "kind=diagnostic" >> $env:GITHUB_OUTPUT
+          } elseif ($playable) {
+            "kind=playable" >> $env:GITHUB_OUTPUT
           } else {
-            "available=false" >> $env:GITHUB_OUTPUT
-            Write-Host "Offline core/test-only build: no installable game mod. Skipping distribution packaging."
+            "kind=none" >> $env:GITHUB_OUTPUT
+            Write-Host "Offline tests only; no distributable payload."
           }
 
-      - name: Stage project-owned distribution files
-        if: steps.installable.outputs.available == 'true'
+      - name: Stage project-owned files
+        if: steps.payload.outputs.kind != 'none'
         run: cmake --install build --config Release --prefix staging
 
-      - name: Create installable archive
-        if: steps.installable.outputs.available == 'true'
+      - name: Create CI artifact archive
+        if: steps.payload.outputs.kind != 'none'
         shell: pwsh
         run: |
-          if (-not (Test-Path staging)) { throw "CMake install produced no staging directory." }
-          $payload = @(Get-ChildItem staging -Recurse -File)
-          if ($payload.Count -eq 0) { throw "CMake install produced no distributable payload." }
-          if (@(Get-ChildItem staging -Recurse -Filter "*.asi" -File).Count -eq 0) { throw "No ASI in staged package; refusing to label offline code as a playable mod." }
+          if (-not (Test-Path staging)) { throw "No staging directory." }
+          $asi = @(Get-ChildItem staging -Recurse -Filter "*.asi" -File)
+          if ($asi.Count -ne 1) { throw "Expected exactly one ASI; got $($asi.Count)." }
+          $forbidden = @(Get-ChildItem staging -Recurse -File |
+            Where-Object { $_.Extension -in @(".exe", ".forge", ".fat", ".pak") -or $_.Name -eq "version.dll" })
+          if ($forbidden.Count -ne 0) { throw "Forbidden third-party or game payload in staging." }
           Copy-Item README.md, LICENSE.md -Destination staging -Force
+          if ("${{ steps.payload.outputs.kind }}" -eq "diagnostic") {
+            Copy-Item docs/DIAGNOSTICS.md -Destination staging -Force
+            Copy-Item packaging/diagnostic.json -Destination staging -Force
+          }
           New-Item -ItemType Directory -Path dist -Force | Out-Null
-          Compress-Archive -Path staging/* -DestinationPath "dist/acbf-resynced-classic-$env:GITHUB_SHA.zip" -Force
+          Compress-Archive -Path staging/* -DestinationPath "dist/acbf-${{ steps.payload.outputs.kind }}-$env:GITHUB_SHA.zip" -Force
 
-      - name: Upload Windows build artifact
-        if: steps.installable.outputs.available == 'true'
+      - name: Upload Windows artifact
+        if: steps.payload.outputs.kind != 'none'
         uses: actions/upload-artifact@v4
         with:
-          name: acbf-resynced-classic-${{ github.sha }}
-          path: dist/acbf-resynced-classic-*.zip
+          name: acbf-${{ steps.payload.outputs.kind }}-${{ github.sha }}
+          path: dist/acbf-*.zip
           if-no-files-found: error
           retention-days: 14
 

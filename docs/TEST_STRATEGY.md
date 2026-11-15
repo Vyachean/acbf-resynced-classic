@@ -11,7 +11,8 @@ Do not run ACBFR or original AC4 merely because development is uncertain. Perfor
 | Deterministic candidate context -> action resolver cases | **Yes: C++/CTest in Windows Actions** | No |
 | Synthetic controller event streams, held/released inputs, double-activation detection | Yes, once implemented | No |
 | Windows offline core build/test | **Yes: CMake/CTest in GitHub Actions** | No |
-| Game integration build + staging/install package | **Only after an actual ASI module + manifest exists** | No for compiling; yes for behavior verification |
+| Read-only ASI diagnostics + synthetic DLL host | **Yes: Windows CMake/CTest and distinct diagnostic artifact** | No; game compatibility remains unknown |
+| Game integration and verified semantic action dispatch | **Not available** | Yes for final gameplay verification |
 | Loader compatibility and actual player-state observation | Only with lawful game execution environment | Usually yes |
 | Verifying in-game attack/finisher/parkour outcomes | No credible automated substitute is currently known | Yes |
 
@@ -34,7 +35,7 @@ If any gate is not met, **do not ask the player to start the game**.
 
 ## Intended one-launch diagnostic bundle
 
-The following is a **target design**, not implemented:
+The following is a **target design**, not fully implemented. The separate [read-only ASI](DIAGNOSTICS.md) currently covers only executable fingerprint, local mod inventory, XInput button edges and explicit `NOT_OBSERVABLE` game semantics. It is **not yet sufficient** for a requested game session:
 
 1. **Preflight / startup:** automatically record project build ID, detected game version, loaded integration component status, controller capabilities, and relevant compatibility flags. Do not dump file paths, tokens or memory.
 2. **Passive discovery:** automatically observe whether expected input and state signals are accessible; log hook/feature availability and clear errors.

@@ -82,3 +82,9 @@ Before asking for an in-game session, GitHub Actions should build/test one **sel
 **Do not** request a game launch merely to identify the EXE hash unless all other preflight/diagnostic questions can be combined in the same session. A stand-alone checksum tool would violate the minimum-operator-work rule.
 
 See [single-session strategy](TEST_STRATEGY.md), [controller matrix](CONTROL_REFERENCE.md), and [testing protocol](TESTING.md).
+
+## Original read-only diagnostic module (implementation status)
+
+This repository now contains its own [Windows x64 ASI](DIAGNOSTICS.md), built by GitHub Actions and loaded by a synthetic Windows test host. It **does not** rely on third-party hook signatures, and is **not** a live gameplay hook. It provides executable hash, local loader/module inventory and XInput edge sampling, explicitly marking semantic action-availability and game dispatch as unsupported.
+
+This is useful infrastructure, but does not reduce the main blocker: identifying game-facing **action eligibility + dispatch**. The ASI must **not** be presented as fixing gameplay and should not trigger a premature game launch.
