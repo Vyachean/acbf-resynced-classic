@@ -68,3 +68,7 @@ Do not require manual input at all for tests that can run offline in CI. Do not 
 Record the missing observation, why previous logs are inadequate, which automatic probes will be added, and why the new bundle can answer multiple remaining questions. Prefer one improved bundle over repeated one-off patches.
 
 See [Testing protocol](TESTING.md) and [Development policy](WORKFLOW.md).
+
+### Host consolidation
+
+The project now builds **two alternative diagnostic delivery hosts** using the same worker: standalone ASI and Puppet Native v1 DLL. The Puppet variant avoids a second `version.dll` when the existing Puppet Native setup is actually functional. Both are tested with synthetic input in Windows Actions. Neither can yet observe action eligibility, so no separate game-start request is justified.

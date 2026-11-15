@@ -31,15 +31,15 @@ This is a **single JSON file** with no usernames, full paths, arbitrary keystrok
 
 ## Runtime and distribution
 
-- Built on **Windows x64** in GitHub Actions as `ACBFClassicDiagnostics.asi`.
-- Requires a **separately installed and compatible** x64 ASI loader; **does not include or overwrite `version.dll`**.
+- Built on **Windows x64** in GitHub Actions as alternative `ACBFClassicDiagnostics.asi` and `ACBFClassicPuppetPlugin.dll` builds. Do not install both.
+- The ASI variant requires a compatible existing ASI loader; the Puppet variant requires a working Puppet Native v1 PluginLoader. **Neither includes or overwrites `version.dll`**.
 - An ASI loader is not guaranteed to coexist with Puppet Native or other mods. Use a controlled session with a known compatible loader only after compatibility analysis.
 - For eventual tests, the operator should only copy the supplied ASI to the game folder, launch once, play the prepared sequence when requested, then send the generated JSON. Remove only this project's ASI after closing the game.
 - **No game launch is requested for this revision.** There is not yet enough semantic coverage for the intended single comprehensive diagnostic session.
 
 ## Test boundary
 
-GitHub Actions compiles the real x64 ASI, then a **synthetic Windows host executable** loads it with `LoadLibraryW` alongside a **test-only fake `xinput1_4.dll`**. The fake device generates four button down/up cycles (X, B, A and RT). CTest verifies the report includes **exactly eight transitions** (no duplicate presses during held polls), controller-connection counters, and explicit semantic-availability limitations. The fake XInput DLL is **never included** in installation archives, nor placed in the game folder. The separate PE-import parser is exercised against independently generated valid/malformed synthetic PE fixtures in CTest. The host never executes game code. CTest also exercises the pure control resolver. This proves neither that a particular ASI loader loads the module nor that semantic game hooks work.
+GitHub Actions compiles both the real x64 ASI and the Puppet Native DLL; synthetic Windows host programs load them with `LoadLibraryW` alongside a test-only fake `xinput1_4.dll`. The fake device generates four button down/up cycles (X, B, A and RT). CTest verifies the report includes **exactly eight transitions** (no duplicate presses during held polls), controller-connection counters, and explicit semantic-availability limitations. The fake XInput DLL is **never included** in installation archives, nor placed in the game folder. The separate PE-import parser is exercised against independently generated valid/malformed synthetic PE fixtures in CTest. The host never executes game code. CTest also exercises the pure control resolver. This proves neither that a particular ASI loader loads the module nor that semantic game hooks work.
 
 ## Safety
 
@@ -49,3 +49,7 @@ GitHub Actions compiles the real x64 ASI, then a **synthetic Windows host execut
 - No address scanning, signature hooking, DRM circumvention or network traffic.
 
 See [integration findings](INTEGRATION_FINDINGS.md) and [single-session strategy](TEST_STRATEGY.md).
+
+## Alternative Puppet Native host
+
+The [Puppet Native v1 DLL](PUPPET_NATIVE.md) now starts the same diagnostic worker on successful `PN_Init`, then stops and flushes the report on `PN_Shutdown`. Windows CTest exercises this integration without Resynced, using a deterministic fake controller. Puppet Native allows a **single plugin DLL**, avoiding installation of a competing proxy loader. GitHub Actions produces separate ASI and Puppet diagnostic archives; neither is a playable mod. Do **not** request a game launch for this milestone alone.

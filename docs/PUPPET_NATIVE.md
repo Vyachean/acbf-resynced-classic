@@ -1,7 +1,7 @@
 # Puppet Native PluginLoader integration: verified public ABI
 
 **Date:** 2026-11-15. **Outcome:** a real, versioned, source-published
-third-party integration seam has been identified and an **inert Windows DLL plugin**
+third-party integration seam has been identified and a **read-only Windows DLL plugin**
 is built/tested in GitHub Actions. This does **not** establish attack/takedown
 gameplay integration.
 
@@ -42,18 +42,32 @@ Reasons: public ABI + standard lifecycle + no need for a *second*
 `version.dll`. This does NOT assert the installed Puppet Native v1.5
 is functional in the user's environment; conflicting loader reports remain.
 
-We now compile an **inert plugin**, `ACBFClassicPuppetPlugin.dll`.
-It validates API version, required callbacks, game module/base consistency,
-logs startup/shutdown, and does **nothing else**. It adds **no hooks,
-thread, memory access, keystroke manipulation or game action calls**.
-CMake/CTest uses a synthetic loader host to test invalid API versions,
-missing functions, missing/mismatched module base, success, idempotent shutdown,
-and reload.
+The `ACBFClassicPuppetPlugin.dll` plugin now **reuses the same read-only
+diagnostic worker as the standalone ASI**. It verifies ABI version, module/base
+callbacks, logs initialization/shutdown and records one local report containing
+executable SHA-256, input-related DLL imports, local ASI/proxy DLL names and
+XInput X/B/A/RT edges. **No gameplay hooks, memory patches, input suppression,
+game memory reads, or action calls are made.** Its worker holds a module
+reference until exit so Puppet Native cannot unload executing code.
 
-The plugin is deliberately **not** included in the game's ASI diagnostic
-package. Installing a `.dll` in the game root will not install it as a Puppet
-plugin. The module is a compiled feasibility artifact in CI, not a playable
-distribution or requested game test.
+CMake/CTest validates both host types on a synthetic Windows process, including
+invalid ABI, missing callbacks, missing/mismatched module base, reinitialization,
+graceful shutdown, and XInput edges from a test-only DLL. CI creates **two
+separate, alternative diagnostic archives** (`acbf-asi-diagnostic-*.zip`
+and `acbf-puppet-diagnostic-*.zip`). Do not install both.
+
+For a future controlled Puppet Native session, the only project DLL required
+is `ACBFClassicPuppetPlugin.dll` in
+`%APPDATA%\\PuppetNative\\plugins\\`. The archive has a relative
+`PuppetNative/plugins/` layout for orientation; this is **not** a folder to
+copy inside the game directory. The existing Puppet Native
+`plugin_config.ini` must enable `[Plugin: ACBFClassicPuppetPlugin]` with
+`Enabled=1` (ideally via the host's UI). Never overwrite an existing config or
+replace `version.dll`.
+
+**No game launch is requested yet:** the module remains unable to observe
+takedown eligibility, parry windows or native action dispatch. Its compatibility
+with the installed Puppet Native build remains untested.
 
 ## Remaining high-impact unknowns
 

@@ -33,12 +33,15 @@ target_link_libraries(acbf_control_core_tests PRIVATE acbf_control_core)
 add_test(NAME classic_control_core COMMAND acbf_control_core_tests)
 
 if(WIN32)
-    # A standalone host-compatible Puppet Native PluginLoader DLL.
-    # Built and tested on Windows CI, intentionally NOT installed or
-    # packaged until its target game/loader combination is validated.
-    add_library(acbf_puppet_plugin SHARED src/puppet_plugin.cpp)
+    # Two separate distribution hosts use the SAME read-only observer source.
+    # The Puppet Native plugin does not require another version.dll or ASI.
+    add_library(acbf_puppet_plugin SHARED
+        src/puppet_plugin.cpp src/diagnostics_win.cpp)
     target_include_directories(acbf_puppet_plugin PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include")
     target_compile_features(acbf_puppet_plugin PRIVATE cxx_std_17)
+    target_compile_definitions(acbf_puppet_plugin PRIVATE ACBF_PUPPET_EMBEDDED WIN32_LEAN_AND_MEAN)
+    target_link_libraries(acbf_puppet_plugin PRIVATE acbf_control_core acbf_pe_imports bcrypt psapi)
+    install(TARGETS acbf_puppet_plugin RUNTIME DESTINATION PuppetNative/plugins)
     set_target_properties(acbf_puppet_plugin PROPERTIES
         OUTPUT_NAME "ACBFClassicPuppetPlugin"
     )
@@ -47,7 +50,9 @@ if(WIN32)
     target_include_directories(acbf_puppet_plugin_test PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include")
     target_compile_features(acbf_puppet_plugin_test PRIVATE cxx_std_17)
     add_test(NAME puppet_native_abi_contract
-             COMMAND acbf_puppet_plugin_test $<TARGET_FILE:acbf_puppet_plugin>)
+             COMMAND acbf_puppet_plugin_test
+                 $<TARGET_FILE:acbf_puppet_plugin>
+                 $<TARGET_FILE:acbf_mock_xinput>)
     set_tests_properties(puppet_native_abi_contract PROPERTIES TIMEOUT 20)
 
     # An ASI is a DLL with a nonstandard extension, loaded by a SEPARATELY

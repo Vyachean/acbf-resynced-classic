@@ -9,7 +9,8 @@
     "process_executable_sha256",
     "local_asi_and_proxy_inventory",
     "xinput_button_edge_observation",
-    "bounded_local_report"
+    "bounded_local_report",
+    "puppet_native_v1_host_report_generation"
   ],
   "unsupported": [
     "game_context",
@@ -18,5 +19,9 @@
     "action_dispatch",
     "input_suppression"
   ],
-  "publish_policy": "CI artifact for future coordinated diagnostic only; not a playable gameplay mod"
+  "publish_policy": "Two mutually exclusive diagnostic-only archives in Actions; no game launch requested yet.",
+  "alternatives": [
+    "standalone_asi",
+    "puppet_native_plugin"
+  ]
 }

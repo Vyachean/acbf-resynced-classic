@@ -82,33 +82,46 @@ jobs:
         if: steps.payload.outputs.kind != 'none'
         run: cmake --install build --config Release --prefix staging
 
-      - name: Create CI artifact archive
-        if: steps.payload.outputs.kind != 'none'
+      - name: Package isolated diagnostic hosts
+        if: steps.payload.outputs.kind == 'diagnostic'
         shell: pwsh
         run: |
-          if (-not (Test-Path staging)) { throw "No staging directory." }
-          $asi = @(Get-ChildItem staging -Recurse -Filter "*.asi" -File)
-          if ($asi.Count -ne 1) { throw "Expected exactly one ASI; got $($asi.Count)." }
-          # The synthetic XInput DLL is a TEST FIXTURE, never a mod dependency.
-          $nonAsi = @(Get-ChildItem staging -Recurse -File |
-            Where-Object { $_.Extension -ne ".asi" })
-          if ($nonAsi.Count -ne 0) { throw "Unexpected files in staged ASI distribution." }
-          $forbidden = @(Get-ChildItem staging -Recurse -File |
-            Where-Object { $_.Extension -in @(".exe", ".forge", ".fat", ".pak") -or $_.Name -eq "version.dll" })
-          if ($forbidden.Count -ne 0) { throw "Forbidden third-party or game payload in staging." }
-          Copy-Item README.md, LICENSE.md -Destination staging -Force
-          if ("${{ steps.payload.outputs.kind }}" -eq "diagnostic") {
-            Copy-Item docs/DIAGNOSTICS.md -Destination staging -Force
-            Copy-Item packaging/diagnostic.json -Destination staging -Force
+          $files = @(Get-ChildItem staging -Recurse -File)
+          $asi = @(Get-ChildItem staging -Recurse -Filter "ACBFClassicDiagnostics.asi" -File)
+          $pn = @(Get-ChildItem staging -Recurse -Filter "ACBFClassicPuppetPlugin.dll" -File)
+          if ($files.Count -ne 2 -or $asi.Count -ne 1 -or $pn.Count -ne 1) {
+            throw "Staging must contain exactly the original ASI and Puppet DLL."
           }
-          New-Item -ItemType Directory -Path dist -Force | Out-Null
-          Compress-Archive -Path staging/* -DestinationPath "dist/acbf-${{ steps.payload.outputs.kind }}-$env:GITHUB_SHA.zip" -Force
+          $root = (Resolve-Path staging).Path
+          $relAsi = [System.IO.Path]::GetRelativePath($root, $asi[0].FullName)
+          $relPn = [System.IO.Path]::GetRelativePath($root, $pn[0].FullName)
+          if ($relAsi -ne "ACBFClassicDiagnostics.asi" -or
+              $relPn -ne "PuppetNative\plugins\ACBFClassicPuppetPlugin.dll") {
+            throw "Unexpected paths: no archive published."
+          }
+          # Mutually exclusive operator choices. Never ship a test-only xinput.dll.
+          New-Item -ItemType Directory "dist/stage-asi" -Force | Out-Null
+          New-Item -ItemType Directory "dist/stage-pn/PuppetNative/plugins" -Force | Out-Null
+          Copy-Item $asi[0].FullName "dist/stage-asi/"
+          Copy-Item $pn[0].FullName "dist/stage-pn/PuppetNative/plugins/"
+          Copy-Item README.md, LICENSE.md, packaging/diagnostic.json -Destination "dist/stage-asi/"
+          Copy-Item README.md, LICENSE.md, packaging/diagnostic.json -Destination "dist/stage-pn/"
+          Copy-Item docs/DIAGNOSTICS.md -Destination "dist/stage-asi/"
+          Copy-Item docs/DIAGNOSTICS.md, docs/PUPPET_NATIVE.md -Destination "dist/stage-pn/"
+          Copy-Item THIRD_PARTY_NOTICES/PUPPET_NATIVE.md -Destination "dist/stage-pn/"
+          Compress-Archive -Path "dist/stage-asi/*" -DestinationPath "dist/acbf-asi-diagnostic-$env:GITHUB_SHA.zip"
+          Compress-Archive -Path "dist/stage-pn/*" -DestinationPath "dist/acbf-puppet-diagnostic-$env:GITHUB_SHA.zip"
+
+      - name: Refuse premature playable packaging
+        if: steps.payload.outputs.kind == 'playable'
+        shell: pwsh
+        run: throw "Playable packaging requires independently verified game action integration."
 
       - name: Upload Windows artifact
-        if: steps.payload.outputs.kind != 'none'
+        if: steps.payload.outputs.kind == 'diagnostic'
         uses: actions/upload-artifact@v4
         with:
-          name: acbf-${{ steps.payload.outputs.kind }}-${{ github.sha }}
+          name: acbf-diagnostics-${{ github.sha }}
           path: dist/acbf-*.zip
           if-no-files-found: error
           retention-days: 14

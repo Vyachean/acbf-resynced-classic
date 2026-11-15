@@ -91,3 +91,7 @@ Technical observations or reproducible control conflicts can be filed through [G
 This repository is **publicly visible but not open source**. No general permission is granted to copy, modify, redistribute, republish, or incorporate its original material into other projects. GitHub's Terms of Service still permit viewing and forking through GitHub's service. See [LICENSE.md](LICENSE.md) for the full notice and third-party exclusions.
 
 **Assassin's Creed**, its names, game content and related trademarks belong to their respective owners. This project's copyright notice applies only to original project material in which rights can legally subsist.
+
+### Read-only diagnostic host alternatives
+
+GitHub Actions builds two **alternative** non-playable diagnostic bundles: standalone ASI or Puppet Native v1 plugin. The Puppet Native plugin reuses the same worker, has no game hooks and needs no additional proxy DLL. Its ABI and report are checked in a synthetic Windows process; neither variant is verified inside Resynced. See [Puppet Native integration](docs/PUPPET_NATIVE.md). No game test is requested for this infrastructure alone.
