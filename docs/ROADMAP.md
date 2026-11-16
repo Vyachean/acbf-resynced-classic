@@ -6,6 +6,8 @@ The roadmap is ordered by **uncertainty reduction and observable gameplay value*
 
 **New mandatory gate — [issue #18](https://github.com/Vyachean/acbf-resynced-classic/issues/18).** The earlier per-button baseline and mock-only resolver are NOT a verified AC4 behavior model. All game-facing input interception, remapping, action suppression, native action hooks, and playable distribution are **blocked** until the full-surface audit is complete.
 
+Issue #30 proposes a narrower per-intervention gate in [the Resynced X decision record](RESYNCED_X_VERTICAL_SLICE.md). It is a proposal only; this roadmap's global gate remains in force until issue #18 is explicitly amended.
+
 - [x] Build a source-labelled [control-system audit](CONTROL_SYSTEM_AUDIT.md) that distinguishes documented functions from runtime priority.
 - [x] Inventory 25 control surfaces across AC4 and Resynced, including combat phases, stealth, traversal, water, helm/gunnery, UI and special modes.
 - [x] Inventory cross-surface collision hazards, explicit unknowns and source-backed/hypothesized transitions in a [CI-validated control ledger](../research/control_system_ledger.json).
@@ -53,6 +55,8 @@ The roadmap is ordered by **uncertainty reduction and observable gameplay value*
 **Exit:** a harmless diagnostic build and testable action resolver (not necessarily playable gameplay changes).
 
 ## Phase 2 — First playable milestone: X (BLOCKED by full control audit #18)
+
+Issue #30's current feasibility decision is `DATA_BLOCKED / COMMAND_BLOCKED / NATIVE_BLOCKED`; see [the evidence and exact next blocker](RESYNCED_X_VERTICAL_SLICE.md). No game adapter or playable X artifact is claimed.
 
 **The earlier X-001 proposed remapping-only test is DEFERRED.** The owner already observed ordinary Attack winning over Takedown when sharing one button. Do not repeat that experiment. More important, **no isolated X fix is safe** until the entire control surface and multi-stage action interactions have been inventoried (issue #18).
 
@@ -109,3 +113,4 @@ The roadmap is ordered by **uncertainty reduction and observable gameplay value*
 ## Confirmed same-button collision and research priority
 
 The maintainer previously assigned **Attack and Takedown to the same physical button**; the game performed only ordinary Attack. This already-observed collision should not be retested without new, concrete evidence. The visibility of a Takedown prompt and separate Y baseline during that experiment are **unknown**, so do not generalize to all contexts. [X-001](X_INPUT_EXPERIMENT.md) is **deferred**. The next real capability gap is a verified *pre-action eligibility* signal and independent game action dispatch. No native bridge implementation currently satisfies these requirements.
+
