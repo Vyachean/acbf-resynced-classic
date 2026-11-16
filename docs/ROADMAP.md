@@ -56,7 +56,7 @@ Issue #30 proposes a narrower per-intervention gate in [the Resynced X decision 
 
 ## Phase 2 — First playable milestone: X (BLOCKED by full control audit #18)
 
-Issue #30's current feasibility decision is `DATA_BLOCKED / COMMAND_BLOCKED / NATIVE_BLOCKED`; see [the evidence and exact next blocker](RESYNCED_X_VERTICAL_SLICE.md). No game adapter or playable X artifact is claimed.
+Issue #30 decoded selected combat states from the available local Resynced data, but the install's exact build and provenance are unverified and no safe numeric parry patch point or pre-action X command seam has been established. See [the selected-resource findings and scoped gate proposal](RESYNCED_X_VERTICAL_SLICE.md). No game adapter or playable X artifact is claimed.
 
 **The earlier X-001 proposed remapping-only test is DEFERRED.** The owner already observed ordinary Attack winning over Takedown when sharing one button. Do not repeat that experiment. More important, **no isolated X fix is safe** until the entire control surface and multi-stage action interactions have been inventoried (issue #18).
 
