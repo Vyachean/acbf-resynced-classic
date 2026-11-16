@@ -1,47 +1,38 @@
-# Community options for a more classic Black Flag feel
+# Why current community mods do not restore classic Black Flag gameplay
 
 **Reviewed:** 2026-11-16  
 **Status:** public-source survey only. No listed mod was installed or tested by this project.
 
-This note asks which existing community work can move *Black Flag Resynced* toward the original *Assassin's Creed IV: Black Flag*, and which apparent shortcuts change the gameplay in a different direction. Mod-page descriptions are author claims, not compatibility or quality verification.
+The requested outcome is to make *Black Flag Resynced* behave as much as possible like the original *Assassin's Creed IV: Black Flag*. The reviewed community mods are not a solution to that goal: each changes one narrow feature, and none documents the integrated original control and gameplay rules.
 
-## Best-aligned candidate: walk by default
+## Survey
 
-The [Classic Movement - Walk By Default Smooth Sprint](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/408) page describes a default walking pace, sprint by holding RT or L3, a configurable walk scale, and an in-game toggle. Its published v2.1 notes list both 32-bit storefront builds and 64-bit DX12 Resynced support.
-
-This is the closest ready-made match found for the original's deliberate low-profile walking and explicit high-profile sprint intent. The page does not establish that every original high-profile action, social-stealth rule, or parkour transition is restored. Treat it as a locomotion experiment, not an AC4 control conversion. Its author prohibits conversion, re-upload, or reuse of its files without permission.
-
-**Candidate for a later, clean-build trial:** this mod alone, with its stated supported binary and a reversible backup. Before trial, identify the exact game build and inspect loader/proxy coexistence. Do not stack another movement or input hook on top.
-
-## Other movement option: controller-specific
-
-[Walk By Default Instead Of Jog - For PlayStation Controllers](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/514) advertises walk-by-default movement and DualSense features, but its instructions require several in-game remaps, including crouch to L3, sprint to R2 (hold), and lock target unassigned. It also bundles a controller input DLL and haptics.
-
-This is a PlayStation-specific alternative, not an additional layer to combine with mod 408. Its mandatory remaps can collide with other actions. Do not use it for an Xbox-oriented profile without a separate controller and conflict audit.
-
-## Combat and stealth: similar labels do not mean classic behavior
-
-| Mod | What its page says | Fit to the original AC4 goal |
+| Mod | What its page says it changes | Why that is not an AC4 restoration |
 | --- | --- | --- |
-| [Easy Parry](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/617) | Extends parry opportunities and permits a double counter-kill without the original simultaneous-warning condition. | Convenience/easy-mode option. The changed double-kill condition differs from AC4's documented input and enemy-warning behavior; do not call it a restoration. |
-| [Lethal Combat and Realistic Difficulty Overhaul](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/451) | Advertises one-hit kills and high lethality. Its page's posts include reports that defensive actions also kill because the game registers them as damage. | Not a close AC4 combat match and has reported side effects. Do not bundle or recommend as a classic combat preset. |
-| [Unrestricted Combat Finishers](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/635) | Its author describes a Resynced 1.0.8 Forge-data change that allows certain finishing animations after lethal normal attacks. | Animation trigger change, not proof of AC4's pre-action finisher selection or of Attack/Takedown input arbitration. The author restricts reuse. |
+| [Classic Movement - Walk By Default Smooth Sprint](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/408) | Default walking pace; sprint via RT or L3; configurable movement scale. | Walking pace alone does not restore AC4's low/high-profile mode, contextual actions, social-stealth behavior, or full parkour rules. |
+| [Walk By Default for PlayStation Controllers](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/514) | Walk-by-default movement plus DualSense/controller changes and required custom bindings. | A controller-specific movement/input layer does not reproduce AC4's integrated control model and adds binding conflicts to audit. |
+| [Easy Parry](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/617) | Extends parry opportunities and changes the condition for double counter-kills. | Changing a timing window and double-kill trigger does not restore AC4's hold-B guard, tap-B counter entry, and follow-up selection. |
+| [Lethal Combat and Realistic Difficulty Overhaul](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/451) | Advertises one-hit lethality. Its page includes reports that defensive actions also kill because they register as damage. | One-hit damage scaling is a different combat model and has reported side effects; it is not AC4's counter-led combat. |
+| [Unrestricted Combat Finishers](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/635) | Author describes a Resynced 1.0.8 Forge-data change affecting some finishing animations after normal lethal attacks. | Changing animation conditions does not establish original pre-action finisher selection or fix Attack/Takedown input arbitration. The author restricts reuse. |
 
-Ubisoft's [Title Update 1.0.8 notes](https://www.ubisoft.com/en-us/game/assassins-creed/news/5Z1RxwznM6CcrkSEVoibmh/ac-black-flag-resynced-title-update-108-patch-notes) add Takedown animation variants inspired by the original and Nightmare difficulty, including a shorter parry window and removed attack glint. These options alter the available experience but do not restore AC4's counter-selection flow. Ubisoft's [control customization guide](https://www.ubisoft.com/en-au/help/assassins-creed-black-flag-resynced/gameplay/article/customising-controls-in-assassins-creed-black-flag-resynced/000116769?origin=middle) confirms native control customization; it does not specify action priority for conflicting bindings.
+These pages are useful only as examples of isolated techniques and as evidence that the community has explored some runtime and data-driven changes. Their descriptions do not provide a complete design or implementation that can be adopted for this project. Do not install, bundle, or recommend them as a classic gameplay preset. Do not copy their code, binaries, or data.
 
-## Project decision
+Ubisoft's [Title Update 1.0.8 notes](https://www.ubisoft.com/en-us/game/assassins-creed/news/5Z1RxwznM6CcrkSEVoibmh/ac-black-flag-resynced-title-update-108-patch-notes) say the game adds Takedown animation variants inspired by the original and a Nightmare difficulty option. Those features add content and difficulty; they do not document restoration of AC4's counter-selection control flow. Ubisoft's [control customization guide](https://www.ubisoft.com/en-au/help/assassins-creed-black-flag-resynced/gameplay/article/customising-controls-in-assassins-creed-black-flag-resynced/000116769?origin=middle) confirms native control customization but does not specify priority when multiple actions share an input.
 
-1. Keep the repository's whole-control-system audit gate in force. No new input hook, input suppression, action dispatch, or playable claim follows from this mod survey.
-2. If a clean, authenticated target build becomes available, evaluate the walk-by-default mod as an isolated, reversible locomotion candidate before building a custom movement hook.
-3. Keep combat changes separate from controller mapping. The available community combat mods change difficulty or animation conditions; none of the reviewed descriptions demonstrates original AC4 counter → follow-up behavior or resolves the already-observed shared Attack/Takedown collision.
-4. Do not combine ASI, proxy-DLL, controller, or Forge-data mods until their exact game versions, load order, and overlapping hooks are known. No compatibility claim is made here.
+## Project direction
 
-## Evidence limits and next evidence
+A closer result requires a project-owned, integrated compatibility layer for the specific Resynced build. It must reproduce verified AC4 behavior across its control surfaces and preserve Resynced-only actions when the mode is unknown. It cannot be designed safely as a few global button remaps.
 
-- Nexus pages describe author-stated features and requirements. No source code, binary, or save was downloaded or inspected for this survey.
-- The game build currently available in the workstation directory was not authenticated as an official clean release; no game was launched or changed.
-- The next safe validation requires an authenticated store build, exact title-update identification, a backup of relevant config/save data, and a controlled test of one candidate at a time. This is separate from validating this project's own code.
-- Original AC4 control and counter semantics remain documented in [the control reference](CONTROL_REFERENCE.md) and [the whole-system audit](CONTROL_SYSTEM_AUDIT.md). The audit is still incomplete.
+The repository's mandatory [whole-control-system audit](CONTROL_SYSTEM_AUDIT.md) remains incomplete and blocks new game-facing input hooks, suppression, action dispatch, and playable claims. Continue source-based research and offline design only until each planned intervention is justified. Do not treat the current C++ resolver as a verified game model.
+
+The original AC4 counter sequence is a key design requirement: guard by holding B; tap B during an incoming melee warning to enter a counter; then use a separate face-button choice for kill, throw, disarm/stun, or selected tool. Other documented exceptions and transitions are catalogued in the [control reference](CONTROL_REFERENCE.md) and [machine-readable audit ledger](../research/control_system_ledger.json). These guides establish documented behavior, not exact engine timing or Resynced action dispatch.
+
+## Evidence limits
+
+- Nexus pages are author descriptions, not independent compatibility or gameplay tests.
+- No source code, binary, save, or game archive from the listed mods was downloaded or inspected.
+- The local Resynced directory has not been authenticated as a clean official store build. No game was launched or changed.
+- No conclusion is made here about whether a custom implementation is technically feasible or which internal hooks it would require.
 
 ## Source pages
 
