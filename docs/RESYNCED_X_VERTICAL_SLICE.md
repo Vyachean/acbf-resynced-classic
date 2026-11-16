@@ -1,32 +1,52 @@
-# Resynced X vertical slice: decision and scoped gate proposal
+# Resynced X vertical slice: local data findings and scoped gate proposal
 
-**Scope:** issue #30; target reported as Resynced TU 1.0.6. This is a bounded feasibility decision, not a claim of a playable control fix.
+**Scope:** issue #30 and the target reported as Resynced TU 1.0.6. This record distinguishes the locally inspected installation from a clean, verified 1.0.6 release. It does not claim a playable fix.
 
-## Decision
+## Current result
 
-| Route | Finding | Decision for X on TU 1.0.6 |
+| Route | Evidence from the available installation | Status |
 | --- | --- | --- |
-| Data rules | Public mods demonstrate editable combat data, but their documented effects do not establish pre-attack X selection or 1.0.6 compatibility. No authenticated 1.0.6 combat entry has been independently decoded and patched. | `DATA_BLOCKED` |
-| Logical command routing | No verified game-facing binding/command seam distinguishes Attack from Takedown before X is consumed. Existing XInput/HID imports and the Puppet Native v1 plugin contract do not expose semantic combat commands or eligibility. | `COMMAND_BLOCKED` |
-| Native action call | No exact-build function, player/target object, eligibility predicate, or action acknowledgement has been verified. | `NATIVE_BLOCKED` |
+| Combat data | AnvilToolkit 1.3.7 decoded the local version-50 Forge entry containing `Edward_Default` into 338 objects using its embedded Resynced schema. Real Attack, Attack Finisher, Parry Success, Final Parry Success, Basic Takedown, and assassination states are present. | `DATA_PARTIAL` |
+| Contextual X | The decoded regular-attack finisher has post-attack transitions to Microkill/Softkill initiator states. These are animation/action-state transitions after an attack, not evidence that X can select a pre-action Takedown command. The candidate input-definition and combat-repository IDs from the available 1.07/1.08 FGFL maps do not occur in any of the 186 local Forge indexes inspected. | `COMMAND_BLOCKED_ON_AVAILABLE_EVIDENCE` |
+| Native action call | Static analysis of the local executable finds low-level SDL controller event handling, but no verified player-action dispatcher, eligibility predicate, or acknowledgement. | `NATIVE_BLOCKED` |
 
-**No playable X prototype is safe to produce yet.** The offline resolver and transactional bridge remain useful policy/test code, but are not connected to Resynced. Do not turn the current resolver into an input hook: it has no trusted source for zone or action eligibility.
+No game-facing control change is implemented. The local executable has no usable version strings in its file-version fields, and the installation contains additional loader/ASI components and modified-looking patch resources. The package title and timestamps do not establish its provenance or exact TU. Treat all decoded values as evidence about this particular local file set only; do not transfer them to a clean 1.0.6 install.
 
-## Evidence and limits
+## Reproducible local data experiment
 
-- The existing project research records that a shared Attack/Takedown binding produced Attack only. The HUD prompt state for that attempt was not captured, so it proves a binding conflict in that test, not that Takedown eligibility was present.
-- Static inspection records XInput, HID and raw-input imports in the local Resynced sample. Imports identify possible input libraries, not the logical command dispatcher or its priority rules.
-- Puppet Native's published v1 API and this repository's synthetic plugin test establish a plugin lifecycle/configuration/logging seam. They do not establish combat state or action dispatch.
-- The repository's local-resource audit found a readable Resynced v50 archive index, but did not map a named combat entry to authenticated TU 1.0.6 data or decode its action conditions. A local name-map file alone does not prove its build provenance or that a selected entry is `Edward_Default.data`.
-- No proprietary game data, executables, third-party mod files, or local installation fingerprints are included here.
+The investigation was read-only. It selected the `Edward_Default` payload from `DataPC_boot_patch_01.forge` by its Forge index entry, parsed that payload with `AnvilToolkit.FileTypes.AnvilNext.Containers.DataFile`, and decoded selected object payloads with the toolkit's embedded `ACBlackFlagResynced` schema. No full archive extraction, game launch, or game-file write was performed.
+
+Observed facts:
+
+- Forge header version: `50`; the selected Forge index contained 5,596 entries.
+- The `Edward_Default` payload parsed to 338 objects. Its `Edward - Regular Attack 01` and `Edward - Regular Attack Finisher` resources decode as `FightLogicActionStateAttack`.
+- The finisher's `ConditionalTransitionGroups` contain targets named `Edward - Microkill - Initiator` and `Edward - Softkill - Initiator`; its base attack data has `IgnoreBlock=False` and `IgnoreParry=False`.
+- `Edward - Basic Takedown Initiator` and its denied-chain variant are separate `FightLogicActionStatePaired` objects in the same payload. Their existence alone does not establish which input selects them or when they are eligible.
+- State `StateFightWindows` entries use `FightLogicWindowDefinition_MarkupActive` values and referenced window categories. These fields are animation/gameplay markups, not exposed numeric parry-duration values. Editing a guessed markup or transition would therefore be an unsupported patch.
+- The 1.07/1.08 FGFL maps available to the toolkit contain names for combat-repository and input-definition candidates, but those candidate IDs did not match any top-level ID in the 186 local Forge indexes checked. The maps are not authenticated as belonging to this installation; their names cannot bridge that mismatch.
+
+These results show that Resynced combat state data is genuinely data-driven and locally decodable. They do **not** yet show a safe, independently tunable parry/finisher parameter, nor identify the complete data dependency containing X-to-command selection. The tuple returned by Toolkit's unpack routine reports `False` while producing the parsed 338-object data set; treat object parsing and archive/build identity as separate checks.
+
+## What blocks the first safe patch
+
+Two concrete evidence gaps remain for a patch against supported TU 1.0.6:
+
+1. **Version/provenance:** the accessible installation is not an authenticated clean TU 1.0.6 set. Its executable has no file/product version metadata, while its resource set and loader directory contain third-party modifications. A patch built against it could not honestly be advertised as 1.0.6-compatible.
+2. **Patch semantics:** the decoded attack graph confirms post-hit finisher animation transitions, but the inspected state objects expose no direct numeric parry window. The version-mismatched/unverified FGFL mapping also fails to resolve the input-definition and repository objects by ID in the local archive indexes. No candidate field has yet been proven to mean “make X choose Takedown before Attack.”
+
+Do not change `IgnoreParry`, animation markups, or transition conditions based on their names alone. A meaningful independent parry patch needs the exact controlling resource, field interpretation, dependency resolution, and a reversible validation against the same supported build. A contextual-X patch additionally needs a pre-action eligibility/command-selection seam.
+
+## Command and native-route evidence
+
+Static Ghidra analysis of the locally available executable found an SDL `PeepEvents` pump that dispatches controller axis/button/device events into generic controller handlers. This establishes a real low-level controller-event path in this binary, not the path from a player's X press to Attack/Takedown. The imported `GameInputCreate`, raw-input and SDL APIs similarly establish library use only; no supported hook is authorized from this evidence.
+
+The prior shared-button observation in project research remains bounded: Attack won in that reported attempt, while whether a Takedown prompt was visible is unknown. It does not prove that contextual Takedown eligibility existed at the moment of input.
 
 ## Data-mod references (technique only)
 
-- [Easy Parry](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/617?tab=description) describes an extended parry window and more permissive double-kill conditions. Its public page does not establish TU 1.0.6 compatibility or expose a redistributable patch recipe. The author restricts modification and redistribution.
-- [Unrestricted Combat Finishers](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/635?tab=description) says its MicroKill/SoftKill animations can trigger when a normal attack kills an enemy, and explicitly supports TU 1.0.8. That is a post-lethal-animation rule, not evidence of pre-attack X choosing Takedown; its author restricts modification and redistribution.
-- [AnvilToolkit 1.3.7](https://www.nexusmods.com/site/mods/455?tab=description) lists Resynced Forge/Data support and Resynced filename decryption. Tool support alone does not validate a 1.0.6 resource set or any combat schema. Any future recipe must operate on the user's own verified files, with backup and restore, and must be independently authored.
-
-**Data path ranking:** the best next low-risk probe if verified 1.0.6 resources become available. It could plausibly adjust guard/parry windows or finisher-animation conditions, but is not yet a solution to contextual X input. Do not borrow either Nexus mod's assets, code, data, or patch.
+- [Easy Parry](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/617?tab=description) describes an extended parry window and more permissive double-kill conditions. Its public page does not establish TU 1.0.6 compatibility or provide a redistributable patch recipe. Respect its author's restrictions.
+- [Unrestricted Combat Finishers](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/635?tab=description) says Microkill/Softkill animations may trigger when a normal attack kills an enemy and explicitly supports TU 1.0.8. This aligns with the locally observed post-hit finisher transitions, but is not evidence of pre-attack X command selection. Do not copy its code, assets, or modified resources.
+- [AnvilToolkit 1.3.7](https://www.nexusmods.com/site/mods/455?tab=description) lists Resynced Forge/Data support. This inspection independently exercised that parser on selected local data; toolkit support does not establish the source install's version.
 
 ## Proposed replacement for issue #18's global implementation gate
 
@@ -41,19 +61,21 @@ Keep the broad control rewrite gated. Permit a narrowly scoped feature only when
 7. The feature is off by default, has a project-owned disable/rollback path, changes no game executable, and has unit/CI checks plus a real-game acceptance case before release.
 8. The audit covers every other action sharing the intercepted event or suppression boundary. Unrelated surfaces need not be exhaustively reverse-engineered while they remain native pass-through.
 
-This amendment does **not** authorize a hook now. It changes the evidence burden from “complete every control surface before any feature” to “prove the complete safety envelope for each feature and its collision blast radius.” A feature that cannot prove its own context, eligibility, ownership, or rollback remains blocked.
+This is a proposal for an explicit amendment to issue #18, not permission to bypass its current gate or install an unverified hook. It changes the evidence burden from “complete every control surface before any feature” to “prove the safety envelope for each feature and its collision blast radius.”
 
-## Exact next blocker and action
+## Next technical steps
 
-The shortest independent next step is access to a clean, authorized Resynced TU 1.0.6 resource set with a build manifest (or equivalent trusted version evidence) and its matching Forge/Data files. With that, inspect only the named player combat entry and determine whether it contains an editable pre-action/finisher condition. If it only controls animation selection, record that boundary and stop the data route for X.
-
-If the data route does not expose pre-X eligibility, the remaining decisive evidence is one combined in-game session that records a visible Takedown prompt and its displayed control, then observes the native logical command/action selected from one press. Do not repeat the already-recorded shared-button test without capturing that eligibility state. Until a semantic command/action boundary is observed, no gameplay hook or installable artifact should be published.
+1. Keep the present combat-data path on the local installation read-only. Resolve a trusted version/provenance marker and a matching FGFL/repository set before patch work; do not assume its contents are clean 1.0.6.
+2. Find a schema- and data-backed parry/attack rule with a reversible patch point. If no numeric or condition field can be interpreted from the actual resource graph, close the data route with that specific finding rather than changing animation values speculatively.
+3. Continue from the SDL event pump through the input mapping/action layer. Accept a candidate only when the call/data flow ties a physical X event to a distinct logical command and pre-action eligibility.
+4. If runtime evidence becomes necessary, instrument only the verified controller-event handler, logical mapping dispatch, and action eligibility/selection boundary. Record a compatibility fingerprint and do not activate a mutating hook until issue #18's per-intervention proposal is explicitly accepted.
 
 ## Status boundary
 
-- Implemented: this decision record and a concrete scoped-gate proposal.
-- Existing source: offline resolver, edge tracker, and mock-only X bridge; no game adapter or playable runtime hook.
-- Tested here: static source/report review only. No synthetic test can prove a Resynced action seam.
-- Real game: not tested in this increment; no game behavior is claimed.
+- Implemented: no gameplay mechanic patch. Existing offline resolver and mock-only action bridge remain disconnected from Resynced.
+- Verified statically/read-only: local Forge index parsing, selected `Edward_Default` object decoding, state/resource types and transitions described above, executable import inventory, and an SDL controller-event pump.
+- Synthetic: existing resolver/action-bridge tests only; they do not establish real game behavior.
+- Real game: not tested in this increment. No gameplay behavior is claimed.
+- Exact supported build: unresolved. The local installation cannot currently qualify as clean or verified TU 1.0.6.
 - Separate original-AC4 diagnostic #28 / PR #29: untouched.
 
