@@ -2,6 +2,10 @@
 
 **Scope:** issue #30 and the target reported as Resynced TU 1.0.6. This record distinguishes the locally inspected installation from a clean, verified 1.0.6 release. It does not claim a playable fix.
 
+## Runtime access attempt — 2026-11-16
+
+With the user's authorization, the local x64 game executable was launched for a read-only test session. It stopped at an **Online Service Error** (`ANIMUS-3-00029`) before reaching the title/gameplay context; the process then exited. No authentication prompt was automated, no protection was bypassed, no ASI was installed, and no game file or save was changed. Consequently this attempt observed no Attack/Takedown transitions and did not validate a gameplay hook. The local executable can be fingerprinted as a byte-for-byte target, but its official title update and provenance remain unknown. The next dynamic run requires a launch that reaches single-player gameplay on a build whose fingerprint can be recorded.
+
 ## Current result
 
 | Route | Evidence from the available installation | Status |
