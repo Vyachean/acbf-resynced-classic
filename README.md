@@ -63,7 +63,8 @@ Start from **[the dual-game modding knowledge base](docs/knowledge/README.md)** 
 
 ## Project documents
 
-- [Current project status and PR queue](docs/PROJECT_STATUS.md) — canonical as-of snapshot; source of truth for live work remains GitHub(docs/SCOPE.md) — target experience and boundaries
+- [Current project status and PR queue](docs/PROJECT_STATUS.md) — canonical as-of snapshot; live status remains in GitHub Issues and PRs
+- [Scope and non-goals](docs/SCOPE.md) — target experience and boundaries
 - [Roadmap](docs/ROADMAP.md) — research, implementation, validation, and release gates
 - [Proposed architecture](docs/ARCHITECTURE.md) — preliminary design, not yet implemented
 - [Test protocol](docs/TESTING.md) — focused player testing and diagnostic reports
