@@ -26,8 +26,12 @@ Never attach proprietary game files, executables, memory dumps or unredacted fil
 | X-03 | Stealth/context assassination eligible | X selects the contextual action when that is the intended AC4 behavior. |
 | X-04 | No valid target / unavailable attack | Safe no-op or documented fallback; no unintended action. |
 | X-05 | Rapid transitions among X-01/02/03 | No double activation or stuck key state. |
+| X-06 | Combat Takedown prompt and nearby world-interaction prompt | X chooses the combat Takedown; it never opens the chest or other world interaction. |
 | B-01 | Counter/parry situation | B resolves to verified classic-style defense behavior. |
 | B-02 | Dodge/evasion situation | B resolves safely and consistently; no unverified automatic choice. |
+| B-03 | Noncombat world interaction prompt (e.g. chest) | B invokes the prompted Y interaction; in combat, B remains parry/evasion. |
+| Y-01 | Combat Takedown prompt | Y still performs the Takedown after world interactions are reassigned; unrelated Y actions remain intact. |
+| Y-02 | Noncombat world interaction prompt | Where the game supports separate action bindings, Y no longer opens the world object and B does. |
 | A-01 | Guard-break eligible | A invokes the correct action without an extra modifier, where supported. |
 | RT-01 | High-profile movement | Running and traversal intent matches verified reference behavior. |
 | M-01 | Mod enabled/disabled and alternate loader setup | Compatibility/fallback is explicit; no silent input loss. |
@@ -36,7 +40,7 @@ These are **proposed test cases**, not evidence of current working behavior. Add
 
 ## Immediate single-session native control experiment
 
-The next useful on-game check is [X-001: native same-X comparison](X_INPUT_EXPERIMENT.md). It is a **controlled remapping-only trial**, intentionally not an ASI/loader test. No diagnostic package is necessary to tell whether the displayed Takedown prompt produced an actual finishing move. The user only needs to report the outcome; synthetic tests cannot observe it.
+The owner reports that native Resynced Takedown uses Y and displays a Y prompt when available. The previous shared-button trial made Attack win, but did not record whether the prompt remained visible after remapping. [X-001](X_INPUT_EXPERIMENT.md) is deferred; do not repeat the same profile. A future materially different remapping-only trial would need to check whether the Takedown prompt is visible under that mapping and whether X performs the finisher. No diagnostic package can establish the in-game outcome; only observed gameplay can.
 
 ## Suggested efficient workflow
 

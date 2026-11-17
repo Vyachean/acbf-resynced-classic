@@ -112,7 +112,9 @@ Earlier research understated the public availability of Puppet Native's plugin i
 
 ## 2026-11-16: selected local Resynced combat-resource decode
 
-The earlier `RESYNCED_X_VERTICAL_SLICE.md` statement that no named combat entry had been decoded was superseded by a read-only experiment on the locally available installation. This installation is not authenticated as clean or as TU 1.0.6: the executable's file/product version fields are empty and the directory contains third-party loader/ASI components. No local executable, logs, resource bytes, installation hash, or third-party modified file is included in this repository.
+The public distribution route has advanced since the earlier feasibility review: a Resynced Nexus release dated November 13 documents **Ultimate ASI Loader** in the game directory. Treat x64 ASI injection as a demonstrated community route, not a project compatibility result. No loader conflict, exact 1.0.8 executable, or gameplay hook for this project has been validated. [Recent loader example](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/648?tab=description).
+
+The earlier `RESYNCED_X_VERTICAL_SLICE.md` statement that no named combat entry had been decoded was superseded by a read-only experiment on the user's licensed offline installation. The user identifies it as TU 1.0.6. Its executable's file/product version fields are empty, so the compatibility profile is pinned to the observed executable SHA-256 recorded in `RESYNCED_X_VERTICAL_SLICE.md`; directory-level third-party loader/ASI components mean compatibility cannot yet be generalized to a clean distribution. No local executable, logs, resource bytes, or third-party modified file is included in this repository.
 
 - AnvilToolkit 1.3.7 parsed a local version-50 Forge index and decoded the selected `Edward_Default` payload into 338 objects with its embedded Resynced schema.
 - Decoded states include Regular Attack, Regular Attack Finisher, Parry Success, Final Parry Success, Basic Takedown Initiator, and numerous contextual assassination states. Attack and finisher objects are `FightLogicActionStateAttack`; Takedown initiator objects are `FightLogicActionStatePaired`.
@@ -121,5 +123,12 @@ The earlier `RESYNCED_X_VERTICAL_SLICE.md` statement that no named combat entry 
 - Candidate combat-repository and input-definition IDs named by the available 1.07/1.08 FGFL maps were absent from the 186 local Forge indexes scanned. The map provenance is unknown, and therefore cannot be used to resolve this installation's missing command-input mapping.
 - Ghidra found an SDL event pump that consumes controller axis/button/device events. The pump proves low-level controller handling only; no player logical-command boundary or pre-action eligibility was established.
 
-Status: **DATA_PARTIAL**, with the exact version/provenance and an independently interpretable patch point still unresolved; **COMMAND_BLOCKED_ON_AVAILABLE_EVIDENCE**; **NATIVE_BLOCKED**. The local file-set findings must not be generalized to a clean supported build. No mod/game file was changed and no game was launched.
+Status: **DATA_PARTIAL**, with the local executable fingerprinted and TU 1.0.6 user-reported; an independently interpretable patch point remains unresolved. **COMMAND_BLOCKED_ON_AVAILABLE_EVIDENCE**; **NATIVE_BLOCKED**. The local file-set findings must not be generalized to another installation without comparison. No mod/game file was changed and no game was launched in this research increment.
 
+## 2026-11-16: local 1.0.6 movement-state profile cross-check
+
+Universal Modder Private's direct-folder scan identified the target as x64 native, found an ASI loader, and detected no anti-cheat in the scanned install. It could not enumerate unrelated `D:\XboxGames`, so the scan was invoked with that store-enumeration branch disabled for this one direct-path read; no plugin code was changed.
+
+The local executable SHA-256 matches an additional 1.0.6-compatible profile listed in the public [ACBFHapticsBridge repository](https://github.com/DEadDRop470/Assassins-Creed-Black-Flag-Resynced-Haptics-Bridge). Its source also calls this hash `voices38`, so keep the user's local fingerprint as the compatibility key and do not treat that label as an official build identifier. A read-only Ghidra cross-check confirmed all 21 listed TU 1.0.6 traversal vtable slots point at the corresponding functions in this executable. The verified targets expose movement/traversal transitions only; the reference provides no combat command dispatcher or pre-action Attack/Takedown eligibility. No code from that project was copied.
+
+This cross-check makes an independently authored **read-only movement-state observer** a concrete next slice. It does not justify a gameplay input hook or action override; those remain disabled under the control-system audit.

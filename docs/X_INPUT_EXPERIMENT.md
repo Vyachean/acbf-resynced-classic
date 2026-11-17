@@ -1,6 +1,6 @@
 # X-001: native remapping feasibility, one game session
 
-**Status: DEFERRED — the maintainer already observed Attack winning over Takedown with a shared physical button. Do not ask to repeat the same binding.**
+**Status: DEFERRED — the maintainer already observed Attack winning over Takedown with a shared physical button. On 2026-11-17, the owner clarified that native Resynced Takedown uses Y and displays a Y prompt when available. Do not repeat the same binding; the earlier shared-button result still lacks a record of which prompt was visible after remapping.**
 **Target:** the owner's **existing** Resynced 1.0.6 installation and Xbox-style controller. Do **not** update to 1.0.8 or install a new game build for this test.
 
 **Historical question (now deferred):** does Resynced itself prioritize a valid **Takedown** over **Attack** when both are assigned to the **same X press**, if conflicting crouch/sprint controls are configured as in a publicly demonstrated profile?
@@ -26,20 +26,18 @@ The video description confirms the **button names** but does not explicitly esta
 
 ## Controlled procedure
 
-### A. Baseline: demonstrate that the game's own Takedown works
+### A. Baseline: native Y Takedown (owner-reported)
 
-Within Controller → Customize Controls → Combat, temporarily use:
+The owner reports that a ready Takedown displays a Y-button prompt and that Resynced performs it through Y. Treat this as the baseline for the current profile; do not spend another session re-proving native Y unless a later observation contradicts it. This establishes a visible, pre-action cue for the player. It does not establish a programmatically readable eligibility signal or prove that the cue remained visible during the earlier shared-X test.
+
+Owner-reported native mapping:
 
 | Action | Button | Input method |
 | --- | --- | --- |
 | Attack | RB | Press |
 | Takedown | Y | Press |
 
-1. Verify RB performs an ordinary attack on an enemy without a Takedown prompt.
-2. Break a suitable enemy's defense **or** make a Perfect Parry until a Takedown prompt is **visibly present**.
-3. Press **Y once** while the prompt is visible. Record `SUCCESS`, `IGNORED/SWING`, `WRONG_ACTION`, or `NO_PROMPT`.
-
-**Stop condition:** If the baseline Y action does not reliably trigger when a prompt is visible, the X priority test is **not diagnostic**. Record this as `BASELINE_BLOCKED`; do not blame an X/X conflict or demand further setup. Ubisoft has recorded a separate multiple-press issue for assassination; that record alone does not explain this Takedown result.
+This baseline is already reported by the owner; do not repeat it unless a later observation contradicts it.
 
 ### B. Shared X: match the published control layout, not merely two key assignments
 
@@ -74,7 +72,7 @@ Copy the simplest applicable example and replace the values:
 
 Other valid labels: `baseline_Y=BASELINE_BLOCKED`, `shared_X_takedown=TAKEDOWN/PARTIAL/NO_ACTION/PROMPT_DISAPPEARED/NOT_TESTED`, `profile_same_as_prior=YES`.
 
-A short ordinary-language result is acceptable. **No logs or screenshots are required**; attach a short video only if convenient. The observer cannot infer Takedown success from physical button edges, so user-observed behavior remains essential.
+A short ordinary-language result is acceptable. **No logs or screenshots are required**; attach a short video only if convenient. The observer cannot infer Takedown success from physical button edges, so user-observed behavior remains essential. The owner-reported default Y prompt is not evidence that it was visible after the earlier shared-X remapping.
 
 ## Decision after one experiment
 
