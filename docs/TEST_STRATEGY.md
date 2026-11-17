@@ -43,6 +43,17 @@ A **mod-based diagnostic request** must have all of the following:
 
 If any gate is not met, **do not ask the player to start the game for that mod diagnostic**. This does not prohibit the separate, no-mod remapping experiment X-001.
 
+## Controlled combat validation (user-authorized, TU 1.0.6)
+
+The diagnostic-bundle gate above applies to requesting a new **instrumented project mod**. It must not block a narrowly scoped validation of an already-built, reversible data candidate or a user-approved, isolated test aid. The first combat pass must minimize enemy pressure and be repeatable:
+
+1. Use an offline checkpoint or encounter already present in the game. Prefer the game's Forgiving combat difficulty if available; Ubisoft describes it as reducing attack frequency and the number of enemies that attack Edward when surrounded. This is a pressure reduction, not invulnerability.
+2. Use one ordinary soldier and provoke a clearly visible **non-red** melee attack. Red-glow attacks are explicitly un-parryable and require dodge, so they are invalid parry samples. Keep other enemies out of range where the scene permits.
+3. Compare the same input and attack under baseline and candidate data, recording attack cue, Q press timing, parry animation/result, health change and death/desynchronization. Reset to the same checkpoint between trials. Stop if additional enemies engage or health becomes critical; label incomplete trials `NOT_RUN`.
+4. If the selected encounter cannot provide a repeatable single-enemy sample, do not improvise by editing save/world files or guessing runtime addresses. A third-party trainer may be considered only after its exact file, supported TU, integrity and cleanup are verified; do not bypass a login/download gate. Two candidate Nexus listings were found for 1.0.6: [Cheats Trainer #541](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/541) has an explicitly listed 1.0.6 file and advertises F4 God Mode; [+64 Trainer #616](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/616) has a file labeled 1.0.6–1.0.7 and advertises invulnerability. Neither file has been downloaded, inspected, or tested here, and the Nexus download was guest-gated. Do not treat their claims as verified support or use alternate mirrors. Treat any claimed invulnerability as unverified until its effect and rollback are observed.
+
+This procedure is intentionally smaller than the X-input feature matrix: it answers only whether the reversible parry-window candidate changes a valid parry outcome. It does not validate X/Takedown routing or the full AC4 combat model. Forgiving difficulty alone does not make an uncontrolled checkpoint a safe test arena.
+
 ## Intended one-launch diagnostic bundle
 
 The following is a **target design**, not fully implemented. The separate [read-only ASI](DIAGNOSTICS.md) currently covers only executable fingerprint, local mod inventory, XInput button edges and explicit `NOT_OBSERVABLE` game semantics. It is **not yet sufficient** for a requested game session:
@@ -94,3 +105,4 @@ The owner tested binding Attack and Takedown to one button; ordinary Attack won.
 ### Required physical-button impact query for any future gameplay PR
 
 For each physical input a feature consumes, use [the offline impact report](INPUT_IMPACT.md) to enumerate collisions in the feature's supported context. Review actions sharing the suppressed event there. Keep every other mode and ambiguous state native-pass-through. The report is impact inventory only; it does not grant or deny implementation by itself. The global classic profile still needs the full relevant catalog, but an isolated slice does not.
+
