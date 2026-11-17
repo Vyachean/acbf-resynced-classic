@@ -70,6 +70,7 @@ No DRM bypass or unauthorized game redistribution is part of this project. Users
 - [Physical-button impact audit](docs/INPUT_IMPACT.md) — conservative, Python-only report of documented actions that a proposed X/B/A/RT or other physical-button override could disable
 - [Control reference](docs/CONTROL_REFERENCE.md) — older compact AC4 vs Resynced button map, **not** a full behavior model
 - [Integration findings](docs/INTEGRATION_FINDINGS.md) — public modding evidence, licensing, compatibility gates
+- [Runtime testing and automation research](docs/RUNTIME_TEST_HARNESS_RESEARCH.md) — verified external tool leads, unknown NPC/arena APIs and proposed deterministic combat test harness
 - [Puppet Native ABI](docs/PUPPET_NATIVE.md) — public plugin API and CI-tested lifecycle bridge, not a gameplay hook
 - [Reference cases](research/reference_scenarios.json) — machine-readable design cases (**not tested in game**)
 - [C++ control core](include/acbf/classic_control.h) — pure, provisional action resolver (no game integration)
