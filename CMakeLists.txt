@@ -54,6 +54,18 @@ add_executable(acbf_legacy_combat_model_tests tests/legacy_combat_model_tests.cp
 target_link_libraries(acbf_legacy_combat_model_tests PRIVATE acbf_legacy_combat_model)
 add_test(NAME legacy_combat_model_offline COMMAND acbf_legacy_combat_model_tests)
 
+# Interactive console sandbox uses the same AC4 policy code as the unit tests.
+# It simulates state inputs only; it does not attach to or drive the game.
+add_executable(acbf_combat_arena tools/combat_arena/main.cpp)
+target_link_libraries(acbf_combat_arena PRIVATE acbf_legacy_combat_model)
+target_compile_features(acbf_combat_arena PRIVATE cxx_std_17)
+if(MSVC)
+    target_compile_options(acbf_combat_arena PRIVATE /W4 /WX /permissive-)
+else()
+    target_compile_options(acbf_combat_arena PRIVATE -Wall -Wextra -Wpedantic -Werror)
+endif()
+add_test(NAME combat_arena_demo COMMAND acbf_combat_arena --demo)
+
 if(WIN32)
     # Two separate distribution hosts use the SAME read-only observer source.
     # The Puppet Native plugin does not require another version.dll or ASI.

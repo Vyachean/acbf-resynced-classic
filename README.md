@@ -70,6 +70,7 @@ No DRM bypass or unauthorized game redistribution is part of this project. Users
 - [Audit coverage ledger](research/control_system_ledger.json) — machine-readable action/gesture catalog, transition hypotheses, hazards and source registry
 - [Combat action conditions](docs/COMBAT_CONDITIONS.md) — original AC4 enemy-class matchup caveats and officially documented Resynced TU1.0.6/TU1.0.7/TU1.0.8 state fixes; **not runtime eligibility**
 - [Offline original-AC4 combat model](docs/LEGACY_COMBAT_MODEL.md) — executable multi-stage reference policy; no game integration
+- [Offline combat sandbox](docs/COMBAT_ARENA.md) — interactive console arena using the same policy code as its deterministic smoke test; no live game integration
 - [Physical-button impact audit](docs/INPUT_IMPACT.md) — conservative, Python-only report of documented actions that a proposed X/B/A/RT or other physical-button override could disable
 - [Control reference](docs/CONTROL_REFERENCE.md) — older compact AC4 vs Resynced button map, **not** a full behavior model
 - [Integration findings](docs/INTEGRATION_FINDINGS.md) — public modding evidence, licensing, compatibility gates
