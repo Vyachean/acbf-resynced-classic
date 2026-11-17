@@ -2,9 +2,9 @@
 
 The maintainer cannot directly run the user's game. Manual tests should therefore be **short, deterministic and diagnostically useful**.
 
-## Required controls audit gate
+## Required feature-scoped controls safety gate
 
-Issue [#18](https://github.com/Vyachean/acbf-resynced-classic/issues/18) blocks any new game-facing controller override. Before approving a single new behavior, validate the [complete multi-surface behavior inventory](CONTROL_SYSTEM_AUDIT.md), including timed counter follow-ups, profile modifiers, aiming/tool chords, ship/water/menu states and input-release safety. Unknown modes must pass through. This test document's X/B/A scenarios describe **goals, not faithful recovered AC4 action logic**.
+[Issue #18](https://github.com/Vyachean/acbf-resynced-classic/issues/18) requires verified build, semantic state/action source and **all shared input uses in the enabled contexts** before approving a new game-facing override. Preserve counter follow-ups, input release/cancellation and modifiers wherever affected; all unverified ship/water/menu states remain native pass-through. The broad [control-system catalog](CONTROL_SYSTEM_AUDIT.md) is required for a global profile, not automatically for unrelated feature slices. These X/B/A scenarios are **goals, not recovered AC4 engine behavior**.
 
 ## Before testing
 
@@ -36,7 +36,7 @@ These are **proposed test cases**, not evidence of current working behavior. Add
 
 ## Immediate single-session native control experiment
 
-The next useful on-game check is [X-001: native same-X comparison](X_INPUT_EXPERIMENT.md). It is a **controlled remapping-only trial**, intentionally not an ASI/loader test. No diagnostic package is necessary to tell whether the displayed Takedown prompt produced an actual finishing move. The user only needs to report the outcome; synthetic tests cannot observe it.
+**X-001 is deferred.** The owner already observed same-button Attack/Takedown selecting ordinary Attack, without enough recorded native state to generalize. [X-001](X_INPUT_EXPERIMENT.md) is a no-mod protocol, **not an immediate repeat task**; it should be revisited only for a materially different, evidence-backed hypothesis. Next game-facing proof should prioritize a verified state/command seam and a single version-gated aggregated diagnostic, not repetitive remapping.
 
 ## Suggested efficient workflow
 
