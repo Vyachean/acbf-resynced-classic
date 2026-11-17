@@ -30,6 +30,8 @@ This does **not** mean any current prototype has passed the feature gate. A synt
 
 ## Open pull request review queue (as of snapshot)
 
+**Research cleanup:** historical draft PRs [#27](https://github.com/Vyachean/acbf-resynced-classic/pull/27) and [#32](https://github.com/Vyachean/acbf-resynced-classic/pull/32) are **closed as superseded**, not merged. Their distinct findings were curated and squash-merged via [PR #39](https://github.com/Vyachean/acbf-resynced-classic/pull/39) into [sanitized static evidence](knowledge/LOCAL_STATIC_EVIDENCE_2026-11-15.md) and the 90-source KB. The ongoing underlying research issues remain open. The independent, synthetic original-AC4 policy part of #31 is being integrated separately; the game-facing evidence and broad draft remain in #31 until independently reviewed.
+
 | PR | Scope | Integration / review boundary |
 | --- | --- | --- |
 | [#27](https://github.com/Vyachean/acbf-resynced-classic/pull/27) | **Research only:** installed-game static and GFL evidence, unresolved actor linkage | Verify confidentiality and evidence grade, then CI / squash. Keep separate from native observer |
