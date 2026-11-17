@@ -3,7 +3,7 @@
   "reviewed_on": "2026-11-17",
   "source": "docs/knowledge/SOURCES.md",
   "notes": "Research-grade source index. A confirms cited upstream content, not runtime compatibility; B is author claim; C secondary; U unverified. No in-game testing is asserted. Before use, re-check URL, license, game architecture and version.",
-  "count": 89,
+  "count": 88,
   "entries": [
     {
       "id": "S001",
@@ -796,15 +796,6 @@
       "game_scope": "BFR",
       "evidence_grade": "B",
       "annotation": "Author package management claims"
-    },
-    {
-      "id": "S089",
-      "title": "Title",
-      "url": "https://original-author-url",
-      "category": "Source addition template",
-      "game_scope": "AC4/BFR/Related; A/B/C/U",
-      "evidence_grade": "U",
-      "annotation": "One precise fact; stated version; what it does NOT prove"
     }
   ]
 }
