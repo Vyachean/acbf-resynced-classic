@@ -1,5 +1,8 @@
 # Black Flag Resynced modding ecosystem — source-led survey
 
+
+> **Dual-game entry point:** [AC4 (2013) + Resynced modding knowledge base](knowledge/README.md), including [source register](knowledge/SOURCES.md), [Anvil details](knowledge/ANVIL_DATA.md) and [open research questions](knowledge/QUESTIONS.md). This page is the **dated Resynced ecosystem deep dive**, not the sole knowledge index.
+
 **Researched:** 2026-11-17. **Focus:** capabilities, engineering workflows, legal/compatibility constraints, and the most promising leads for restoring classic AC4 controls/combat in **Resynced 1.0.6**. **Evidence level:** public documentation, original author descriptions and inspected public source; **no new in-game tests, executable disassembly or files from the installed game** in this pass.
 
 Read this alongside [integration findings](INTEGRATION_FINDINGS.md), [combat conditions](COMBAT_CONDITIONS.md), [runtime test harness research](RUNTIME_TEST_HARNESS_RESEARCH.md), [Puppet Native ABI](PUPPET_NATIVE.md) and [scope](SCOPE.md). This is a **research index**, not instructions to install all listed tools.
