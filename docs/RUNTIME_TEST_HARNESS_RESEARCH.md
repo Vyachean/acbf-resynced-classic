@@ -2,6 +2,8 @@
 
 **Research date:** 2026-11-17. **Status:** public-source inventory and proposed architecture; **no in-game tests, engine NPC-control API, or Resynced 1.0.6 compatibility confirmed**. This document records tools worth evaluating, not dependencies or permission to install them. Related: [integration findings](INTEGRATION_FINDINGS.md), [single-session strategy](TEST_STRATEGY.md), [Puppet Native ABI](PUPPET_NATIVE.md), and issues [#30](https://github.com/Vyachean/acbf-resynced-classic/issues/30), [#10](https://github.com/Vyachean/acbf-resynced-classic/issues/10), [#18](https://github.com/Vyachean/acbf-resynced-classic/issues/18).
 
+> **Broader resources:** See [the Resynced modding ecosystem survey](MODDING_ECOSYSTEM.md) for source-checked patch-FORGE authoring, combat/AI data-mod leads, animation-speed hooks and manager/version restrictions. This document remains focused on runtime test automation.
+
 ## Problem to solve
 
 Current synthetic tests can validate project logic but cannot demonstrate that the game accepted a command or that a counter/parry/finisher actually occurred. A useful **minimal** runtime harness must capture reproducible initial conditions, input, and **engine-semantic outcome**, not simply record physical button edges. The priority is one auditable combat test on the owner's exact Resynced **1.0.6** build, with a clear failure report if the required hook is unavailable. Creating a custom arena, spawning NPCs or controlling their AI is a **later capability**, not a prerequisite for the first test.
