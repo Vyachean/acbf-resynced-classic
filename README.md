@@ -58,6 +58,11 @@ Public research confirms a plausible x64 ASI distribution path and published **m
 No DRM bypass or unauthorized game redistribution is part of this project. Users must provide their own lawful copy of the game.
 
 ## Project documents
+## Modding knowledge base (original AC4 + Resynced)
+
+Start from **[the dual-game modding knowledge base](docs/knowledge/README.md)** for the source-indexed research on Anvil/Scimitar formats, AC4 2013 x86 and Resynced x64, modding tools, asset formats, native hooks, gameplay changes, automation and research gaps. Its [source register](docs/knowledge/SOURCES.md) separates primary evidence from mod-author claims and contains direct public links. The knowledge base is **research**, not a claim of a playable mod or verified compatibility with the owner's build.
+
+
 
 - [Scope and non-goals](docs/SCOPE.md) — target experience and boundaries
 - [Roadmap](docs/ROADMAP.md) — research, implementation, validation, and release gates
