@@ -39,6 +39,33 @@ add_executable(acbf_action_bridge_tests tests/action_bridge_tests.cpp)
 target_link_libraries(acbf_action_bridge_tests PRIVATE acbf_control_core)
 add_test(NAME action_bridge_offline COMMAND acbf_action_bridge_tests)
 
+# Separate, pure original-AC4 combat reference model (synthetic labels only).
+# It does not attach to either game or alter the existing X bridge.
+add_library(acbf_legacy_combat_model STATIC src/legacy_combat_model.cpp)
+target_include_directories(acbf_legacy_combat_model
+    PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
+target_compile_features(acbf_legacy_combat_model PUBLIC cxx_std_17)
+if(MSVC)
+    target_compile_options(acbf_legacy_combat_model PRIVATE /W4 /WX /permissive-)
+else()
+    target_compile_options(acbf_legacy_combat_model PRIVATE -Wall -Wextra -Wpedantic -Werror)
+endif()
+
+add_executable(acbf_legacy_combat_model_tests tests/legacy_combat_model_tests.cpp)
+target_link_libraries(acbf_legacy_combat_model_tests PRIVATE acbf_legacy_combat_model)
+add_test(NAME legacy_combat_model_offline COMMAND acbf_legacy_combat_model_tests)
+
+# CLI demonstrator of the exact same synthetic policy, not an in-game arena.
+add_executable(acbf_combat_arena tools/combat_arena/main.cpp)
+target_link_libraries(acbf_combat_arena PRIVATE acbf_legacy_combat_model)
+target_compile_features(acbf_combat_arena PRIVATE cxx_std_17)
+if(MSVC)
+    target_compile_options(acbf_combat_arena PRIVATE /W4 /WX /permissive-)
+else()
+    target_compile_options(acbf_combat_arena PRIVATE -Wall -Wextra -Wpedantic -Werror)
+endif()
+add_test(NAME combat_arena_demo COMMAND acbf_combat_arena --demo)
+
 if(WIN32)
     # Two separate distribution hosts use the SAME read-only observer source.
     # The Puppet Native plugin does not require another version.dll or ASI.
