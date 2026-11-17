@@ -2,9 +2,9 @@
 
 The roadmap is ordered by **uncertainty reduction and observable gameplay value**, not calendar dates. A completed research deliverable is **not** a validated runtime capability.
 
-## Phase 0 — Whole-system controls audit (ACTIVE P0)
+## Phase 0 — Feature-scoped safety (P0) and whole-system reference audit (ongoing)
 
-**New mandatory gate — [issue #18](https://github.com/Vyachean/acbf-resynced-classic/issues/18).** The earlier per-button baseline and mock-only resolver are NOT a verified AC4 behavior model. All game-facing input interception, remapping, action suppression, native action hooks, and playable distribution are **blocked** until the full-surface audit is complete.
+**Current gate — [issue #18](https://github.com/Vyachean/acbf-resynced-classic/issues/18).** The earlier per-button map and mock resolver are NOT verified gameplay behavior. **A narrowly scoped feature can proceed independently** only when its exact build, semantic action source, affected contexts/gestures, input ownership, native pass-through, off-by-default state and rollback are proven. **No current main-branch gameplay hook meets that gate.** The full-surface reference audit remains ongoing and is necessary for a **global** classic profile, but does not block unrelated feature slices.
 
 - [x] Build a source-labelled [control-system audit](CONTROL_SYSTEM_AUDIT.md) that distinguishes documented functions from runtime priority.
 - [x] Inventory 25 control surfaces across AC4 and Resynced, including combat phases, stealth, traversal, water, helm/gunnery, UI and special modes.
@@ -21,7 +21,7 @@ The roadmap is ordered by **uncertainty reduction and observable gameplay value*
 - [ ] Verify that existing mock policies for X/B/A do not eliminate original AC4 counter, finishing or traversal actions.
 - [ ] Approve every planned input interception point by target mode, version, action, gesture, cancel/release and fallback; no global remapping.
 
-**Gate exit:** issue #18 explicitly closed with evidence for the first affected action *and* safety for all other affected surfaces. Broad features that remain unverified must stay permanently native passthrough. This gate takes precedence over work on #2, #4 and #10.
+**Per-feature gate exit:** document sufficient build/context/command evidence and safe handling of **every action affected in that feature's enabled contexts**; unsupported/unknown contexts must remain native pass-through and the feature must be disabled by default with tested rollback. The issue #18 **global inventory remains open** until broad coverage is genuinely complete. Neither #2, #4 nor #10 requires closure of unrelated catalog rows.
 
 ## Earlier Phase 0 — Research and baseline (partially completed)
 
@@ -52,9 +52,9 @@ The roadmap is ordered by **uncertainty reduction and observable gameplay value*
 
 **Exit:** a harmless diagnostic build and testable action resolver (not necessarily playable gameplay changes).
 
-## Phase 2 — First playable milestone: X (BLOCKED by full control audit #18)
+## Phase 2 — First playable milestone: X (BLOCKED by game-semantic evidence)
 
-**The earlier X-001 proposed remapping-only test is DEFERRED.** The owner already observed ordinary Attack winning over Takedown when sharing one button. Do not repeat that experiment. More important, **no isolated X fix is safe** until the entire control surface and multi-stage action interactions have been inventoried (issue #18).
+**X-001 remapping-only test remains DEFERRED.** The owner already observed ordinary Attack winning over Takedown when sharing one button. Do not repeat the same experiment. An isolated X feature requires **its own** complete affected-context audit under issue #18 plus verified Resynced pre-action eligibility and independent native command/input ownership; it does **not** require finishing unrelated naval/menu surface research.
 
 - [x] Document baseline AC4 and Resynced controller mapping and **desired** attack, finisher, assassination cases (not yet verified in game).
 - [x] Document a controlled one-launch comparison of native Y takedown and shared-X mapping, with explicit pass/fail/inconclusive decision gates (not yet executed).
@@ -66,7 +66,7 @@ The roadmap is ordered by **uncertainty reduction and observable gameplay value*
 
 **Exit:** X behaves consistently in documented scenarios on an explicitly identified game build.
 
-## Phase 3 — Classic controller profile (BLOCKED by full control audit #18)
+## Phase 3 — Global classic controller profile (REQUIRES broad audit #18 and game integration)
 
 - [ ] Implement context-aware B defense actions (first establish original B counter/dodge details).
 - [ ] Investigate A defense-break equivalent (do not assume Resynced Sweep means AC4 guard-break).
@@ -100,7 +100,7 @@ The roadmap is ordered by **uncertainty reduction and observable gameplay value*
 3. Avoid invasive animation/combat redesign until the control layer is understood.
 4. A failed feasibility study is a valid documented outcome; do not silently broaden scope.
 
-## Diagnostic host consolidation (v0.1.7 candidate)
+## Diagnostic host consolidation (implemented offline; not a playable release)
 
 - [x] Reuse the same read-only diagnostic worker under Puppet Native ABI v1 and standalone ASI without duplicating the game observer.
 - [x] Add separate, CI-generated packaging for two mutually exclusive diagnostic hosts.
