@@ -54,6 +54,17 @@
 - [Black Flag Texture Replacer #364](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/364): browser texture replacement tool, not behavior editor; audit processing/licensing before uploading any game assets into a web service.
 - [Jackdaw Flag Patcher (MIT)](https://github.com/emike09/Jackdaw-Flag-Patcher): read/verify/append single texture/redirect index/restore technique, though modifies existing FORGE instead of additive patch. Good pattern for transactional rollback.
 
+## Historical local static evidence
+
+[Sanitized static checkpoint](LOCAL_STATIC_EVIDENCE_2026-11-15.md) (historical PR #27) includes a metadata-only BFR v50 index enumeration and one checked GFL → EntityBuilder resource candidate. **Missing registered component schema** still prevents tracing behavior to actual player/NPC ownership, while the local title update was not authenticated. This is not a tested Resynced gameplay API.
+
+### Community movement mods — why they are not a classic-control replacement
+
+- [Classic Movement — Walk By Default Smooth Sprint #408](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/408) describes walking by default, configurable movement scale and sprint by RT/L3. Author claim; **not** proof of restoring original high/low-profile mode, native counter/takedown actions or all parkour contexts.
+- [Walk By Default for PlayStation Controllers #514](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/514) describes a PlayStation-specific walk-first controller profile. Author claim; it introduces additional bindings to audit and is **not** a universal classic gameplay layer.
+
+Both were identified in historical research [PR #32](https://github.com/Vyachean/acbf-resynced-classic/pull/32). This section replaces a redundant stand-alone community comparison and must remain version/build-specific.
+
 ## Is there an NPC, arena or character command API?
 
 **No confirmed public API of that kind has been found for BFR 1.0.6** in the inspected sources as of 2026-11-17.
