@@ -38,6 +38,8 @@ CRITICAL_HAZARDS = {
     "BFR_106_RT_SPRINT_CLIMBING",
     "BFR_106_INTERRUPTED_TOOL_STEALTH",
     "BFR_107_108_VERSION_DELTA",
+    "BFR_SHARED_BUTTON_PRIORITY_CONFLICT",
+    "BFR_ASSASSINATION_PROMPT_REMAP_FAILURE",
 }
 CRITICAL_UNKNOWN_IDS = {
     "AC4_COUNTER_TIMING_INTERRUPTS", "AC4_X_PRIORITY",
@@ -53,14 +55,17 @@ class ControlSystemAuditContract(unittest.TestCase):
     def setUpClass(cls):
         cls.ledger = json.loads(LEDGER.read_text(encoding="utf-8"))
 
-    def test_audit_explicitly_incomplete_and_gameplay_blocked(self):
+    def test_audit_incomplete_without_global_gameplay_block(self):
         l = self.ledger
         self.assertEqual(l["schema_version"], 1)
-        self.assertEqual(l["audit_status"], "INCOMPLETE_NO_GAME_HOOKS")
+        self.assertEqual(l["audit_status"], "INCOMPLETE_FEATURE_SCOPED")
         self.assertFalse((ROOT / "packaging" / "installable.json").exists())
-        self.assertIn("all_runtime_overrides", {
-            b for unknown in l["critical_unknowns"]
-            for b in unknown["blocked_features"]
+        unknowns = {item["id"]: item for item in l["critical_unknowns"]}
+        self.assertIn("global_classic_profile",
+                      unknowns["FULL_SURFACE_COVERAGE"]["blocked_features"])
+        self.assertNotIn("all_runtime_overrides", {
+            feature for unknown in l["critical_unknowns"]
+            for feature in unknown["blocked_features"]
         })
         self.assertTrue((ROOT / "docs" / "CONTROL_SYSTEM_AUDIT.md").exists())
 
@@ -170,6 +175,29 @@ class ControlSystemAuditContract(unittest.TestCase):
                 self.assertEqual(actions[name]["evidence"],
                                  "source_described_not_runtime_verified")
                 self.assertIn("ac4_prima_advanced_tips", actions[name]["sources"])
+
+    def test_shared_button_reports_keep_conflict_and_build_unknown(self):
+        l = self.ledger
+        sources = l["source_registry"]
+        hazards = {item["id"]: item for item in l["hazards"]}
+        report = sources["bfr_reddit_shared_button_priority"]
+        self.assertEqual(report["kind"], "community_report")
+        self.assertIn("exact build, prompt and gesture settings not reported",
+                      report["scope"])
+        self.assertEqual(
+            hazards["BFR_SHARED_BUTTON_PRIORITY_CONFLICT"]["source_ids"],
+            ["bfr_reddit_shared_button_priority"])
+        self.assertIs(
+            hazards["BFR_SHARED_BUTTON_PRIORITY_CONFLICT"]["engine_arbitration_verified"],
+            False)
+        self.assertIs(
+            hazards["BFR_SHARED_BUTTON_OBSERVED"]["engine_arbitration_verified"],
+            False)
+        self.assertIn("visible Takedown prompt",
+                      hazards["BFR_SHARED_BUTTON_OBSERVED"]["risk"])
+        self.assertEqual(
+            hazards["BFR_ASSASSINATION_PROMPT_REMAP_FAILURE"]["source_ids"],
+            ["bfr_reddit_shared_assassination_prompt"])
 
     def test_documented_exceptions_keep_engine_priority_unverified(self):
         l = self.ledger

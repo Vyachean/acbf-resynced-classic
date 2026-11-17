@@ -16,6 +16,12 @@ struct IntegrationEvidence {
     bool input_release_handling_verified = false;
     bool context_eligibility_verified = false;
     bool native_action_dispatch_verified = false;
+    // Only the proposed feature's collision blast radius must be reviewed.
+    // Unrelated or unsupported contexts stay native pass-through.
+    bool affected_actions_reviewed = false;
+    bool unsupported_contexts_passthrough = false;
+    bool rollback_verified = false;
+    bool off_by_default_verified = false;
 
     bool complete() const noexcept {
         return exact_executable_verified &&
@@ -23,7 +29,11 @@ struct IntegrationEvidence {
                original_input_suppression_verified &&
                input_release_handling_verified &&
                context_eligibility_verified &&
-               native_action_dispatch_verified;
+               native_action_dispatch_verified &&
+               affected_actions_reviewed &&
+               unsupported_contexts_passthrough &&
+               rollback_verified &&
+               off_by_default_verified;
     }
 };
 

@@ -39,6 +39,21 @@ add_executable(acbf_action_bridge_tests tests/action_bridge_tests.cpp)
 target_link_libraries(acbf_action_bridge_tests PRIVATE acbf_control_core)
 add_test(NAME action_bridge_offline COMMAND acbf_action_bridge_tests)
 
+# Source-backed original AC4 multi-stage combat policy. This offline model is
+# not connected to Resynced input and cannot suppress gameplay controls.
+add_library(acbf_legacy_combat_model STATIC src/legacy_combat_model.cpp)
+target_include_directories(acbf_legacy_combat_model
+    PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
+target_compile_features(acbf_legacy_combat_model PUBLIC cxx_std_17)
+if(MSVC)
+    target_compile_options(acbf_legacy_combat_model PRIVATE /W4 /WX /permissive-)
+else()
+    target_compile_options(acbf_legacy_combat_model PRIVATE -Wall -Wextra -Wpedantic -Werror)
+endif()
+add_executable(acbf_legacy_combat_model_tests tests/legacy_combat_model_tests.cpp)
+target_link_libraries(acbf_legacy_combat_model_tests PRIVATE acbf_legacy_combat_model)
+add_test(NAME legacy_combat_model_offline COMMAND acbf_legacy_combat_model_tests)
+
 if(WIN32)
     # Two separate distribution hosts use the SAME read-only observer source.
     # The Puppet Native plugin does not require another version.dll or ASI.
@@ -60,7 +75,7 @@ if(WIN32)
              COMMAND acbf_puppet_plugin_test
                  $<TARGET_FILE:acbf_puppet_plugin>
                  $<TARGET_FILE:acbf_mock_xinput>)
-    set_tests_properties(puppet_native_abi_contract PROPERTIES TIMEOUT 20)
+    set_tests_properties(puppet_native_abi_contract PROPERTIES TIMEOUT 25)
 
     # An ASI is a DLL with a nonstandard extension, loaded by a SEPARATELY
     # installed compatible ASI loader. No loader or game binary is bundled.

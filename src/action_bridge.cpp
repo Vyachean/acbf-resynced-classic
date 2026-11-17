@@ -6,8 +6,10 @@ Outcome XActionBridge::prepare(classic::Button button, classic::Edge edge,
                                const classic::Snapshot& snapshot,
                                const IntegrationEvidence& evidence,
                                const NativeActionSink& sink) noexcept {
-    // No ability to install an input-consuming hook until ALL six gates are
-    // demonstrated on the exact build. Unknown eligibility fails closed.
+    // This feature is enabled only after its own context, dispatch, input
+    // ownership, collision, fallback and rollback evidence is complete.
+    // Unrelated surfaces need not be audited when their inputs pass through.
+    // Unknown eligibility fails closed.
     if (button != classic::Button::X || edge != classic::Edge::Pressed ||
         !evidence.complete() || consumed_until_release_)
         return {};

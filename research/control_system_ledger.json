@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "updated": "2026-11-15",
-  "audit_status": "INCOMPLETE_NO_GAME_HOOKS",
-  "scope": "Xbox-style single-player input behavior; original AC4 2013 documentation versus Resynced July 2026 published defaults; owner-specific TU 1.0.6 not validated",
+  "updated": "2026-11-16",
+  "audit_status": "INCOMPLETE_FEATURE_SCOPED",
+  "scope": "Xbox-style single-player input behavior; original AC4 2013 documentation versus Resynced July 2026 published defaults; user-reported offline TU 1.0.6 is the target but executable and control behavior are not validated",
   "source_registry": {
     "ac4_manual": {
       "kind": "official_manual",
@@ -118,6 +118,16 @@
       "kind": "official_design_document",
       "url": "https://www.ubisoft.com/en-us/game/assassins-creed/news/5Z1RxwznM6CcrkSEVoibmh/ac-black-flag-resynced-title-update-108-patch-notes",
       "scope": "Official October 27 TU1.0.8 changes; not automatically available in TU1.0.6"
+    },
+    "bfr_reddit_shared_button_priority": {
+      "kind": "community_report",
+      "url": "https://www.reddit.com/r/ACBFResynced/comments/1usa1zu/best_legacy_control_scheme_for_black_flag_resynced/",
+      "scope": "July 2026 player comment says shared Attack/Takedown chooses Takedown when enemy is stunned; exact build, prompt and gesture settings not reported"
+    },
+    "bfr_reddit_shared_assassination_prompt": {
+      "kind": "community_report",
+      "url": "https://www.reddit.com/r/ACBFResynced/comments/1us5abn/controls_remapping_seems_to_be_bugged/",
+      "scope": "Recent player report says mapped Assassination loses to Attack despite visible prompt; exact TU, controller profile and gesture settings not supplied"
     }
   },
   "surfaces": [
@@ -2651,6 +2661,36 @@
       ],
       "risk": "Guide/video/mod built against newer version can assume game states absent or buggy in 1.0.6",
       "engine_arbitration_verified": false
+    },
+    {
+      "id": "BFR_SHARED_BUTTON_PRIORITY_CONFLICT",
+      "priority": "P0",
+      "game": "ACBFR",
+      "statement": "Owner observed Attack winning shared Attack/Takedown; a July player comment claims Takedown wins when the enemy is stunned. The same-button result is context-dependent or the reports differ in unstated setup.",
+      "surface_ids": [
+        "combat_neutral",
+        "combat_finisher"
+      ],
+      "source_ids": [
+        "bfr_reddit_shared_button_priority"
+      ],
+      "risk": "Do not encode a universal shared-button priority; exact target/prompt/gesture/version is required before the first override",
+      "engine_arbitration_verified": false
+    },
+    {
+      "id": "BFR_ASSASSINATION_PROMPT_REMAP_FAILURE",
+      "priority": "P0",
+      "game": "ACBFR",
+      "statement": "A recent player reports Attack winning over a remapped Assassination even while its prompt is visible; target build and gesture profile are unknown.",
+      "surface_ids": [
+        "combat_neutral",
+        "stealth_assassination"
+      ],
+      "source_ids": [
+        "bfr_reddit_shared_assassination_prompt"
+      ],
+      "risk": "Visible prompt alone may not make a same-button Assassination command win; fail closed until the native selection/dispatch behavior is understood",
+      "engine_arbitration_verified": false
     }
   ],
   "critical_unknowns": [
@@ -2687,21 +2727,21 @@
     {
       "id": "BFR_X_CONFLICT_CONTEXT",
       "priority": "P0",
-      "statement": "User observed same-button Attack wins over Takedown; whether Takedown HUD prompt was available in that case unknown",
+      "statement": "User observed same-button Attack wins over Takedown; owner later confirmed native Y Takedown and a visible Y prompt when available, but prompt status after remapping remains unknown",
       "blocked_features": [
         "X_takedown"
       ],
-      "needs": "do not repeat same remap; only materially different source evidence"
+      "needs": "do not repeat same remap; only materially different evidence that records prompt state after remapping"
     },
     {
       "id": "BFR_NATIVE_ELIGIBILITY",
       "priority": "P0",
-      "statement": "No verified pre-action availability signal for Takedown/Assassinate for exact game build",
+      "statement": "Owner reports visible pre-action Y prompt for native Takedown; no programmatic availability signal for Takedown/Assassinate verified for exact game build",
       "blocked_features": [
         "X_takedown",
         "X_assassinate"
       ],
-      "needs": "documented or independently validated native state API"
+      "needs": "documented or independently validated programmatic state source; do not repeat owner-confirmed native Y baseline"
     },
     {
       "id": "BFR_NATIVE_DISPATCH",
@@ -2742,18 +2782,18 @@
       "priority": "P0",
       "statement": "Hunting/harpooning, UI and all contextual actions not exhaustively verified from current sources",
       "blocked_features": [
-        "all_runtime_overrides"
+        "global_classic_profile"
       ],
-      "needs": "complete per-surface confirmed map and fail-open bypass for unknown"
+      "needs": "complete relevant map for a global classic profile; scoped features must bypass unknown contexts"
     },
     {
       "id": "GAMEPAD_VERSION_OPTIONS",
       "priority": "P0",
       "statement": "Full controller remap, accessibility options, input device auto-switch and 1.0.6 custom mapping not captured",
       "blocked_features": [
-        "all_runtime_overrides"
+        "global_classic_profile"
       ],
-      "needs": "real target version settings when appropriate single-session validation"
+      "needs": "verify settings that affect the specific feature; unrelated profiles remain native"
     },
     {
       "id": "AC4_TARGET_ARCHETYPE_ACTION",
@@ -2796,7 +2836,8 @@
     "Resynced Takedown after defense break/perfect parry, normal/perfect dodge and enemy archetype limits are separate systems from original AC4 kill streaks.",
     "Controller maps from July 2026 do not establish exact input priority or bindings on the owner's TU 1.0.6.",
     "Every feature described with an unconfirmed binding is explicitly marked feature_described_binding_unverified.",
-    "User confirmed only normal Attack fired when Attack and Takedown shared a physical button in Resynced; exact available prompt at that moment unknown.",
+    "User confirmed only normal Attack fired when Attack and Takedown shared a physical button in Resynced; owner later reported native Takedown uses Y with a visible Y prompt when available, while prompt status in the earlier remapped trial remains unknown.",
+    "Owner specifies that Y also performs noncombat world interactions such as opening chests, while B remains combat parry/evasion; any classic remap must distinguish a combat Takedown prompt from a noncombat interaction prompt and preserve native B defense in combat.",
     "Additional guide-described exception: original AC4 B alone can produce a double counter kill when two enemy attack warnings overlap; exact eligibility and timing remain unknown.",
     "Original AC4 A may be human shield at gunfire warning despite being break-defense in normal combat and jump in traversal; documented Xbox control, runtime priority not verified.",
     "Resynced LB press parry / hold Observe, RB press attack / hold heavy / perch hang enemy, and R3 press target lock / hold Eagle Vision / double-tap HUD are independent context/gesture overlaps in the July 2026 table; TU1.0.6 behavior not verified.",

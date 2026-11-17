@@ -1,17 +1,17 @@
 # AC4 vs Resynced — complete control-system audit (work in progress)
 
-**Priority P0 · November 15, 2026 · status: INCOMPLETE / GAMEPLAY HOOKS BLOCKED.**
+**Reference inventory · November 15–17, 2026 · status: INCOMPLETE / FEATURE-SCOPED WORK ALLOWED.**
 Tracked in [issue #18](https://github.com/Vyachean/acbf-resynced-classic/issues/18).
 
 **Scope:** primarily Xbox-style controller gameplay in *Assassin's Creed IV: Black Flag (2013)* vs. *Black Flag Resynced* (launch July 2026 public documentation, with **no validated 1.0.6-specific action priority**). Single-player is the active target. Modern-day and multiplayer portions of AC4, special activities and menus are inventoried as independent control surfaces so an input hook will never accidentally affect them.
 
 The complete [machine-readable audit ledger](../research/control_system_ledger.json) currently contains **25 surfaces, 150+ action rows, 45 described/hypothesized transitions, 27 cross-context hazards, and 12 P0 unknowns**. These are an *inventory*, **not** 150 independently verified in-game behaviors.
 
-## Stop-the-line rule
+## Feature-scoped implementation rule
 
-**No new gameplay input hook, physical-button remapper, action suppression or playable-mod claim until the control-system model is explicitly approved.** The provisional C++ \`resolve()\` and \`XActionBridge\` implement *design policies* in offline test fixtures, **not a reconstructed AC4 or Resynced input dispatcher**. All integration evidence defaults false. Do not make unverified assumptions true merely to activate a feature.
+The provisional C++ \`resolve()\` and \`XActionBridge\` implement *design policies* in offline test fixtures, **not a reconstructed AC4 or Resynced input dispatcher**. All integration evidence defaults false. A narrowly scoped feature need not wait for a complete control-system audit, but must prove its exact state/command and every action in its collision blast radius.
 
-A working feature must preserve **all other actions sharing its input in all reachable contexts**, including holds, release, timed second-phase inputs, modifiers, equipment, swimming, menus and the ship. An unknown mode must be native pass-through.
+A working feature must preserve every action sharing its consumed input **inside the feature's enabled context**, including holds, release and timed second-phase inputs. Outside that exact context, including unknown modes, modifiers, equipment, swimming, menus and the ship, native input must pass through unchanged. The global classic profile still requires the larger catalog; unrelated surfaces do not block a smaller slice.
 
 ## What must be modeled (not only an input table)
 
@@ -139,7 +139,11 @@ The largest newly identified risks are AC4's *automatic double counter*, its *A 
 | **Water A/B** | Blocks dive or ascent, creates unresponsive swimming | Water state / ledge vs dive transition |
 | **Menus / specialized modes** | Soft-locks UI or side activity | Mandatory unknown-mode pass-through |
 
-User **already observed** Attack and Takedown assigned to the same button producing Attack, not Takedown. This is evidence of that tested configuration, **not** proof that every eligible Takedown condition was present. No repeat is requested.
+User **already observed** Attack and Takedown assigned to the same button producing Attack, not Takedown. The owner later clarified that the native Y binding displays a Y prompt when Takedown is available and that Y performs it. This establishes a visible player-facing cue in the default profile, but not that it remained visible during the shared-button trial or that the game exposes a machine-readable eligibility signal. No repeat of the same remapping is requested.
+
+The owner further specifies that Y also triggers noncombat world interactions such as opening chests, while B is used for parry/evasion in combat. The intended remap must preserve combat B, route B to native Y only for a specifically identified noncombat interaction, and route X to native Y only for a specifically identified combat Takedown. Do not choose an action from the Y glyph alone; distinguish prompt type and state, with native pass-through when either is unclear.
+
+Public reports conflict on shared-button arbitration: a July 2026 player comment claims Takedown wins when the enemy is stunned, while a recent player reports that a mapped Assassination still loses to Attack even with its prompt visible ([Takedown comment](https://www.reddit.com/r/ACBFResynced/comments/1usa1zu/best_legacy_control_scheme_for_black_flag_resynced/), [Assassination remap report](https://www.reddit.com/r/ACBFResynced/comments/1us5abn/controls_remapping_seems_to_be_bugged/)). Neither report supplies a confirmed TU 1.0.6 profile or complete gesture settings. Treat these as context-specific anecdotes, not a universal priority rule; the owner’s prior result remains separate evidence.
 
 ## Combat eligibility and exact-title-update boundaries
 
@@ -155,7 +159,7 @@ The previous `Snapshot` includes only global tri-state `can_counter/can_attack/c
 
 The [input impact analyzer](INPUT_IMPACT.md) now derives **all currently catalogued actions sharing X/Y/A/B/LB/RB/LT/RT/L3/R3/D-pad/Menu/View** for either game, preserving gestures, source identifiers and unmatched unknown bindings. This is a **read-only audit** of what a future physical-button hook could block, not a game control API. The CI suite tests high-risk collisions across on-foot, ship, swim, tools, traversal, counter follow-up and menus.
 
-**It never grants permission to consume a button.** Every query returns `DENIED_UNVERIFIED_GAME_CONTEXT`, because full mode/cancel and engine-priority evidence is absent. An action not in the source catalog is not automatically safe.
+The impact report never grants permission by itself; it returns `IMPACT_REPORT_ONLY`. Use its rows to bound the specific feature's enabled context. Missing bindings and unrelated modes remain native-pass-through and do not globally deny that feature.
 
 ## 5. What remains to make this a trustworthy, complete model
 
@@ -170,15 +174,14 @@ The audit ledger deliberately lists P0 unknowns instead of filling them with gue
 
 Use [Prima original combat](https://primagames.com/eguides/assassins-creed-iv-black-flag-eguide/primer/combat) and [Ubisoft Resynced combat](https://www.ubisoft.com/en-gb/game/assassins-creed/news/1A8XkbnvONciecEZm9my1C/assassins-creed-black-flag-resynced-combat-system-breakdown) for the conceptual action-state descriptions. Neither source is a programming API or a native priority graph.
 
-### Completion gate (issue #18)
+### Gate for a single feature (issue #18)
 
-- [ ] Every single-player gameplay surface and action in scope enumerated (or intentionally bypassed with explicit reason)
-- [ ] Every overlapping physical input/chord audited for cross-surface priority, press/hold/release and multi-stage sequences (button mapping for AC4 counter established; timing/priority still unverified)
-- [ ] Per-action evidence and version scope distinguish authoritative documentation, secondary references, user observations and engine-unknown behavior
-- [ ] No original AC4 mechanic incorrectly equated to a similarly named Resynced action
-- [ ] Independent target-build (1.0.6) behavior evidence sufficient for the exact **first intended override**
-- [ ] Existing project \`resolve_b\`, \`resolve_a\`, \`resolve_x\` design assumptions reconciled with research or explicitly redesigned
-- [ ] Any unknown / unsupported state provably falls back to native input, including ship, water, menu and minigame
-- [ ] **Only then** approve a narrowly-scoped, reversible input/action adapter PR and a comprehensive one-session game test if needed
+- [ ] Exact executable/profile and target version verified for the feature
+- [ ] Semantic state and native action independently identified for the enabled context
+- [ ] Every action sharing the intercepted input **in that context** is enumerated and preserved or intentionally superseded
+- [ ] Press, hold, release, repeat, cancellation and single-dispatch behavior are bounded
+- [ ] Every state and input source outside the exact supported envelope passes through unchanged
+- [ ] Feature is off by default and has a verified project-owned rollback
+- [ ] Automated contract tests pass; a real-game acceptance test is recorded before claiming game support
 
-**The audit is not complete while these boxes remain unchecked. Do not ship gameplay interception.**
+The full audit remains open for a global classic profile. Its remaining rows do not block independent features that pass this scoped gate.

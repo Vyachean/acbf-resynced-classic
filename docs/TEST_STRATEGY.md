@@ -1,12 +1,12 @@
 # Single-session game testing strategy
 
-## Global audit gate before game-facing integration
+## Feature-scoped safety gate before game-facing integration
 
-[Control-system audit #18](CONTROL_SYSTEM_AUDIT.md) is a **P0 prerequisite** for any physical-input suppression or action override. CI tests of a synthetic X action bridge are not proof the original game behavior has been reconstructed. Preserve guard/counter follow-ups, high/low profile, parkour settings and ship/water/menu behavior before proposing a gameplay test. No further duplicate owner remapping experiments.
+[Control-system audit #18](CONTROL_SYSTEM_AUDIT.md) is a reference inventory, not a global prerequisite. A feature must prove its exact build, semantic state, source-input ownership, command routing, affected collisions, full press/release cycle, native pass-through elsewhere, off-by-default activation and tested rollback. CI tests of a synthetic bridge do not prove in-game behavior. Unrelated surfaces do not block work when their inputs remain untouched. Do not repeat the already reported shared Attack/Takedown remap.
 
-## Primary constraint: avoid game launches
+## Game launches: one question, one focused session
 
-Do not run ACBFR or original AC4 merely because development is uncertain. Perform **all possible testing without either game** first.
+Do static analysis and synthetic checks first. Launch only when a specific, unresolved feature question can be answered in one focused session. The user's current task explicitly authorizes a Resynced vertical-slice attempt; the local executable previously exited at ANIMUS-3-00029 before single-player, so do not repeat an identical launch or automate authentication.
 
 | Layer | Runs in GitHub Actions? | Needs the game? |
 | --- | --- | --- |
@@ -24,7 +24,7 @@ The existence of an input/ASI mod **does not** prove we can automate scene creat
 
 ## Exception: one-session built-in control comparison (X-001)
 
-A **remapping-only**, user-observed behavior comparison is different from a mod diagnostic. It requires **no instrumented build, compiler, loader, package or telemetry**. [X-001](X_INPUT_EXPERIMENT.md) tests the existing game once: first establish that default Takedown Y works with a visible prompt, then try the *complete* published shared-X profile under controlled input methods. The game's own action/animation is the outcome; our XInput report cannot observe it. Skip execution if the complete tested profile already matches the maintainer's earlier failure.
+A **remapping-only**, user-observed behavior comparison is different from a mod diagnostic. It requires **no instrumented build, compiler, loader, package or telemetry**. [X-001](X_INPUT_EXPERIMENT.md) records the owner's existing native Y Takedown and visible Y prompt as the baseline; it does not ask for that check again. The earlier shared-X result remains unresolved only as to whether a Takedown prompt was visible after remapping. Do not repeat the same profile; the game's own action/animation is the outcome, and an XInput report cannot observe it.
 
 This exception is preferred before invasive hooks because a successful built-in mapping would remove the need to develop a fragile game-action dispatcher. It does **not** certify the project's plugin, 1.0.8 compatibility, or other AC4 control contexts.
 
@@ -89,8 +89,8 @@ Before an eventual one-session game check, the reporter now observes Xbox X/Y/A/
 
 ### Research pivot: owner already confirmed the dual-binding collision
 
-The owner tested binding Attack and Takedown to one button; ordinary Attack won. X-001 is **deferred**, not a requirement to repeat that binding. The recorded prompt/eligibility condition is unknown, but extending raw XInput logs does not resolve it. The immediate engineering effort is identification of game action availability and a callable native dispatcher. A new [offline two-phase X bridge](../include/acbf/action_bridge.h) now has unit-tested safety gates, but **no corresponding game APIs exist in this repo**.
+The owner tested binding Attack and Takedown to one button; ordinary Attack won. On 2026-11-17, the owner clarified that native Resynced shows a Y prompt when a Takedown is available and uses Y to perform it. The prompt state during the earlier shared-button test is still unknown. X-001 is **deferred**, not a requirement to repeat that binding. Extending raw XInput logs does not resolve prompt visibility or native command selection. A new [offline two-phase X bridge](../include/acbf/action_bridge.h) has unit-tested safety gates, but **no corresponding game APIs exist in this repo**.
 
 ### Required physical-button impact query for any future gameplay PR
 
-Before a PR that consumes an X/Y/A/B/LB/RB/LT/RT (or stick/D-pad) input is reviewed, run [the offline impact report](INPUT_IMPACT.md) against **the same input in both games**. Review every exact and unknown mapping, including ship, water, tools, foot combat, counter follow-up and menus. All unverified binding/priority cases must remain **native pass-through**, not be silently dropped. The tool's decision is always `DENIED_UNVERIFIED_GAME_CONTEXT`; it only identifies potential regressions and does not certify an implementation. Current #18 audit remains open.
+For each physical input a feature consumes, use [the offline impact report](INPUT_IMPACT.md) to enumerate collisions in the feature's supported context. Review actions sharing the suppressed event there. Keep every other mode and ambiguous state native-pass-through. The report is impact inventory only; it does not grant or deny implementation by itself. The global classic profile still needs the full relevant catalog, but an isolated slice does not.

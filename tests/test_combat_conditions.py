@@ -47,7 +47,7 @@ class CombatConditionsContract(unittest.TestCase):
         self.assertTrue((ROOT / "docs" / "COMBAT_CONDITIONS.md").is_file())
         self.assertFalse((ROOT / "packaging" / "installable.json").exists())
         self.assertEqual(self.ledger["audit_status"],
-                         "INCOMPLETE_NO_GAME_HOOKS")
+                         "INCOMPLETE_FEATURE_SCOPED")
         self.assertEqual(self.ledger["combat_condition_catalog"],
                          "research/combat_conditions.json")
 
