@@ -50,9 +50,9 @@ These links describe independently published projects and **do not** establish a
 
 **Option A — configuration-only remapping:** reversible, no executable hooks, but does not solve verified context-priority failures. Keep as optional degraded profile, **not** as proof of an AC4-like mod.
 
-**Option B — original standalone x64 ASI + pure decision core:** **preferred investigation**. Separate input collection, verified context/eligibility, decision rules, and action dispatch. Require strict executable fingerprint and fallback for unsupported versions. Do not assume old patterns/offsets can be used verbatim.
+**Option B — original standalone x64 ASI + pure decision core:** **standalone fallback investigation**. Separate input collection, verified context/eligibility, decision rules, and action dispatch. Require strict executable fingerprint and fallback for unsupported versions. Do not assume old patterns/offsets can be used verbatim.
 
-**Option C — plugin hosted by Puppet Native:** contingency only after confirming a documented interface and whether it can coexist with the user's installed mods.
+**Option C — plugin hosted by Puppet Native:** **conditionally preferred for first read-only integration** if the owner's installed Puppet Native version/loader works. Its documented ABI and this repository's synthetic-tested plugin lifecycle avoid a second project proxy DLL; there is still **no game action API**. If not compatible, evaluate standalone ASI separately.
 
 **Option D — changing packaged game data:** research only if action-level integration is impossible and data edits clearly affect the target rule; conflicts/versioning/permissions make this unsuitable as the initial controller layer.
 
@@ -60,13 +60,13 @@ These links describe independently published projects and **do not** establish a
 
 | Gate | Current verdict | Next evidence |
 | --- | --- | --- |
-| Can original mod logic compile and be tested without games? | **Yes in principle**, with an isolated resolver; no game-facing source currently exists. | Implement pure resolver and CI test fixtures. |
+| Can original mod logic compile and be tested without games? | **Yes, the synthetic decision core/action bridge and diagnostic hosts run in Windows CI.** Native action semantics are still unavailable. | Keep offline tests and require game-semantic proof before marking gameplay supported. |
 | Can an ASI load in an identified environment? | **Plausible; not verified for this project.** | Build safe no-hook diagnostic first, then a single controlled game session if necessary. |
 | Can game context distinguish valid takedown and assassination from attack? | **Unknown; central blocker.** | Public code/disassembly study first; only then read-only in-game probe if unavoidable. |
 | Can selected action be invoked without duplicate binding conflicts? | **Unknown; central blocker.** | A narrow action-dispatch proof, staged disabled until verified. |
 | Can unsupported builds fail closed and be uninstalled cleanly? | **Architectural requirement, not demonstrated.** | Version guard + rollback tests; no unverified patches. |
 
-**Therefore:** not yet safe or honest to ship a playable X-fix. The next implementation should be **an offline, deterministic action-resolution core** with synthetic cases, while continuing the action-dispatch research. It must remain independent of external mod code.
+**Therefore:** not yet safe or honest to ship a playable X-fix. The **offline action-resolution core already exists**; the next decision requires verified game-semantic eligibility/command routing or a precisely bounded data-only experiment, not another generic synthetic resolver. It must remain independent of external mod code.
 
 ## Minimal-risk future diagnostic: a single launch
 
