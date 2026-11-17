@@ -27,15 +27,15 @@ class ControlImpactTests(unittest.TestCase):
                                           "feature_described_binding_unverified"))
         self.assertFalse(ambiguous_binding("X", "source_described_not_runtime_verified"))
 
-    def test_both_games_and_all_buttons_fail_closed(self):
+    def test_both_games_and_all_buttons_produce_impact_only_report(self):
         for game in ("AC4", "ACBFR"):
             for button in BUTTONS:
                 with self.subTest(game=game, button=button):
                     result = analyze(self.ledger, game, button)
                     self.assertEqual(result["override_permission"],
-                                     "DENIED_UNVERIFIED_GAME_CONTEXT")
+                                     "IMPACT_REPORT_ONLY")
                     self.assertEqual(result["audit_status"],
-                                     "INCOMPLETE_NO_GAME_HOOKS")
+                                     "INCOMPLETE_FEATURE_SCOPED")
                     self.assertTrue(result["scope"].startswith("ALL_"))
                     self.assertTrue(all(row["runtime_verified"] is False
                                        for row in result["exact_binding_actions"]+

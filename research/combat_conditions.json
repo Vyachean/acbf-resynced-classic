@@ -1,7 +1,8 @@
 {
   "schema_version": 1,
   "status": "RESEARCH_ONLY_INCOMPLETE",
-  "updated": "2026-11-15",
+  "updated": "2026-11-16",
+  "current_target": "User-reported offline TU 1.0.6 under C:/Games; executable fingerprint and gameplay compatibility remain unverified",
   "intended_build": "Resynced TU 1.0.6 (owner's reported edition; executable fingerprint unverified)",
   "source_registry": {
     "original_enemy_archetypes": {

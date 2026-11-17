@@ -2,9 +2,11 @@
 
 The roadmap is ordered by **uncertainty reduction and observable gameplay value**, not calendar dates. A completed research deliverable is **not** a validated runtime capability.
 
-## Phase 0 — Whole-system controls audit (ACTIVE P0)
+## Phase 0 — Whole-system controls inventory (ongoing reference)
 
-**New mandatory gate — [issue #18](https://github.com/Vyachean/acbf-resynced-classic/issues/18).** The earlier per-button baseline and mock-only resolver are NOT a verified AC4 behavior model. All game-facing input interception, remapping, action suppression, native action hooks, and playable distribution are **blocked** until the full-surface audit is complete.
+The [issue #18 audit](https://github.com/Vyachean/acbf-resynced-classic/issues/18) remains incomplete, but it no longer blocks unrelated feature work. It is a source-labelled reference inventory. A feature may proceed when its exact context, eligibility, command ownership, affected collisions, release behavior, pass-through boundary, rollback and off-by-default state are established. Unknown contexts remain native passthrough.
+
+The feature-scoped gate and current Resynced evidence are recorded in [the Resynced vertical-slice decision](RESYNCED_X_VERTICAL_SLICE.md). It removes the full-catalog prerequisite; it does not authorize guessed state, command or address hooks.
 
 - [x] Build a source-labelled [control-system audit](CONTROL_SYSTEM_AUDIT.md) that distinguishes documented functions from runtime priority.
 - [x] Inventory 25 control surfaces across AC4 and Resynced, including combat phases, stealth, traversal, water, helm/gunnery, UI and special modes.
@@ -21,7 +23,7 @@ The roadmap is ordered by **uncertainty reduction and observable gameplay value*
 - [ ] Verify that existing mock policies for X/B/A do not eliminate original AC4 counter, finishing or traversal actions.
 - [ ] Approve every planned input interception point by target mode, version, action, gesture, cancel/release and fallback; no global remapping.
 
-**Gate exit:** issue #18 explicitly closed with evidence for the first affected action *and* safety for all other affected surfaces. Broad features that remain unverified must stay permanently native passthrough. This gate takes precedence over work on #2, #4 and #10.
+**Gate exit for each feature:** evidence for that feature's supported state and its collision blast radius, with native passthrough elsewhere. The global classic profile still requires the whole relevant input catalog. No single feature must wait for unrelated surfaces.
 
 ## Earlier Phase 0 — Research and baseline (partially completed)
 
@@ -48,17 +50,19 @@ The roadmap is ordered by **uncertainty reduction and observable gameplay value*
 - [x] Implement a **read-only PE import and pre-probe loaded DLL inventory** for input-backend hypotheses; test malformed synthetic PE fixtures in Windows Actions.
 - [ ] Observe **verified in-game** player context/action eligibility and actual action dispatch.
 - [x] Cap local JSON diagnostics (X/Y/A/B/LB/RB/LT/RT edges, no paths or network), and require explicit installation of a diagnostic host.
-- [ ] Add validated semantic event telemetry for the **single comprehensive game test**; no game launch before that.
+- [ ] Add validated semantic telemetry for one combined feature-specific game test when the local build can reach single-player; do not collect generic input traces.
 
 **Exit:** a harmless diagnostic build and testable action resolver (not necessarily playable gameplay changes).
 
-## Phase 2 — First playable milestone: X (BLOCKED by full control audit #18)
+## Phase 2 — First playable milestone: X (blocked by missing semantic seam)
 
-**The earlier X-001 proposed remapping-only test is DEFERRED.** The owner already observed ordinary Attack winning over Takedown when sharing one button. Do not repeat that experiment. More important, **no isolated X fix is safe** until the entire control surface and multi-stage action interactions have been inventoried (issue #18).
+Issue #30 decoded selected combat states from the locally available Resynced executable; the user reports TU 1.0.6. No safe numeric parry patch point or pre-action X command seam has been established. See [the selected-resource findings and scoped gate](RESYNCED_X_VERTICAL_SLICE.md). No game adapter or playable X artifact is claimed.
+
+**The earlier X-001 remapping-only test is deferred for the reported 1.0.6 profile.** The owner already observed ordinary Attack winning over Takedown when sharing one button. Do not repeat the same setup. TU 1.0.8 does not prove a changed input priority. X remains blocked by the missing pre-action eligibility and command seam, not by unrelated audit rows.
 
 - [x] Document baseline AC4 and Resynced controller mapping and **desired** attack, finisher, assassination cases (not yet verified in game).
 - [x] Document a controlled one-launch comparison of native Y takedown and shared-X mapping, with explicit pass/fail/inconclusive decision gates (not yet executed).
-- [x] Implement an **offline-only** two-phase X action bridge contract with six evidence gates, physical input claim, single-shot dispatch and synthetic CTest coverage.
+- [x] Implement an **offline-only** two-phase X action bridge contract with ten feature-scoped safety gates, physical input claim, single-shot dispatch and synthetic CTest coverage.
 - [ ] Identify a game-verified eligibility source and native action dispatcher for Resynced (or document infeasibility).
 - [ ] Implement priority rules only for contexts that can actually be detected.
 - [ ] Verify X attack + finisher + assassination scenarios and non-context behavior.
@@ -66,7 +70,7 @@ The roadmap is ordered by **uncertainty reduction and observable gameplay value*
 
 **Exit:** X behaves consistently in documented scenarios on an explicitly identified game build.
 
-## Phase 3 — Classic controller profile (BLOCKED by full control audit #18)
+## Phase 3 — Classic controller profile (blocked only by each feature's own evidence)
 
 - [ ] Implement context-aware B defense actions (first establish original B counter/dodge details).
 - [ ] Investigate A defense-break equivalent (do not assume Resynced Sweep means AC4 guard-break).

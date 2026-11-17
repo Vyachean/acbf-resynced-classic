@@ -81,12 +81,13 @@ def analyze(ledger: dict, game: str, button: str) -> dict:
         "game": game,
         "physical_button": button,
         "audit_status": ledger["audit_status"],
-        "override_permission": "DENIED_UNVERIFIED_GAME_CONTEXT",
+        "override_permission": "IMPACT_REPORT_ONLY",
         "scope": "ALL_CATALOGUED_SURFACES_NOT_AN_ENGINE_ACTION_GRAPH",
         "exact_binding_actions": sorted(definite, key=key),
         "unknown_binding_actions": sorted(uncertain, key=key),
-        "rule": ("Do not consume this button until every impacted gesture, "
-                 "context and unknown binding is independently proven safe."),
+        "rule": ("Use this inventory to review collisions inside the feature's "
+                 "declared context. Keep unsupported and unknown contexts native "
+                 "pass-through; this report does not authorize or deny a feature."),
     }
 
 def main() -> None:

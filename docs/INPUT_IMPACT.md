@@ -1,7 +1,7 @@
 # Physical-button impact audit: what can an override silently disable?
 
-**Status:** research-only, independent of any game hook. The control system audit is still
-**INCOMPLETE_NO_GAME_HOOKS**. See [#18](https://github.com/Vyachean/acbf-resynced-classic/issues/18).
+**Status:** impact inventory only, independent of any game hook. The control system audit is
+**INCOMPLETE_FEATURE_SCOPED**. See [#18](https://github.com/Vyachean/acbf-resynced-classic/issues/18).
 
 The [complete source-labelled control ledger](../research/control_system_ledger.json)
 is currently the project's best catalog of documented controller actions, but the
@@ -26,7 +26,7 @@ Each command outputs JSON with:
   a physical button (potential collisions, never declared safe);
 - **gesture and context**: press/hold/chord and action conditions, with original
   source identifiers for follow-up;
-- **override_permission = DENIED_UNVERIFIED_GAME_CONTEXT**: no positive verdict.
+- **override_permission = IMPACT_REPORT_ONLY**: this report neither approves nor globally blocks an independent feature.
 
 The analyzer is intentionally lexical. It recognizes face/shoulder buttons,
 triggers, stick clicks, D-pad, View and Menu; \`RT + X\` contributes to both
@@ -73,7 +73,7 @@ and button assignments alone do not establish action equivalence.
 The test suite [tests/test_control_impact.py](../tests/test_control_impact.py)
 exercises the lexer, catches lost high-risk uses of X/B/A/RT/RB/Y, checks
 ambiguous bindings cannot be silently excluded, and insists the analyzer
-returns a **denied** verdict for every button in both games.
+returns an impact-only verdict for every button in both games.
 
 **Do not install or launch anything for this research artifact.** No
 actual game-side input interception, code hooks, suppression, or new

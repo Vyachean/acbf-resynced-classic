@@ -5,9 +5,9 @@
 > [!IMPORTANT]
 > **Experimental diagnostic-only ASI and offline control core.** No playable mod, validated loader, compatible game build, or working action hook exists yet. The Windows diagnostic ASI makes **no game modifications** and is not yet intended for user installation.
 
-## Priority: audit the ENTIRE input systems before gameplay work
+## Priority: ship one safe combat slice at a time
 
-**Gameplay input interception is frozen under [issue #18](https://github.com/Vyachean/acbf-resynced-classic/issues/18).** The earlier controller map covered only high-level button labels; it omitted AC4's **hold B block / tap B counter / second face-button follow-up**, high/low profile effects, tool and ship modes, and Resynced gesture conflicts. See [the whole-system behavior audit](docs/CONTROL_SYSTEM_AUDIT.md) and [its machine-readable source/transition/unknown ledger](research/control_system_ledger.json). The audit is **INCOMPLETE**; only offline research, non-game observability and design validation may proceed. No new gameplay hook is allowed until affected surfaces and fallbacks have been justified.
+The whole-system control audit remains useful reference material, but its completion is **not a prerequisite** for a narrowly scoped feature. Each proposed change must prove its exact game build, input ownership, eligibility, affected-action collisions, complete press/hold/release handling and rollback. It must be off by default and pass every unsupported or unknown context through natively. Unrelated surfaces can remain unaudited while untouched. See [the audit](docs/CONTROL_SYSTEM_AUDIT.md) and [the evidence ledger](research/control_system_ledger.json).
 
 ## Goal
 
@@ -22,7 +22,7 @@ This is an independent, unofficial fan project and is not affiliated with or end
 | Priority | Desired behavior | Initial acceptance criterion |
 | --- | --- | --- |
 | P0 | **X: attack / finish / contextual assassination** | A single X binding chooses the correct action in each tested context, without disabling finishers. |
-| P0 | **B: counter / dodge** | One B input resolves sensibly by context; exact parry/dodge rules to be verified against AC4. |
+| P0 | **B: combat defense / world interaction** | Preserve Resynced parry/evasion in combat; use B for clearly prompted noncombat Y interactions. Unknown contexts pass through. |
 | P1 | **A: guard break** | Execute the intended guard-break action without a modifier, if game interfaces permit. |
 | P1 | **RT: high-profile movement** | Make high-profile traversal behave more like AC4, subject to investigation. |
 | Later | Other actions, weapon selection, combat pacing, parkour | Decide separately after the input layer is proven. |
@@ -39,20 +39,22 @@ These mappings express **design targets**, not claims that the target game's int
 - **Modular boundaries.** Input handling, state detection, action decisions, and game integration should remain separable.
 - **Rare, purposeful manual testing.** Use focused builds and diagnostic logs rather than repeated guesswork.
 
-## Current technical conclusion (2026-11-15)
+## Current technical conclusion (2026-11-16)
 
-Public research confirms a plausible x64 ASI distribution path and published **movement-state** instrumentation in an unrelated mod. It **does not confirm** a safe way to detect takedown/assassination eligibility or invoke either action independently. Built-in shared-button remapping has contradictory community reports; no runtime integration is yet implemented. See the [evidence register](docs/RESEARCH.md).
+Public research confirms community use of x64 ASI loading and published **movement-state** instrumentation in an unrelated mod. Ubisoft's latest major update, TU 1.0.8, restores several original-game takedown animations, but does not establish original AC4 input priority. The owner reports that an available Resynced Takedown displays a Y prompt and is performed with Y. There is still no verified programmatic way to read that eligibility cue or invoke either action independently. No runtime integration is implemented. See the [evidence register](docs/RESEARCH.md).
 
 ## Status and compatibility
 
 **Status:** Windows Actions builds and tests the C++ controller core **and a read-only diagnostic ASI**, including a synthetic host loading the actual DLL. There is **no playable gameplay mod** and **no in-game validation** yet.
 
+An additional **offline original-AC4 combat model** now makes the documented guard → counter → follow-up sequence executable, including the Brute, double-counter and human-shield exceptions. It is a standalone policy model: it is not linked to the ASI, does not represent verified Resynced behavior, and does not change the playable-mod status. See [the model and verification boundary](docs/LEGACY_COMBAT_MODEL.md).
+
 | Target | Status |
 | --- | --- |
-| ACBFR 1.0.6 | Not verified |
-| ACBFR 1.0.8 | Not verified |
+| ACBFR 1.0.6 (user-reported offline target) | Executable fingerprint and gameplay behavior not validated |
+| ACBFR 1.0.7–1.0.8 | Later updates; their fixes are not assumed in the 1.0.6 target |
 | Windows controllers / input APIs | To be investigated |
-| ASI loading and coexistence with other mods | To be investigated |
+| Community x64 ASI route | Demonstrated by current Resynced mods; this project's loader compatibility/coexistence unverified |
 | Original AC4 reference behavior | To be documented and tested |
 
 No DRM bypass or unauthorized game redistribution is part of this project. Users must provide their own lawful copy of the game.
@@ -69,9 +71,11 @@ Start from **[the dual-game modding knowledge base](docs/knowledge/README.md)** 
 - [Proposed architecture](docs/ARCHITECTURE.md) — preliminary design, not yet implemented
 - [Test protocol](docs/TESTING.md) — focused player testing and diagnostic reports
 - [Research register](docs/RESEARCH.md) — evidence and outstanding technical questions
-- [Whole control-system audit](docs/CONTROL_SYSTEM_AUDIT.md) — 25 gameplay surfaces, multi-step actions, source quality and blocking unknowns (**mandatory**)
+- [Whole control-system audit](docs/CONTROL_SYSTEM_AUDIT.md) — 25 gameplay surfaces, multi-step actions, source quality and unknowns (reference; scoped feature gate applies)
 - [Audit coverage ledger](research/control_system_ledger.json) — machine-readable action/gesture catalog, transition hypotheses, hazards and source registry
 - [Combat action conditions](docs/COMBAT_CONDITIONS.md) — original AC4 enemy-class matchup caveats and officially documented Resynced TU1.0.6/TU1.0.7/TU1.0.8 state fixes; **not runtime eligibility**
+- [Offline original-AC4 combat model](docs/LEGACY_COMBAT_MODEL.md) — executable multi-stage reference policy; no game integration
+- [Offline combat sandbox](docs/COMBAT_ARENA.md) — interactive console arena using the same policy code as its deterministic smoke test; no live game integration
 - [Physical-button impact audit](docs/INPUT_IMPACT.md) — conservative, Python-only report of documented actions that a proposed X/B/A/RT or other physical-button override could disable
 - [Control reference](docs/CONTROL_REFERENCE.md) — older compact AC4 vs Resynced button map, **not** a full behavior model
 - [Integration findings](docs/INTEGRATION_FINDINGS.md) — public modding evidence, licensing, compatibility gates
@@ -86,7 +90,7 @@ Start from **[the dual-game modding knowledge base](docs/knowledge/README.md)** 
 
 ## Immediate validation task
 
-**[X-001](docs/X_INPUT_EXPERIMENT.md) is deferred.** The maintainer already observed the same-button Attack/Takedown collision, and repeating it is not useful without a materially different hypothesis. It tests whether the game's own Attack/Takedown arbitration works under a published complete remapping profile. **No project ASI/DLL, loader changes, scripts, or uploads are required.** Only a visible in-game Takedown outcome can settle the observation. If the exact same profile was already tested, report that earlier result instead of repeating it. The protocol does **not** establish a playable mod or game-hook compatibility.
+**[X-001](docs/X_INPUT_EXPERIMENT.md) is deferred.** The owner reports that native Takedown uses Y and shows a Y prompt when available; a prior shared-button trial made Attack win. The remaining question is whether a Takedown prompt stayed visible under that remapped profile. Do not repeat the same setup. **No project ASI/DLL, loader changes, scripts, or uploads are required.** The protocol does **not** establish a playable mod or game-hook compatibility.
 
 ## Getting started
 

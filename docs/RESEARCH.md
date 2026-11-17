@@ -1,12 +1,12 @@
 # Research register
 
-**Last public-source review:** 2026-11-15. All findings are **informational**; this project has **no tested in-game mod yet**.
+**Last public-source review:** 2026-11-16. Current project target: the user's offline TU 1.0.6 installation; its executable fingerprint and gameplay behavior are not yet validated. TU 1.0.8 is later and is historical comparison only. All findings are **informational**; this project has **no tested in-game mod yet**.
 
 This index separates **authoritative documented behavior**, **third-party source observations**, **user/community reports**, and **unresolved game-engine questions**.
 
 ## Priority gate: whole-system behavior audit
 
-The [whole-system audit](CONTROL_SYSTEM_AUDIT.md) supersedes the earlier button-only reference and is the mandatory gate for implementation. It includes source-labelled [control surfaces, transitions, hazards and P0 unknowns](../research/control_system_ledger.json). A documented *button mapping* is not an engine action arbitration contract. The AC4 B hold/block → tap/counter → second face-button choice is a critical counterexample to the previous simplistic B resolver.
+The [whole-system audit](CONTROL_SYSTEM_AUDIT.md) supersedes the earlier button-only reference as a source-labelled catalog of [control surfaces, transitions, hazards and P0 unknowns](../research/control_system_ledger.json). It is not a global implementation gate: narrow features use the feature-scoped safety checks in the roadmap. A documented *button mapping* is not an engine action arbitration contract. The AC4 B hold/block → tap/counter → second face-button choice is a critical counterexample to the previous simplistic B resolver.
 
 ## Detailed findings
 
@@ -23,6 +23,7 @@ The [whole-system audit](CONTROL_SYSTEM_AUDIT.md) supersedes the earlier button-
 3. Ubisoft documents native input remapping and configurable press/hold/double-tap/toggle behavior.
 4. Ubisoft's title update 1.0.6 included a specific fix for **parkour while holding remapped RT sprint**; TU 1.0.8 changed/expanded takedown variants.
 5. Ubisoft describes Resynced's combat finisher as a distinct action that depends on making opponents vulnerable (e.g. defense break or perfect parry). This is distinct from the original game's advertised control semantics.
+6. Ubisoft released TU 1.0.8 on October 27, 2026 and calls it the final major content update. It restores hidden-blade, unarmed, single-sword and gunblade Takedown animations. Nightmare Mode shortens parry timing and removes the white attack glint. These are **later-version changes** and are not attributed to the user's TU 1.0.6 target. [Official 1.0.8 notes](https://www.ubisoft.com/en-us/game/assassins-creed/news/5Z1RxwznM6CcrkSEVoibmh/ac-black-flag-resynced-title-update-108-patch-notes).
 
 ## Independent projects / evidence with caveats
 

@@ -38,7 +38,7 @@ public:
 };
 
 IntegrationEvidence all_gates() {
-    return {true, true, true, true, true, true};
+    return {true, true, true, true, true, true, true, true, true, true};
 }
 Snapshot combat(Availability attack, Availability takedown) {
     Snapshot snapshot{};
@@ -65,9 +65,9 @@ int main() {
         return pipeline.prepare(Button::X, Edge::Pressed, c, e, sink);
     };
 
-    // Six integration gates are individually necessary; no partial trust.
+    // Each feature-scoped safety gate is individually necessary.
     result(try_x(finisher, {}), Result::Passthrough, "default closed");
-    for (int mask = 0; mask < 6; ++mask) {
+    for (int mask = 0; mask < 10; ++mask) {
         IntegrationEvidence proof = verified;
         switch (mask) {
         case 0: proof.exact_executable_verified = false; break;
@@ -76,6 +76,10 @@ int main() {
         case 3: proof.input_release_handling_verified = false; break;
         case 4: proof.context_eligibility_verified = false; break;
         case 5: proof.native_action_dispatch_verified = false; break;
+        case 6: proof.affected_actions_reviewed = false; break;
+        case 7: proof.unsupported_contexts_passthrough = false; break;
+        case 8: proof.rollback_verified = false; break;
+        case 9: proof.off_by_default_verified = false; break;
         }
         result(try_x(finisher, proof), Result::Passthrough,
                "single missing gate blocks claim and dispatch");

@@ -11,12 +11,12 @@ Success is measured by **player-visible outcomes**, not whether the physical key
 - Primary reference: **original AC4** on an Xbox-style controller.
 - Target: **Black Flag Resynced**, treated as a separate game build and integration surface.
 - First focus: in-combat and nearby-context actions; later traversal and other mechanics.
-- Input API, mod loader, supported builds, and game event hooks are **unverified** until researched.
+- Community x64 ASI loading is documented, but this project's loader compatibility, supported build and game event hooks are **unverified** until tested.
 
 ## Initial target behaviors
 
 1. **X — context-appropriate combat action**: normal hit when appropriate; finishing move when available; contextual assassination in the applicable state. Avoid the observed failure where putting attack and finisher on the same game binding causes the finisher to disappear.
-2. **B — defense**: classic combined-feeling response to parry/counter vs evade, depending on the actual situation. The dispatch criteria must be derived from observed game behavior, not fabricated.
+2. **B — combat defense and world interaction**: preserve Resynced parry/evasion on B during combat; use B for a clearly prompted noncombat Y interaction such as opening a chest. Resolve the prompt/context first and leave unknown contexts native.
 3. **A — defense break**: direct control without the Resynced modifier chord, where technically feasible.
 4. **RT — high-profile movement**: align running/parkour intent with AC4 while avoiding unintended dives or wrong contextual actions, when a reliable input or movement seam exists.
 5. Later candidate work: weapon switching, contextual action priorities, animation or combat pacing, traversal tuning.
@@ -43,6 +43,6 @@ The ordering and exact rules are **working requirements**, subject to reference 
 
 ## Definition of first playable milestone
 
-A test build in a **specified** ACBFR version demonstrably resolves X to attack or finishing action by context, without breaking either action in the documented test scenarios; it can be disabled without modifying installed game files, and its logs contain enough information to reproduce unexpected dispatch.
+A test build in a **specified** ACBFR version demonstrably resolves X to attack or finishing action by context, without breaking either action in the documented test scenarios; it can be disabled without modifying installed game files, and its logs contain enough information to reproduce unexpected dispatch. Follow-up B behavior must keep combat defense native while routing explicitly prompted noncombat interactions.
 
 This milestone does **not** mean combat is fully restored to AC4.

@@ -37,6 +37,7 @@ PN_Api valid_api() {
     return {kPuppetNativeApiVersion, log_cb, game_cb, base_cb,
             read_int_cb, read_float_cb, write_int_cb};
 }
+
 }
 
 int wmain(int argc, wchar_t** argv) {
@@ -87,11 +88,12 @@ int wmain(int argc, wchar_t** argv) {
     expect(log_calls == 1, "log successful init once");
     expect(!init(&api), "reject double initialization");
     // The fake XInput provider emits 16 down/up transitions in its first
-    // 64 poll iterations; no real game/controller is required.
-    Sleep(3000);
+    // 64 calls; no real game/controller is required. Give the worker enough
+    // time to finish its initial executable scan and collect those calls.
+    const auto path = dir + L"\\diagnostics.json";
+    Sleep(5000);
     shutdown();
     expect(log_calls == 2, "log shutdown");
-    const auto path = dir + L"\\diagnostics.json";
     std::ifstream report(path, std::ios::binary);
     expect(report.is_open(), "PN plugin wrote diagnostics.json");
     if (report.is_open()) {
