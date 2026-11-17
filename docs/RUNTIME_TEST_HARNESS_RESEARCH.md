@@ -1,5 +1,8 @@
 # Runtime test harness and controlled combat testing — external-tool leads
 
+
+> **Broader research index:** [two-game modding knowledge base](knowledge/README.md) with [runtime/native API comparison](knowledge/RUNTIME.md) and [testing methodology](knowledge/TESTING.md). This page retains detailed instrument investigations.
+
 **Research date:** 2026-11-17. **Status:** public-source inventory and proposed architecture; **no in-game tests, engine NPC-control API, or Resynced 1.0.6 compatibility confirmed**. This document records tools worth evaluating, not dependencies or permission to install them. Related: [integration findings](INTEGRATION_FINDINGS.md), [single-session strategy](TEST_STRATEGY.md), [Puppet Native ABI](PUPPET_NATIVE.md), and issues [#30](https://github.com/Vyachean/acbf-resynced-classic/issues/30), [#10](https://github.com/Vyachean/acbf-resynced-classic/issues/10), [#18](https://github.com/Vyachean/acbf-resynced-classic/issues/18).
 
 > **Broader resources:** See [the Resynced modding ecosystem survey](MODDING_ECOSYSTEM.md) for source-checked patch-FORGE authoring, combat/AI data-mod leads, animation-speed hooks and manager/version restrictions. This document remains focused on runtime test automation.
