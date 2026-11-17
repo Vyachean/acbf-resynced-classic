@@ -61,6 +61,10 @@ The pure module is built with C++17/CMake in GitHub Actions on Windows. `ctest` 
 
 The Windows build packages **diagnostic-only** ASI/Puppet Native host alternatives, not the native action bridge. The action bridge links with the pure core; its fake native sink is compiled only into its CTest executable. No playable mod is currently packaged.
 
+## Separate original AC4 reference policy (offline only)
+
+The [legacy combat model](LEGACY_COMBAT_MODEL.md) is an **independent** original-AC4 guard/counter/follow-up policy with a [deterministic console scenario](COMBAT_ARENA.md). It receives explicit synthetic phase/target labels and does **not** replace the current `resolve_b()` hypothesis or integrate with Resynced input. Its presence does not satisfy a feature-scoped native hook gate (#18) and cannot be advertised as an in-game arena.
+
 ## Physical-button collision prerequisite
 
 [Input impact analyzer](INPUT_IMPACT.md) derives every documented X/B/A/RT
