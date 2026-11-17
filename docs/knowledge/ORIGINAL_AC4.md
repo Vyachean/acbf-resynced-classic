@@ -66,6 +66,10 @@ Resource and gameplay mod descriptions are valuable because they identify *class
 - [AC4 Modular Patch #1031 (alpha, Oct 2026)](https://www.nexusmods.com/assassinscreedivblackflag/mods/1031) author reports PhysX/cloth/high-FPS fixes, **only exact original Steam x86 executable**, uses `dinput8.dll`, `nvcuda.dll` and runtime patch components; warns to stop on existing conflicting proxies. **Do not run this merely because the game is “Steam AC4.”** Author's own package indicates antivirus warnings and limited hardware validation.
 - [Original AC4 camera tool](https://github.com/LionAG/ACBlackFlag-CameraTool) is the strongest explicit old-game world-stop/photomode interface found in open source; its author has a **specific** Uplay build target.
 
+## Historical local static research
+
+A sanitized [installed-game evidence checkpoint](LOCAL_STATIC_EVIDENCE_2026-11-15.md) consolidates the completed read-only investigation from historical PR #27: bounded v27 archive typed parsing and a Ghidra-observed logical input-edge → candidate resolution → conditional virtual handler → typed engine-message route. **Actor ownership and action meaning are unverified**. Do not confuse this with an identified player attack/takedown command.
+
 ## AC4 research gaps
 
 1. Identify original game's **actual** `DataPC.forge` resource for enemy attack cadence and counter windows, with provenance, not copying mods.
