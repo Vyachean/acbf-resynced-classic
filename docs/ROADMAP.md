@@ -42,6 +42,7 @@ The roadmap is ordered by **uncertainty reduction and observable gameplay value*
 - [x] Build an original, read-only x64 **diagnostic ASI** and exercise DLL loading/report generation in a **synthetic CI host**.
 - [ ] Validate the actual **ASI loader and Resynced game integration**, as part of a future combined session.
 - [x] Introduce an isolated, deterministic **candidate** contextual-action resolver and press edge tracker with synthetic test cases (not connected to a game).
+- [x] Independently implement the **original AC4 staged guard/counter/follow-up** policy as an offline reference and deterministic CLI sandbox (not an in-game arena); see [legacy model](LEGACY_COMBAT_MODEL.md).
 - [x] Add a **non-modifying** diagnostic module that reports executable SHA-256, loaded local ASIs/proxies and XInput edges; **not** native gameplay context.
 - [ ] Add version-safe, semantic game-state observation and fail-closed action hook integration.
 - [x] Observe XInput button transitions in an external read-only observer (tested in a synthetic host and deterministic fake XInput provider).
