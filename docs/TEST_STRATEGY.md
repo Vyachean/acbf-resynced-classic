@@ -1,8 +1,8 @@
 # Single-session game testing strategy
 
-## Global audit gate before game-facing integration
+## Feature-scoped audit gate before game-facing integration
 
-[Control-system audit #18](CONTROL_SYSTEM_AUDIT.md) is a **P0 prerequisite** for any physical-input suppression or action override. CI tests of a synthetic X action bridge are not proof the original game behavior has been reconstructed. Preserve guard/counter follow-ups, high/low profile, parkour settings and ship/water/menu behavior before proposing a gameplay test. No further duplicate owner remapping experiments.
+[Issue #18](https://github.com/Vyachean/acbf-resynced-classic/issues/18) requires a **P0 safety review for the affected contexts and shared inputs of each proposed feature**. A global classic profile additionally requires the broad [control-system audit](CONTROL_SYSTEM_AUDIT.md). CI tests of a synthetic X action bridge do not prove original game behavior. Preserve counter follow-ups and profile modifiers where affected, and ensure ship/water/menu and all unverified modes remain **native pass-through**. Do not repeat the owner's already-observed remapping failure.
 
 ## Primary constraint: avoid game launches
 

@@ -4,15 +4,15 @@
 
 This index separates **authoritative documented behavior**, **third-party source observations**, **user/community reports**, and **unresolved game-engine questions**.
 
-## Priority gate: whole-system behavior audit
+## Safety gate: specific feature first, whole-system audit for global profile
 
-The [whole-system audit](CONTROL_SYSTEM_AUDIT.md) supersedes the earlier button-only reference and is the mandatory gate for implementation. It includes source-labelled [control surfaces, transitions, hazards and P0 unknowns](../research/control_system_ledger.json). A documented *button mapping* is not an engine action arbitration contract. The AC4 B hold/block → tap/counter → second face-button choice is a critical counterexample to the previous simplistic B resolver.
+[Issue #18](https://github.com/Vyachean/acbf-resynced-classic/issues/18) requires **feature-scoped** evidence for game-facing input consumption: every action affected in enabled contexts, exact build, verified native state/dispatch, gestures, release/cancellation, passthrough and rollback. The [whole-system audit](CONTROL_SYSTEM_AUDIT.md) and [coverage ledger](../research/control_system_ledger.json) remain a necessary reference for a global classic profile, not an unrelated prerequisite for narrow work. A documented button map is not an arbitration contract: original AC4 B guard/tap-counter/second face-button actions disprove the simplistic B resolver.
 
 ## Detailed findings
 
 - [AC4 vs Resynced control reference](CONTROL_REFERENCE.md): source-backed Xbox-style mapping, AC4 reference vs Resynced default, release differences and contradictory remap reports.
 - [Resynced integration feasibility](INTEGRATION_FINDINGS.md): x64 ASI examples, source license restrictions, version-aware state hook examples, unverified action dispatcher and decision gates.
-- [Single-session native X experiment](X_INPUT_EXPERIMENT.md): **next controlled proof**, no loader or mod required.
+- [Single-session native X experiment](X_INPUT_EXPERIMENT.md): **deferred** because the owner already observed a same-button attack/takedown conflict; repeat only for a new concrete hypothesis.
 - [Single-session test strategy](TEST_STRATEGY.md): exhaust CI before any mod-based runtime diagnostic.
 - [Machine-readable scenarios](../research/reference_scenarios.json): **design-only fixture**, not actual game results.
 
@@ -37,7 +37,7 @@ Full URLs and study-only license caveats are in [integration findings](INTEGRATI
 
 User testing reports that placing X attack and finisher on the same binding causes only ordinary attacks. Some July 2026 community accounts say this combination worked in particular contexts, while other reports describe attacks overriding assassination. **The result may depend on player state, input mode and game version.** Neither side supplies a complete engine-level priority model.
 
-For the first playable feature, **first test whether the game's own input dispatcher** correctly selects a finisher under an exact, publicly demonstrated dual-X layout. This is the no-mod [X-001 experiment](X_INPUT_EXPERIMENT.md). **Only if that fails with a functioning native Y control** should we prioritize acquiring verified action eligibility and independent dispatch; physical XInput traces are insufficient.
+**Do not repeat the already-observed same-button Attack/Takedown failure** without an independently grounded new question. [X-001](X_INPUT_EXPERIMENT.md) is deferred; the next critical proof is **verified native pre-action eligibility plus an independently invokable logical command** (or a precise blocker). The original Y takedown baseline and context of the old observation remain incompletely documented; do not claim the mapping fails in every situation.
 
 ## Evidence and unknowns
 
@@ -79,7 +79,7 @@ The 2013 [Prima Advanced Tips](https://primagames.com/tips/assassins-creed-4-bla
 
 - The original [Prima combat guide](https://primagames.com/eguides/assassins-creed-iv-black-flag-eguide/primer/combat) describes an exceptional **B-initiated double counter kill without a second input** when two melee enemies threaten Kenway simultaneously, a **repeat-A guard break followed by knockdown**, and a **human shield** during a firearm warning. The **A** button for human shield is explicitly corroborated by a [2013 Xbox achievements guide](https://www.xboxachievements.com/game/assassins-creed-4-black-flag-xbox-one/guide/). No actual runtime priority or timing threshold is inferred from these texts.
 - The Resynced [launch controls table](https://canary.shacknews.com/article/149927/assassins-creed-black-flag-resynced-controls) includes **LB press Parry / hold LB Observe**, **RB Attack / RB Hold Heavy / RB while perched Hang Enemy Below**, and **R3 press Lock On / hold R3 Eagle Vision / double-tap R3 HUD**. These are launch-era button descriptions; behavior on the owner's **1.0.6** is unknown.
-- These cases are now explicit in `research/control_system_ledger.json` with independently validated IDs, sources and default-false engine-priority assertions. The gameplay-input freeze remains in force; no repeat of the user-observed dual-binding failure.
+- These cases are now explicit in `research/control_system_ledger.json` with independently validated IDs, sources and default-false engine-priority assertions. The feature-scoped game-input safety gate remains in force; no repeat of the user-observed dual-binding failure.
 
 ## Enemy archetype matchups and title-update action-state boundaries
 

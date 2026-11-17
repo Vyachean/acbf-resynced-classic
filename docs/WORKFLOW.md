@@ -39,7 +39,7 @@ The repository was initialized by two direct documentation commits **before** th
 
 **Default: zero game launches for research and development.** First exhaust public documentation, source code, static analysis of legally obtained materials, synthetic test fixtures, and CI tests.
 
-For a **pure built-in control experiment** that needs no mod (see [X-001](X_INPUT_EXPERIMENT.md)), first attempt one controlled, single-session comparison **without** installing diagnostic binaries. This can prove or disprove the user's observed behavior without loader interference. It cannot observe engine eligibility or verify a mod. Do not require a CI artifact for a test that installs no mod.
+For a **pure built-in control experiment** needing no mod (see [X-001](X_INPUT_EXPERIMENT.md)), an earlier owner observation already found a same-button Attack/Takedown collision. **X-001 is deferred** unless a new, materially different hypothesis justifies a bounded test. A no-mod experiment does not require a CI artifact and cannot establish engine eligibility or verify a game mod.
 
 When a **mod-based** real game launch is unavoidable, prepare **a comprehensive, version-safe, opt-in diagnostic build**:
 
@@ -69,15 +69,15 @@ No unchecked TODO is silently represented as a completed game feature.
 
 ## Mandatory pre-implementation audit gate
 
-**Issue [#18](https://github.com/Vyachean/acbf-resynced-classic/issues/18) blocks gameplay-facing input changes.** Before accepting a PR that installs an input hook, disables native input, remaps player actions, or marks a version playable, require:
+**Issue [#18](https://github.com/Vyachean/acbf-resynced-classic/issues/18) governs gameplay-facing input changes through a feature-scoped gate.** The whole-system audit is an ongoing reference and is mandatory for a **global** profile, not an independent prerequisite for every narrow feature. Before accepting a PR that installs an input hook, disables native input, remaps player actions, or marks a version playable, require:
 
-- [Source-labelled control-system audit](CONTROL_SYSTEM_AUDIT.md) updated for **every affected surface**, including ship, water, menus and special states.
+- [Source-labelled control-system audit](CONTROL_SYSTEM_AUDIT.md) updated for **every affected context and all uses of consumed input in that context**. All unrelated or unknown ship, water, menus and special states must stay **native pass-through**, not be guessed or intercepted.
 - All input gestures, RT/LT modifiers, tap/hold/release, secondary counter commands and mode transitions that share the button inventoried.
-- All candidate AC4-vs-Resynced semantic equivalences verified, *especially* B hold-block / tap-counter submenu and separate Resynced parry/dodge.
+- All **relevant** candidate AC4-vs-Resynced semantic equivalences verified for the enabled feature, *especially* B hold-block / tap-counter submenu whenever B is affected, and separate Resynced parry/dodge when defense inputs are affected.
 - Exact executable/version gates and native fallback when current game mode or action eligibility is unknown.
 - No unexplained behavior changes to unrelated original actions.
 
-The current offline C++ resolver is a **hypothesis**, not a reference implementation. Passing synthetic CTest does not satisfy this gate. A research PR may add evidence and coverage without opening the gate; do not close #18 prematurely.
+The current offline C++ resolver is a **hypothesis**, not a reference implementation. Passing synthetic CTest does not satisfy this gate. A research PR may add evidence and coverage without opening the gate. A narrow feature can pass its own scoped gate while the broader catalog remains open; do not close #18 prematurely.
 
 ## Security and compatibility
 

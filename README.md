@@ -5,9 +5,9 @@
 > [!IMPORTANT]
 > **Experimental diagnostic-only ASI and offline control core.** No playable mod, validated loader, compatible game build, or working action hook exists yet. The Windows diagnostic ASI makes **no game modifications** and is not yet intended for user installation.
 
-## Priority: audit the ENTIRE input systems before gameplay work
+## Priority: safe, feature-scoped classic combat improvements
 
-**Gameplay input interception is frozen under [issue #18](https://github.com/Vyachean/acbf-resynced-classic/issues/18).** The earlier controller map covered only high-level button labels; it omitted AC4's **hold B block / tap B counter / second face-button follow-up**, high/low profile effects, tool and ship modes, and Resynced gesture conflicts. See [the whole-system behavior audit](docs/CONTROL_SYSTEM_AUDIT.md) and [its machine-readable source/transition/unknown ledger](research/control_system_ledger.json). The audit is **INCOMPLETE**; only offline research, non-game observability and design validation may proceed. No new gameplay hook is allowed until affected surfaces and fallbacks have been justified.
+**[Issue #18](https://github.com/Vyachean/acbf-resynced-classic/issues/18) defines a feature-scoped safety gate.** A narrow game-facing input change may proceed only after its own target build, affected contexts and shared inputs, native action source, release/cancel handling, safe passthrough, off-by-default activation and rollback are verified. **None has passed those game-integration gates on `main`.** The [whole-system audit](docs/CONTROL_SYSTEM_AUDIT.md) and [coverage ledger](research/control_system_ledger.json) remain **incomplete** but gate a *global* classic-control profile, not every independent slice. AC4's **hold B guard / tap B counter / second face-button follow-up**, high/low profiles and ship/tool modes must not be silently broken.
 
 ## Goal
 
@@ -39,13 +39,13 @@ These mappings express **design targets**, not claims that the target game's int
 - **Modular boundaries.** Input handling, state detection, action decisions, and game integration should remain separable.
 - **Rare, purposeful manual testing.** Use focused builds and diagnostic logs rather than repeated guesswork.
 
-## Current technical conclusion (2026-11-15)
+## Current verified status (2026-11-17)
 
-Public research confirms a plausible x64 ASI distribution path and published **movement-state** instrumentation in an unrelated mod. It **does not confirm** a safe way to detect takedown/assassination eligibility or invoke either action independently. Built-in shared-button remapping has contradictory community reports; no runtime integration is yet implemented. See the [evidence register](docs/RESEARCH.md).
+`main` has an offline resolver/action-bridge contract, synthetic-tested x64 diagnostic host alternatives and a [dual-game modding knowledge base](docs/knowledge/README.md). There is **no playable game integration** and no verified way to read pre-action takedown/assassination eligibility or dispatch native commands in Resynced. Unmerged [PR #31](https://github.com/Vyachean/acbf-resynced-classic/pull/31) separately reports a local 1.0.6 launch with a reversible data-patch candidate **without confirmed gameplay effect**; its arena is an offline simulator. See the [project status and PR queue](docs/PROJECT_STATUS.md), not PR-only claims, for what is actually in `main`.
 
 ## Status and compatibility
 
-**Status:** Windows Actions builds and tests the C++ controller core **and a read-only diagnostic ASI**, including a synthetic host loading the actual DLL. There is **no playable gameplay mod** and **no in-game validation** yet.
+**Status of `main`:** Windows Actions builds and tests the C++ controller core and **two alternative read-only diagnostic hosts** (standalone ASI and Puppet Native plugin) against synthetic processes. There is **no playable Resynced mod** or in-game validation of these project-owned hosts.
 
 | Target | Status |
 | --- | --- |
@@ -53,17 +53,17 @@ Public research confirms a plausible x64 ASI distribution path and published **m
 | ACBFR 1.0.8 | Not verified |
 | Windows controllers / input APIs | To be investigated |
 | ASI loading and coexistence with other mods | To be investigated |
-| Original AC4 reference behavior | To be documented and tested |
+| Original AC4 reference behavior | Partly documented; in-game command semantics not fully verified |
 
 No DRM bypass or unauthorized game redistribution is part of this project. Users must provide their own lawful copy of the game.
 
-## Project documents
 ## Modding knowledge base (original AC4 + Resynced)
 
 Start from **[the dual-game modding knowledge base](docs/knowledge/README.md)** for the source-indexed research on Anvil/Scimitar formats, AC4 2013 x86 and Resynced x64, modding tools, asset formats, native hooks, gameplay changes, automation and research gaps. Its [source register](docs/knowledge/SOURCES.md) and [machine-readable catalog](research/modding_sources.json) separate primary evidence from mod-author claims and index 88 public sources. The knowledge base is **research**, not a claim of a playable mod or verified compatibility with the owner's build.
 
+## Project documents
 
-
+- [Current project status and PR queue](docs/PROJECT_STATUS.md) — canonical as-of snapshot; live status remains in GitHub Issues and PRs
 - [Scope and non-goals](docs/SCOPE.md) — target experience and boundaries
 - [Roadmap](docs/ROADMAP.md) — research, implementation, validation, and release gates
 - [Proposed architecture](docs/ARCHITECTURE.md) — preliminary design, not yet implemented
@@ -84,7 +84,7 @@ Start from **[the dual-game modding knowledge base](docs/knowledge/README.md)** 
 - [Diagnostic ASI](docs/DIAGNOSTICS.md) — experimental read-only Windows observer, built by Actions and tested only with a synthetic host
 - [Contributing](CONTRIBUTING.md) — issue reports and contribution rules
 
-## Immediate validation task
+## Existing built-in remapping observation (deferred)
 
 **[X-001](docs/X_INPUT_EXPERIMENT.md) is deferred.** The maintainer already observed the same-button Attack/Takedown collision, and repeating it is not useful without a materially different hypothesis. It tests whether the game's own Attack/Takedown arbitration works under a published complete remapping profile. **No project ASI/DLL, loader changes, scripts, or uploads are required.** Only a visible in-game Takedown outcome can settle the observation. If the exact same profile was already tested, report that earlier result instead of repeating it. The protocol does **not** establish a playable mod or game-hook compatibility.
 
@@ -96,13 +96,13 @@ Technical observations or reproducible control conflicts can be filed through [G
 
 ## Development workflow and automation
 
-**No game launch by default.** We research and test with public evidence and automated synthetic tests before requesting any in-game diagnostics. For a no-mod control comparison, use one [X-001](docs/X_INPUT_EXPERIMENT.md) game session and a short observed outcome; if a *mod-based* game session later becomes unavoidable, require one CI-built bundle and a sanitized report.
+**No game launch by default.** Research and synthetic tests precede any requested game run. The owner has already observed the same-button Attack/Takedown failure; [X-001](docs/X_INPUT_EXPERIMENT.md) is deferred unless a materially different evidence-backed hypothesis emerges. Any future *mod-based* session requires one compatible CI-built diagnostic and a sanitized report.
 
 - [Development and versioning policy](docs/WORKFLOW.md): feature branches, **squash-only PR merges**, one version tag per completed merge, GitHub Actions as the sole automation/build service.
 - [Single-session diagnostic strategy](docs/TEST_STRATEGY.md): offline-first testing and maximal evidence per game launch.
-- [GitHub Actions CI](.github/workflows/ci.yml): documentation checks, offline tests, and a Windows build/package pipeline that activates once actual source exists.
+- [GitHub Actions CI](.github/workflows/ci.yml): document-contract checks, offline unit tests, Windows x64 builds/tests and separate diagnostic packaging; no playable artifact.
 
-**Project versions are Git tags, not necessarily public releases.** GitHub Actions builds/tests the Windows observer and offline core, and packages the diagnostic ASI separately. A green diagnostic build is **not** proof of game support. A separate Puppet Native ABI v1 plugin is now compiled and lifecycle-tested offline (not packaged for player use).
+**Project versions are Git tags, not necessarily public releases.** GitHub Actions builds/tests the Windows observer and offline core, and packages the diagnostic ASI separately. A green diagnostic build is **not** proof of game support. A Puppet Native ABI v1 plugin is compiled, lifecycle-tested and packaged as an **alternative diagnostic-only artifact** (not a playable release).
 
 ## Legal and licensing
 
