@@ -112,7 +112,6 @@
 | [Combat/Sprint Camera Tweaks #695](https://www.nexusmods.com/assassinscreedivblackflag/mods/695) | AC4 B | Camera animations via data |
 | [AC4Tools Nexus #901](https://www.nexusmods.com/assassinscreedivblackflag/mods/901) | AC4 B | GUI time/camera/noclip, source on GitHub |
 | [AC4 modular PhysX/high-FPS patch #1031](https://www.nexusmods.com/assassinscreedivblackflag/mods/1031) | AC4 B | Very specific original Steam exe, alpha, DLL collisions |
-| [Resorep legacy AC4 setup #15](https://www.nexusmods.com/assassinscreedivblackflag/mods/15) | AC4 C | Old DX11 texture wrapper |
 | [AC4 Vortex extension #971](https://www.nexusmods.com/site/mods/971) | AC4 B | Resorep/full-forge installation automation |
 | [BFR Nexus Vortex extension #1977](https://www.nexusmods.com/site/mods/1977) | BFR A/B | Official Nexus general mod manager |
 | [BFR AC Mods Launcher source README](https://github.com/nickythesmithy/ac-mods-launcher) | BFR A | 1.0.8-only proprietary launcher `.acmod`, not all mods |
