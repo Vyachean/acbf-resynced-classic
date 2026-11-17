@@ -1,6 +1,6 @@
 # Project status and maintenance index
 
-**Snapshot:** 2026-11-17 · **Repository:** [Vyachean/acbf-resynced-classic](https://github.com/Vyachean/acbf-resynced-classic) · **Main source tag confirmed:** `v0.1.17`. This is a **manually reviewed status snapshot**, not an automatic dashboard; use linked [open PRs](https://github.com/Vyachean/acbf-resynced-classic/pulls) and [issues](https://github.com/Vyachean/acbf-resynced-classic/issues) for current state.
+**Snapshot:** 2026-11-17 · **Repository:** [Vyachean/acbf-resynced-classic](https://github.com/Vyachean/acbf-resynced-classic) · **Recent source tag verified before this increment:** `v0.1.19`. This is a **manually reviewed status snapshot**, not an automatic dashboard; use linked [open PRs](https://github.com/Vyachean/acbf-resynced-classic/pulls) and [issues](https://github.com/Vyachean/acbf-resynced-classic/issues) for current state.
 
 ## Product goal and actual evidence
 
@@ -30,14 +30,14 @@ This does **not** mean any current prototype has passed the feature gate. A synt
 
 ## Open pull request review queue (as of snapshot)
 
+**Research cleanup:** historical draft PRs [#27](https://github.com/Vyachean/acbf-resynced-classic/pull/27) and [#32](https://github.com/Vyachean/acbf-resynced-classic/pull/32) are **closed as superseded**, not merged. Their distinct findings were curated and squash-merged via [PR #39](https://github.com/Vyachean/acbf-resynced-classic/pull/39) into [sanitized static evidence](knowledge/LOCAL_STATIC_EVIDENCE_2026-11-15.md) and the 90-source KB. The ongoing underlying research issues remain open. The independent, synthetic original-AC4 policy part of #31 is being integrated separately; the game-facing evidence and broad draft remain in #31 until independently reviewed.
+
 | PR | Scope | Integration / review boundary |
 | --- | --- | --- |
-| [#27](https://github.com/Vyachean/acbf-resynced-classic/pull/27) | **Research only:** installed-game static and GFL evidence, unresolved actor linkage | Verify confidentiality and evidence grade, then CI / squash. Keep separate from native observer |
 | [#29](https://github.com/Vyachean/acbf-resynced-classic/pull/29) | **Original AC4 x86** diagnostic ASI and analyzer, with reported local smoke evidence | Review exact-build guard, source permissions, crash/rollback, output privacy and Windows x86 pipeline; green CI ≠ every hook's semantic validity |
-| [#31](https://github.com/Vyachean/acbf-resynced-classic/pull/31) | Broad feature-safety policy, offline counter model + standalone **offline arena**, experimental BFR patch report | High overlap with README/ROADMAP/audit; reconcile with issue #18 and this status document before merge. Do **not** classify the offline arena as in-game NPC control |
-| [#32](https://github.com/Vyachean/acbf-resynced-classic/pull/32) | Research comparison of community combat mods | Check sources/claim scope and whether text is already covered by merged knowledge base; if duplicate, link or condense, avoid parallel contradictory summaries |
+| [#31](https://github.com/Vyachean/acbf-resynced-classic/pull/31) | Large overlapping policy/control research and an unverified BFR data-patch candidate | This offline reference model is extracted independently; remaining PR must be split/reconciled. Successful Forge boot is **not** a proven parry improvement |
 
-**Integration order:** finish small non-overlapping research/housekeeping decisions first. Do not merge #27/#29/#31/#32 in bulk or infer their readiness from PR title or local test claims. Before merging any PR, assess whether it overlaps later PRs; keep conflict/rebase responsibility explicit.
+**Integration order:** source-only research is consolidated via #39; this increment isolates the legacy offline policy. Review #29's original AC4 x86 observer **ABI, loader and privacy safety** and #31's **Resynced data/command evidence** separately. Neither is merge-ready just because synthetic CI is green.
 
 ## Where information belongs
 
