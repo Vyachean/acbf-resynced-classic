@@ -2,12 +2,12 @@
 
 > The **pure C++ decision core, sampled-input edge tracker, and gated native action-bridge contract** are now implemented and tested offline. **No ACBFR input API, hook target, memory layout, action invocation, compatible loader, or runtime integration has been verified.**
 
-## Critical design audit / implementation freeze
+## Feature-scoped integration safety gate
 
-**Full-system control audit #18 is mandatory before any game-facing work.**
+**Issue #18 requires a complete audit of every action affected by the specific enabled feature, not closure of the full-system catalog before any game-facing research.**
 See [CONTROL_SYSTEM_AUDIT.md](CONTROL_SYSTEM_AUDIT.md) and its [coverage ledger](../research/control_system_ledger.json). Current `resolve_b()` assumes a one-step choice between counter and dodge; original AC4 instead documents **hold B to block, tap B to enter a counter phase, then a second face-button choice**. Thus the function cannot be treated as a faithful AC4 replica. `resolve_x()` and `resolve_a()` similarly encode **provisional goals**, not recovered runtime priority. **Do not use the existing offline bridge as authorization to suppress any physical input.**
 
-No new game hook or remapping runtime shall be enabled until all other actions sharing that input have been analyzed across contexts, press/hold/release, modifiers, target states and game versions. An unmodeled mode must pass through without consuming game input.
+No consuming game hook or remapping runtime shall be enabled until every action sharing its input **in supported contexts**, press/hold/release, modifiers, target states and exact game version is analyzed and proven safe. Unsupported and unknown contexts must pass through without consuming game input. The global multi-surface audit remains necessary for a full classic profile.
 
 ## Design objective
 
