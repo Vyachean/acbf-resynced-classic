@@ -57,7 +57,7 @@ class ProjectGovernanceTests(unittest.TestCase):
     def test_unverified_game_features_are_not_claimed(self):
         status = (ROOT / "docs/PROJECT_STATUS.md").read_text(encoding="utf-8")
         self.assertIn("No playable Resynced mod", status)
-        self.assertIn("not in-engine", status.lower() if "not in-engine" in status.lower() else "not in-engine")
+        self.assertIn("not an in-engine combat arena", status.lower())
         self.assertIn("synthetic", status.lower())
 
 
