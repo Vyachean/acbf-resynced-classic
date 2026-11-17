@@ -58,6 +58,11 @@ Public research confirms a plausible x64 ASI distribution path and published **m
 No DRM bypass or unauthorized game redistribution is part of this project. Users must provide their own lawful copy of the game.
 
 ## Project documents
+## Modding knowledge base (original AC4 + Resynced)
+
+Start from **[the dual-game modding knowledge base](docs/knowledge/README.md)** for the source-indexed research on Anvil/Scimitar formats, AC4 2013 x86 and Resynced x64, modding tools, asset formats, native hooks, gameplay changes, automation and research gaps. Its [source register](docs/knowledge/SOURCES.md) and [machine-readable catalog](research/modding_sources.json) separate primary evidence from mod-author claims and index 88 public sources. The knowledge base is **research**, not a claim of a playable mod or verified compatibility with the owner's build.
+
+
 
 - [Scope and non-goals](docs/SCOPE.md) — target experience and boundaries
 - [Roadmap](docs/ROADMAP.md) — research, implementation, validation, and release gates
@@ -71,6 +76,7 @@ No DRM bypass or unauthorized game redistribution is part of this project. Users
 - [Control reference](docs/CONTROL_REFERENCE.md) — older compact AC4 vs Resynced button map, **not** a full behavior model
 - [Integration findings](docs/INTEGRATION_FINDINGS.md) — public modding evidence, licensing, compatibility gates
 - [Runtime testing and automation research](docs/RUNTIME_TEST_HARNESS_RESEARCH.md) — verified external tool leads, unknown NPC/arena APIs and proposed deterministic combat test harness
+- [Resynced modding ecosystem](docs/MODDING_ECOSYSTEM.md) — current patch-forge workflow, gameplay-mod evidence, tool compatibility and research priorities
 - [Puppet Native ABI](docs/PUPPET_NATIVE.md) — public plugin API and CI-tested lifecycle bridge, not a gameplay hook
 - [Reference cases](research/reference_scenarios.json) — machine-readable design cases (**not tested in game**)
 - [C++ control core](include/acbf/classic_control.h) — pure, provisional action resolver (no game integration)

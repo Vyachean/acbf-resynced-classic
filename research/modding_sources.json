@@ -1,0 +1,801 @@
+{
+  "schema_version": 1,
+  "reviewed_on": "2026-11-17",
+  "source": "docs/knowledge/SOURCES.md",
+  "notes": "Research-grade source index. A confirms cited upstream content, not runtime compatibility; B is author claim; C secondary; U unverified. No in-game testing is asserted. Before use, re-check URL, license, game architecture and version.",
+  "count": 88,
+  "entries": [
+    {
+      "id": "S001",
+      "title": "Ubisoft TU 1.0.6 patch notes",
+      "url": "https://www.ubisoft.com/en-gb/game/assassins-creed/news/5c72WnN2ot90ii8d9Le1Wt/ac-black-flag-resynced-title-update-106-patch-notes",
+      "category": "Official docs, game mechanics and format authorities",
+      "game_scope": "BFR",
+      "evidence_grade": "A",
+      "annotation": "Parkour/sprint/takedown state changes, not third-party compatibility"
+    },
+    {
+      "id": "S002",
+      "title": "Ubisoft TU 1.0.7 patch notes",
+      "url": "https://www.ubisoft.com/de-de/game/assassins-creed/news/24bBcwoOoYNZ2gt2yi3HdH/ac-black-flag-resynced-title-update-107-patch-notes",
+      "category": "Official docs, game mechanics and format authorities",
+      "game_scope": "BFR",
+      "evidence_grade": "A",
+      "annotation": "Different state fixes from 1.0.6"
+    },
+    {
+      "id": "S003",
+      "title": "Ubisoft TU 1.0.8 patch notes",
+      "url": "https://www.ubisoft.com/en-us/game/assassins-creed/news/5Z1RxwznM6CcrkSEVoibmh/ac-black-flag-resynced-title-update-108-patch-notes",
+      "category": "Official docs, game mechanics and format authorities",
+      "game_scope": "BFR",
+      "evidence_grade": "A",
+      "annotation": "Later update, not assumption for target 1.0.6"
+    },
+    {
+      "id": "S004",
+      "title": "Ubisoft Resynced combat breakdown",
+      "url": "https://www.ubisoft.com/en-gb/game/assassins-creed/news/1A8XkbnvONciecEZm9my1C/assassins-creed-black-flag-resynced-combat-system-breakdown",
+      "category": "Official docs, game mechanics and format authorities",
+      "game_scope": "BFR",
+      "evidence_grade": "A",
+      "annotation": "Parry/dodge/attack classes and adaptive enemies"
+    },
+    {
+      "id": "S005",
+      "title": "Ubisoft Resynced input customization",
+      "url": "https://www.ubisoft.com/en-gb/help/assassins-creed-black-flag-resynced/gameplay/article/customising-controls-in-assassin-s-creed-black-flag-resynced/000116769",
+      "category": "Official docs, game mechanics and format authorities",
+      "game_scope": "BFR",
+      "evidence_grade": "A",
+      "annotation": "Press/hold/double-tap rebinding, no public native command API"
+    },
+    {
+      "id": "S006",
+      "title": "Prima AC4 advanced combat",
+      "url": "https://primagames.com/tips/assassins-creed-4-black-flag-advanced-tips",
+      "category": "Official docs, game mechanics and format authorities",
+      "game_scope": "AC4",
+      "evidence_grade": "C",
+      "annotation": "B counter follow-up face actions, not exact runtime timings"
+    },
+    {
+      "id": "S007",
+      "title": "Prima AC4 combat eGuide",
+      "url": "https://primagames.com/eguides/assassins-creed-iv-black-flag-eguide/primer/combat",
+      "category": "Official docs, game mechanics and format authorities",
+      "game_scope": "AC4",
+      "evidence_grade": "C",
+      "annotation": "Combat rules and special cases, not code"
+    },
+    {
+      "id": "S008",
+      "title": "Prima AC4 enemy archetypes",
+      "url": "https://primagames.com/eguides/assassins-creed-iv-black-flag-eguide/reference-analysis/enemy-archetypes",
+      "category": "Official docs, game mechanics and format authorities",
+      "game_scope": "AC4",
+      "evidence_grade": "C",
+      "annotation": "Susceptibility matrix, contains reported internal guide inconsistency"
+    },
+    {
+      "id": "S009",
+      "title": "PCGamingWiki original AC4",
+      "url": "https://www.pcgamingwiki.com/wiki/Assassin%27s_Creed_IV:_Black_Flag",
+      "category": "Official docs, game mechanics and format authorities",
+      "game_scope": "AC4",
+      "evidence_grade": "C",
+      "annotation": "Graphic/performance/controllers, not engine action API"
+    },
+    {
+      "id": "S010",
+      "title": "Original AC4 Steam guide — DEPRECATED",
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2288998586",
+      "category": "Official docs, game mechanics and format authorities",
+      "game_scope": "AC4",
+      "evidence_grade": "C",
+      "annotation": "Historical old Forge/outfit workflow; superseded tools"
+    },
+    {
+      "id": "S011",
+      "title": "AnvilToolkit main Nexus entry",
+      "url": "https://www.nexusmods.com/site/mods/455",
+      "category": "Anvil/asset editing / resource documentation",
+      "game_scope": "Both",
+      "evidence_grade": "A",
+      "annotation": "Official maintained tool, version/changelog and game support"
+    },
+    {
+      "id": "S012",
+      "title": "AnvilToolkit resources / author GitHub",
+      "url": "https://github.com/Kamzik123/AnvilToolkit-Resources",
+      "category": "Anvil/asset editing / resource documentation",
+      "game_scope": "Both",
+      "evidence_grade": "A",
+      "annotation": "File lists, tutorials and author wiki"
+    },
+    {
+      "id": "S013",
+      "title": "AnvilToolkit wiki home",
+      "url": "https://github.com/Kamzik123/AnvilToolkit-Resources/wiki",
+      "category": "Anvil/asset editing / resource documentation",
+      "game_scope": "Both",
+      "evidence_grade": "A",
+      "annotation": "Author's current resource guides"
+    },
+    {
+      "id": "S014",
+      "title": "New BFR patch forge guide",
+      "url": "https://github.com/Kamzik123/AnvilToolkit-Resources/wiki/Creating-a-New-Patch-Forge-for-Assassin's-Creed-Shadows-or-later",
+      "category": "Anvil/asset editing / resource documentation",
+      "game_scope": "BFR",
+      "evidence_grade": "A",
+      "annotation": "1.3.7+ additive patch, chain metadata, boot-crash caveats"
+    },
+    {
+      "id": "S015",
+      "title": "Texture modding in custom forges",
+      "url": "https://github.com/Kamzik123/AnvilToolkit-Resources/wiki/Texture-Modding-in-Custom-Forges",
+      "category": "Anvil/asset editing / resource documentation",
+      "game_scope": "BFR",
+      "evidence_grade": "A",
+      "annotation": "Mips/RawAsset and prefetch rules"
+    },
+    {
+      "id": "S016",
+      "title": "Forge Injector v1 Beta #108",
+      "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/108",
+      "category": "Anvil/asset editing / resource documentation",
+      "game_scope": "BFR",
+      "evidence_grade": "B",
+      "annotation": "FORGE v50 low-level importer; no AI API"
+    },
+    {
+      "id": "S017",
+      "title": "Jackdaw Flag Patcher source",
+      "url": "https://github.com/emike09/Jackdaw-Flag-Patcher",
+      "category": "Anvil/asset editing / resource documentation",
+      "game_scope": "BFR",
+      "evidence_grade": "A",
+      "annotation": "MIT transactional asset patch and restore"
+    },
+    {
+      "id": "S018",
+      "title": "BFR Texture Replacer #364",
+      "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/364",
+      "category": "Anvil/asset editing / resource documentation",
+      "game_scope": "BFR",
+      "evidence_grade": "B",
+      "annotation": "Browser-based texture replacement, not combat editor"
+    },
+    {
+      "id": "S019",
+      "title": "BFR Modding Workshop #197",
+      "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/197",
+      "category": "Anvil/asset editing / resource documentation",
+      "game_scope": "BFR",
+      "evidence_grade": "B",
+      "annotation": "Visual/save editor with revert, not NPC control"
+    },
+    {
+      "id": "S020",
+      "title": "ReForger source README",
+      "url": "https://github.com/QuilLeeR/ReForger",
+      "category": "Anvil/asset editing / resource documentation",
+      "game_scope": "Shadows only (A), BFR",
+      "evidence_grade": "U",
+      "annotation": "Public README says Shadows Pipeline v42, third-party claims new BFR support"
+    },
+    {
+      "id": "S021",
+      "title": "EK Replacer BFR #636",
+      "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/636",
+      "category": "Anvil/asset editing / resource documentation",
+      "game_scope": "BFR",
+      "evidence_grade": "B",
+      "annotation": "Claims ReForger newer release use; verify conflict with README"
+    },
+    {
+      "id": "S022",
+      "title": "AnvilToolkit AC4 Nexus mirror",
+      "url": "https://www.nexusmods.com/assassinscreedivblackflag/mods/222",
+      "category": "Anvil/asset editing / resource documentation",
+      "game_scope": "AC4",
+      "evidence_grade": "A",
+      "annotation": "Original AC4 tool features and game-specific type support"
+    },
+    {
+      "id": "S023",
+      "title": "Kirikirin AC/Rogue/Black Flag RE kit",
+      "url": "https://kirikirin.com/en/blog/game-assassins-creed-modding-kit",
+      "category": "Anvil/asset editing / resource documentation",
+      "game_scope": "Related A/C",
+      "evidence_grade": "U",
+      "annotation": "Rogue v27 parser / LZO notes, Black Flag transform; validate per build"
+    },
+    {
+      "id": "S024",
+      "title": "ACViewer docs",
+      "url": "https://github.com/forge-master/ACViewer",
+      "category": "Anvil/asset editing / resource documentation",
+      "game_scope": "AC family",
+      "evidence_grade": "U",
+      "annotation": "Historical format exploration, verify real availability/fit before adopting"
+    },
+    {
+      "id": "S025",
+      "title": "Steam AC4 Resorep guide",
+      "url": "https://www.nexusmods.com/assassinscreedivblackflag/mods/15",
+      "category": "Anvil/asset editing / resource documentation",
+      "game_scope": "AC4",
+      "evidence_grade": "C",
+      "annotation": "Legacy 32-bit D3D texture injection; may collide with renderer wrappers"
+    },
+    {
+      "id": "S026",
+      "title": "Ultimate ASI Loader",
+      "url": "https://github.com/ThirteenAG/Ultimate-ASI-Loader",
+      "category": "Native runtime tooling / public source / automation patterns",
+      "game_scope": "Both",
+      "evidence_grade": "A",
+      "annotation": "Architecture-matching loader, proxy ownership matters"
+    },
+    {
+      "id": "S027",
+      "title": "Puppet Native MIT source",
+      "url": "https://github.com/venvyl/puppet-native",
+      "category": "Native runtime tooling / public source / automation patterns",
+      "game_scope": "BFR",
+      "evidence_grade": "A",
+      "annotation": "Plugin loader and native ABI, not action scripting"
+    },
+    {
+      "id": "S028",
+      "title": "Puppet Native v1 API header",
+      "url": "https://github.com/venvyl/puppet-native/blob/main/plugin%20loader/PuppetNativeApi.h",
+      "category": "Native runtime tooling / public source / automation patterns",
+      "game_scope": "BFR",
+      "evidence_grade": "A",
+      "annotation": "`PN_Init`/`PN_Shutdown`, module base, INI/log callbacks"
+    },
+    {
+      "id": "S029",
+      "title": "Puppet Native loader source",
+      "url": "https://github.com/venvyl/puppet-native/blob/main/plugin%20loader/PluginLoader.cpp",
+      "category": "Native runtime tooling / public source / automation patterns",
+      "game_scope": "BFR",
+      "evidence_grade": "A",
+      "annotation": "Plugin discovery/enable/disable semantics"
+    },
+    {
+      "id": "S030",
+      "title": "Puppet Native Nexus #566",
+      "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/566",
+      "category": "Native runtime tooling / public source / automation patterns",
+      "game_scope": "BFR",
+      "evidence_grade": "B",
+      "annotation": "Parkour improvements + plugin UI feature claims"
+    },
+    {
+      "id": "S031",
+      "title": "HapticsBridge public source",
+      "url": "https://github.com/DEadDRop470/Assassins-Creed-Black-Flag-Resynced-Haptics-Bridge",
+      "category": "Native runtime tooling / public source / automation patterns",
+      "game_scope": "BFR",
+      "evidence_grade": "A",
+      "annotation": "Version profiles, input/effects and limited state hooks; non-commercial license"
+    },
+    {
+      "id": "S032",
+      "title": "HapticsBridge state-mapping JSON",
+      "url": "https://github.com/DEadDRop470/Assassins-Creed-Black-Flag-Resynced-Haptics-Bridge/blob/main/Source%20v%202.3.7.9/References/state_mapping108.json",
+      "category": "Native runtime tooling / public source / automation patterns",
+      "game_scope": "BFR",
+      "evidence_grade": "A",
+      "annotation": "21 movement/traversal hooks across TU fields, **not combat start**"
+    },
+    {
+      "id": "S033",
+      "title": "HapticsBridge hook synthetic tests",
+      "url": "https://github.com/DEadDRop470/Assassins-Creed-Black-Flag-Resynced-Haptics-Bridge/blob/main/Source%20v%202.3.7.9/test_hooks.cpp",
+      "category": "Native runtime tooling / public source / automation patterns",
+      "game_scope": "BFR",
+      "evidence_grade": "A",
+      "annotation": "1.0.6/1.0.7 transaction/rollback, not live 1.0.8 proof"
+    },
+    {
+      "id": "S034",
+      "title": "HapticsBridge noncommercial license",
+      "url": "https://github.com/DEadDRop470/Assassins-Creed-Black-Flag-Resynced-Haptics-Bridge/blob/main/Source%20v%202.3.7.9/LICENSE.txt",
+      "category": "Native runtime tooling / public source / automation patterns",
+      "game_scope": "BFR",
+      "evidence_grade": "A",
+      "annotation": "Study only, no unlicensed code/pattern copying"
+    },
+    {
+      "id": "S035",
+      "title": "AC4Coop source",
+      "url": "https://github.com/Kamzik123/AC4Coop",
+      "category": "Native runtime tooling / public source / automation patterns",
+      "game_scope": "AC4",
+      "evidence_grade": "A",
+      "annotation": "Working author-reported x86 puppet/action/transform synchronization, AI disabled"
+    },
+    {
+      "id": "S036",
+      "title": "Original AC4Tools source",
+      "url": "https://github.com/45hgv43whgf/AC4Tools",
+      "category": "Native runtime tooling / public source / automation patterns",
+      "game_scope": "AC4",
+      "evidence_grade": "A",
+      "annotation": "SHA-256, bytes/unique-pattern gates, ImGui, time-scale, input/camera"
+    },
+    {
+      "id": "S037",
+      "title": "Original AC4 camera source",
+      "url": "https://github.com/LionAG/ACBlackFlag-CameraTool",
+      "category": "Native runtime tooling / public source / automation patterns",
+      "game_scope": "AC4",
+      "evidence_grade": "A",
+      "annotation": "Camera/world pause; Ubisoft Connect build 1.07"
+    },
+    {
+      "id": "S038",
+      "title": "LionAG ScriptEngine",
+      "url": "https://github.com/LionAG/ScriptEngine",
+      "category": "Native runtime tooling / public source / automation patterns",
+      "game_scope": "AC4",
+      "evidence_grade": "A",
+      "annotation": "`.scrx` loader; **not** generally supported across store builds"
+    },
+    {
+      "id": "S039",
+      "title": "Resynced BlackFlagCoop smoke-test source",
+      "url": "https://github.com/zzyrrup/BlackFlagCoop",
+      "category": "Native runtime tooling / public source / automation patterns",
+      "game_scope": "BFR",
+      "evidence_grade": "A",
+      "annotation": "x64 ASI/placeholder network, **no gameplay hooks or real co-op**"
+    },
+    {
+      "id": "S040",
+      "title": "AC family PatchFix source (MIT)",
+      "url": "https://github.com/playday3008/PatchFix",
+      "category": "Native runtime tooling / public source / automation patterns",
+      "game_scope": "Rogue/Syndicate A; AC4/BFR",
+      "evidence_grade": "U",
+      "annotation": "General hook architecture, not a ready plugin for either target game"
+    },
+    {
+      "id": "S041",
+      "title": "Universal Modder original AC4 field notes",
+      "url": "https://universal-modder.dev/games/assassin-s-creed-iv-black-flag/",
+      "category": "Native runtime tooling / public source / automation patterns",
+      "game_scope": "AC4 A/C",
+      "evidence_grade": "U",
+      "annotation": "Agent RE techniques and empirical notes, per-note version/status"
+    },
+    {
+      "id": "S042",
+      "title": "Universal Modder AC family notes",
+      "url": "https://universal-modder.dev/games/assassin-s-creed/",
+      "category": "Native runtime tooling / public source / automation patterns",
+      "game_scope": "AC family A/C",
+      "evidence_grade": "U",
+      "annotation": "Field-note aggregation, do not blindly trust addresses"
+    },
+    {
+      "id": "S043",
+      "title": "Frida",
+      "url": "https://frida.re/",
+      "category": "Native runtime tooling / public source / automation patterns",
+      "game_scope": "General",
+      "evidence_grade": "A",
+      "annotation": "Hook instrumentation, not a game-native semantic API"
+    },
+    {
+      "id": "S044",
+      "title": "Ghidra",
+      "url": "https://github.com/NationalSecurityAgency/ghidra",
+      "category": "Native runtime tooling / public source / automation patterns",
+      "game_scope": "General",
+      "evidence_grade": "A",
+      "annotation": "Static analysis, not gameplay controller"
+    },
+    {
+      "id": "S045",
+      "title": "x64dbg",
+      "url": "https://x64dbg.com/",
+      "category": "Native runtime tooling / public source / automation patterns",
+      "game_scope": "General",
+      "evidence_grade": "A",
+      "annotation": "Native debugger, not game-integrated"
+    },
+    {
+      "id": "S046",
+      "title": "ImHex",
+      "url": "https://github.com/WerWolv/ImHex",
+      "category": "Native runtime tooling / public source / automation patterns",
+      "game_scope": "General",
+      "evidence_grade": "A",
+      "annotation": "File/binary format inspection"
+    },
+    {
+      "id": "S047",
+      "title": "pefile",
+      "url": "https://github.com/erocarrera/pefile",
+      "category": "Native runtime tooling / public source / automation patterns",
+      "game_scope": "General",
+      "evidence_grade": "A",
+      "annotation": "PE file parsing / executable fingerprint"
+    },
+    {
+      "id": "S048",
+      "title": "Capstone",
+      "url": "https://github.com/capstone-engine/capstone",
+      "category": "Native runtime tooling / public source / automation patterns",
+      "game_scope": "General",
+      "evidence_grade": "A",
+      "annotation": "Disassembly, version-aware byte checking"
+    },
+    {
+      "id": "S049",
+      "title": "vgamepad",
+      "url": "https://github.com/yannbouteiller/vgamepad",
+      "category": "Native runtime tooling / public source / automation patterns",
+      "game_scope": "General",
+      "evidence_grade": "A",
+      "annotation": "Python virtual gamepad API, Windows backend EOL"
+    },
+    {
+      "id": "S050",
+      "title": "ViGEmBus end-of-life",
+      "url": "https://docs.nefarius.at/projects/ViGEm/End-of-Life/",
+      "category": "Native runtime tooling / public source / automation patterns",
+      "game_scope": "General",
+      "evidence_grade": "A",
+      "annotation": "Driver archived, not a maintained default"
+    },
+    {
+      "id": "S051",
+      "title": "libvirtualhid announcement",
+      "url": "https://app.lizardbyte.dev/2026-08-16-introducing-libvirtualhid-and-virtual-hid-driver/",
+      "category": "Native runtime tooling / public source / automation patterns",
+      "game_scope": "General",
+      "evidence_grade": "A",
+      "annotation": "Maintained alternative, separate licensed Windows driver"
+    },
+    {
+      "id": "S052",
+      "title": "coop-anything fast iteration",
+      "url": "https://github.com/cranebeaker/coop-anything/blob/main/playbook/fast-iteration.md",
+      "category": "Native runtime tooling / public source / automation patterns",
+      "game_scope": "General",
+      "evidence_grade": "A",
+      "annotation": "Main-thread RPC/event-driven loop, needs game-specific hooks"
+    },
+    {
+      "id": "S053",
+      "title": "coop-anything automated QA",
+      "url": "https://github.com/cranebeaker/coop-anything/blob/main/playbook/automated-qa.md",
+      "category": "Native runtime tooling / public source / automation patterns",
+      "game_scope": "General",
+      "evidence_grade": "A",
+      "annotation": "Honest game-side oracle, mutation tests"
+    },
+    {
+      "id": "S054",
+      "title": "coop-anything hot reload",
+      "url": "https://github.com/cranebeaker/coop-anything/blob/main/playbook/hot-reloading-your-mod.md",
+      "category": "Native runtime tooling / public source / automation patterns",
+      "game_scope": "General",
+      "evidence_grade": "A",
+      "annotation": "Valid only after verified callback/teardown, not out-of-box"
+    },
+    {
+      "id": "S055",
+      "title": "REA previously suggested repository",
+      "url": "https://github.com/riccardoponte/Reverse-Engineering-REA",
+      "category": "Native runtime tooling / public source / automation patterns",
+      "game_scope": "General",
+      "evidence_grade": "U",
+      "annotation": "Direct URL returned 404 in 2026-11-17 research; not recommended"
+    },
+    {
+      "id": "S056",
+      "title": "Easy Parry #617",
+      "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/617",
+      "category": "Resynced gameplay / combat / environment author projects",
+      "game_scope": "BFR",
+      "evidence_grade": "B",
+      "annotation": "Parry windows, dual counters; resource unknown"
+    },
+    {
+      "id": "S057",
+      "title": "Unrestricted Combat Finishers #635",
+      "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/635",
+      "category": "Resynced gameplay / combat / environment author projects",
+      "game_scope": "BFR",
+      "evidence_grade": "B",
+      "annotation": "`Edward_Default.data` / MicroKill/SoftKill, 1.0.8"
+    },
+    {
+      "id": "S058",
+      "title": "Assassination Impact #587",
+      "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/587",
+      "category": "Resynced gameplay / combat / environment author projects",
+      "game_scope": "BFR",
+      "evidence_grade": "B",
+      "annotation": "Enemy cadence, double takedowns and camera shake"
+    },
+    {
+      "id": "S059",
+      "title": "The Padre Captain Style #602",
+      "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/602",
+      "category": "Resynced gameplay / combat / environment author projects",
+      "game_scope": "BFR",
+      "evidence_grade": "B",
+      "annotation": "NPC combat archetype change"
+    },
+    {
+      "id": "S060",
+      "title": "Heroes of the Jackdaw #569",
+      "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/569",
+      "category": "Resynced gameplay / combat / environment author projects",
+      "game_scope": "BFR",
+      "evidence_grade": "B",
+      "annotation": "NPC boarding participation"
+    },
+    {
+      "id": "S061",
+      "title": "City Under Siege #618",
+      "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/618",
+      "category": "Resynced gameplay / combat / environment author projects",
+      "game_scope": "BFR",
+      "evidence_grade": "B",
+      "annotation": "Guard spawn/population density"
+    },
+    {
+      "id": "S062",
+      "title": "Double Assassination Fix #597",
+      "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/597",
+      "category": "Resynced gameplay / combat / environment author projects",
+      "game_scope": "BFR",
+      "evidence_grade": "B",
+      "annotation": "Contextual takedown change, mechanism unknown"
+    },
+    {
+      "id": "S063",
+      "title": "Unarmed Combat #336",
+      "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/336",
+      "category": "Resynced gameplay / combat / environment author projects",
+      "game_scope": "BFR",
+      "evidence_grade": "B",
+      "annotation": "Alternative weapon/action state"
+    },
+    {
+      "id": "S064",
+      "title": "Lethal Combat #451",
+      "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/451",
+      "category": "Resynced gameplay / combat / environment author projects",
+      "game_scope": "BFR",
+      "evidence_grade": "B",
+      "annotation": "Damage model / microdamage event caveat"
+    },
+    {
+      "id": "S065",
+      "title": "Black Flag Overhauled #659",
+      "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/659",
+      "category": "Resynced gameplay / combat / environment author projects",
+      "game_scope": "BFR",
+      "evidence_grade": "B",
+      "annotation": "1.0.8-only modular movement/water animation/UI"
+    },
+    {
+      "id": "S066",
+      "title": "GoatedACBlackFlag #19",
+      "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/19",
+      "category": "Resynced gameplay / combat / environment author projects",
+      "game_scope": "BFR",
+      "evidence_grade": "B",
+      "annotation": "Attack/execution/assassination animation speed runtime cfg"
+    },
+    {
+      "id": "S067",
+      "title": "ACBlackFlagFix #7",
+      "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/7",
+      "category": "Resynced gameplay / combat / environment author projects",
+      "game_scope": "BFR",
+      "evidence_grade": "B",
+      "annotation": "Camera/aim/control-adjacent hooks; coexistence hazard"
+    },
+    {
+      "id": "S068",
+      "title": "QuickSaveF5 #536",
+      "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/536",
+      "category": "Resynced gameplay / combat / environment author projects",
+      "game_scope": "BFR",
+      "evidence_grade": "B",
+      "annotation": "Native save routine, not replay/AI restore"
+    },
+    {
+      "id": "S069",
+      "title": "ACBFRTools #661",
+      "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/661",
+      "category": "Resynced gameplay / combat / environment author projects",
+      "game_scope": "BFR",
+      "evidence_grade": "B",
+      "annotation": "Trainer F4, timescale and free camera; no verified scripting RPC"
+    },
+    {
+      "id": "S070",
+      "title": "Encrypted Ultimate Rewrite #64",
+      "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/64",
+      "category": "Resynced gameplay / combat / environment author projects",
+      "game_scope": "BFR",
+      "evidence_grade": "B",
+      "annotation": "Cheat Engine manual exploration"
+    },
+    {
+      "id": "S071",
+      "title": "Otis_Inf BFR camera page",
+      "url": "https://opm.fransbouma.com/Cameras/acbfresynced.htm",
+      "category": "Resynced gameplay / combat / environment author projects",
+      "game_scope": "BFR A/B",
+      "evidence_grade": "U",
+      "annotation": "Pause/frameskip/time scale/camera, not AI reset"
+    },
+    {
+      "id": "S072",
+      "title": "Resynced Cheats Trainer #541",
+      "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/541",
+      "category": "Resynced gameplay / combat / environment author projects",
+      "game_scope": "BFR",
+      "evidence_grade": "B",
+      "annotation": "Author support claims 1.0.6–1.0.8, not a trusted API"
+    },
+    {
+      "id": "S073",
+      "title": "Resynced trainer #616",
+      "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/616",
+      "category": "Resynced gameplay / combat / environment author projects",
+      "game_scope": "BFR",
+      "evidence_grade": "B",
+      "annotation": "Author support 1.0.6–1.0.7, potentially incompatible hooks"
+    },
+    {
+      "id": "S074",
+      "title": "BFR inventory editor #631",
+      "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/631",
+      "category": "Resynced gameplay / combat / environment author projects",
+      "game_scope": "BFR",
+      "evidence_grade": "B",
+      "annotation": "Alpha/AOB failures reported, not combat tool"
+    },
+    {
+      "id": "S075",
+      "title": "More Frequent Double Counters #1029",
+      "url": "https://www.nexusmods.com/assassinscreedivblackflag/mods/1029",
+      "category": "Original AC4 gameplay, rendering and mod management author projects",
+      "game_scope": "AC4",
+      "evidence_grade": "B",
+      "annotation": "Enemy cadence/double counter data"
+    },
+    {
+      "id": "S076",
+      "title": "Combat Changes #765",
+      "url": "https://www.nexusmods.com/assassinscreedivblackflag/mods/765",
+      "category": "Original AC4 gameplay, rendering and mod management author projects",
+      "game_scope": "AC4",
+      "evidence_grade": "B",
+      "annotation": "Enemy archetype/defenses"
+    },
+    {
+      "id": "S077",
+      "title": "AC4 Combat Overhaul #302",
+      "url": "https://www.nexusmods.com/assassinscreedivblackflag/mods/302",
+      "category": "Original AC4 gameplay, rendering and mod management author projects",
+      "game_scope": "AC4",
+      "evidence_grade": "B",
+      "annotation": "Damage/difficulty parameters"
+    },
+    {
+      "id": "S078",
+      "title": "Yet another combat mod #494",
+      "url": "https://www.nexusmods.com/assassinscreedivblackflag/mods/494",
+      "category": "Original AC4 gameplay, rendering and mod management author projects",
+      "game_scope": "AC4",
+      "evidence_grade": "B",
+      "annotation": "Parries/killstreak changes"
+    },
+    {
+      "id": "S079",
+      "title": "AC3 Improved Combat System #138",
+      "url": "https://www.nexusmods.com/assassinscreedivblackflag/mods/138",
+      "category": "Original AC4 gameplay, rendering and mod management author projects",
+      "game_scope": "AC4",
+      "evidence_grade": "B",
+      "annotation": "Alternate combat balance"
+    },
+    {
+      "id": "S080",
+      "title": "No Counter Slow Motion #871",
+      "url": "https://www.nexusmods.com/assassinscreedivblackflag/mods/871",
+      "category": "Original AC4 gameplay, rendering and mod management author projects",
+      "game_scope": "AC4",
+      "evidence_grade": "B",
+      "annotation": "Named `Game Bootstrap Settings.data` timing file"
+    },
+    {
+      "id": "S081",
+      "title": "Adewale's Counters for Edward #1039",
+      "url": "https://www.nexusmods.com/assassinscreedivblackflag/mods/1039",
+      "category": "Original AC4 gameplay, rendering and mod management author projects",
+      "game_scope": "AC4",
+      "evidence_grade": "B",
+      "annotation": "Single/double finisher animation replacement"
+    },
+    {
+      "id": "S082",
+      "title": "Combat/Sprint Camera Tweaks #695",
+      "url": "https://www.nexusmods.com/assassinscreedivblackflag/mods/695",
+      "category": "Original AC4 gameplay, rendering and mod management author projects",
+      "game_scope": "AC4",
+      "evidence_grade": "B",
+      "annotation": "Camera animations via data"
+    },
+    {
+      "id": "S083",
+      "title": "AC4Tools Nexus #901",
+      "url": "https://www.nexusmods.com/assassinscreedivblackflag/mods/901",
+      "category": "Original AC4 gameplay, rendering and mod management author projects",
+      "game_scope": "AC4",
+      "evidence_grade": "B",
+      "annotation": "GUI time/camera/noclip, source on GitHub"
+    },
+    {
+      "id": "S084",
+      "title": "AC4 modular PhysX/high-FPS patch #1031",
+      "url": "https://www.nexusmods.com/assassinscreedivblackflag/mods/1031",
+      "category": "Original AC4 gameplay, rendering and mod management author projects",
+      "game_scope": "AC4",
+      "evidence_grade": "B",
+      "annotation": "Very specific original Steam exe, alpha, DLL collisions"
+    },
+    {
+      "id": "S085",
+      "title": "AC4 Vortex extension #971",
+      "url": "https://www.nexusmods.com/site/mods/971",
+      "category": "Original AC4 gameplay, rendering and mod management author projects",
+      "game_scope": "AC4",
+      "evidence_grade": "B",
+      "annotation": "Resorep/full-forge installation automation"
+    },
+    {
+      "id": "S086",
+      "title": "BFR Nexus Vortex extension #1977",
+      "url": "https://www.nexusmods.com/site/mods/1977",
+      "category": "Original AC4 gameplay, rendering and mod management author projects",
+      "game_scope": "BFR A/B",
+      "evidence_grade": "U",
+      "annotation": "Official Nexus general mod manager"
+    },
+    {
+      "id": "S087",
+      "title": "BFR AC Mods Launcher source README",
+      "url": "https://github.com/nickythesmithy/ac-mods-launcher",
+      "category": "Original AC4 gameplay, rendering and mod management author projects",
+      "game_scope": "BFR",
+      "evidence_grade": "A",
+      "annotation": "1.0.8-only proprietary launcher `.acmod`, not all mods"
+    },
+    {
+      "id": "S088",
+      "title": "BFR AC Mods Launcher #658",
+      "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/658",
+      "category": "Original AC4 gameplay, rendering and mod management author projects",
+      "game_scope": "BFR",
+      "evidence_grade": "B",
+      "annotation": "Author package management claims"
+    }
+  ]
+}
