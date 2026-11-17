@@ -2,6 +2,8 @@
 .vs/
 .vscode/
 .idea/
+__pycache__/
+*.py[cod]
 build/
 out/
 bin/
@@ -45,6 +47,9 @@ compile_commands.json
 # Local diagnostics and secrets
 logs/
 diagnostics/
+tools/ac4_observer/target_profile.local.h
+tools/ac4_observer/target_profile.local.ini
+tools/ac4_observer/target_profile.local.json
 *.log
 .env
 .env.*

@@ -82,6 +82,7 @@ Start from **[the dual-game modding knowledge base](docs/knowledge/README.md)** 
 - [C++ control core](include/acbf/classic_control.h) — pure, provisional action resolver (no game integration)
 - [Gated X action bridge](include/acbf/action_bridge.h) — single-shot native command contract, fully **offline** with a test fake, **no game hook**
 - [Diagnostic ASI](docs/DIAGNOSTICS.md) — experimental read-only Windows observer, built by Actions and tested only with a synthetic host
+- [Original AC4 control observer](tools/ac4_observer/README.md) — separate x86 diagnostic ASI with exact-build-gated native probes; smoke/game readiness is reported independently from CI
 - [Contributing](CONTRIBUTING.md) — issue reports and contribution rules
 
 ## Existing built-in remapping observation (deferred)
