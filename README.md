@@ -59,7 +59,7 @@ No DRM bypass or unauthorized game redistribution is part of this project. Users
 
 ## Modding knowledge base (original AC4 + Resynced)
 
-Start from **[the dual-game modding knowledge base](docs/knowledge/README.md)** for the source-indexed research on Anvil/Scimitar formats, AC4 2013 x86 and Resynced x64, modding tools, asset formats, native hooks, gameplay changes, automation and research gaps. Its [source register](docs/knowledge/SOURCES.md) and [machine-readable catalog](research/modding_sources.json) separate primary evidence from mod-author claims and index 88 public sources. The knowledge base is **research**, not a claim of a playable mod or verified compatibility with the owner's build.
+Start from **[the dual-game modding knowledge base](docs/knowledge/README.md)** for the source-indexed research on Anvil/Scimitar formats, AC4 2013 x86 and Resynced x64, modding tools, asset formats, native hooks, gameplay changes, automation and research gaps. Its [source register](docs/knowledge/SOURCES.md) and [machine-readable catalog](research/modding_sources.json) separate primary evidence from mod-author claims and index 90 public sources. The knowledge base is **research**, not a claim of a playable mod or verified compatibility with the owner's build.
 
 ## Project documents
 
