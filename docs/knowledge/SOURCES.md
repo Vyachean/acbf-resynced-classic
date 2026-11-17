@@ -1,6 +1,6 @@
 # Source register — original AC4 and Black Flag Resynced modding
 
-**Last primary-source review: 2026-11-17.** **Machine-readable companion:** [research/modding_sources.json](../../research/modding_sources.json) (88 curated source URLs, scope, evidence grade and annotations; regenerate/update when the human index changes). This curated catalogue maps toolchains, official documentation, public code and mod-author **claims**. It is **not** a copy of external source, a license grant, a tested compatibility list or a claim to have indexed all internet content. For precise findings follow [original AC4](ORIGINAL_AC4.md), [Resynced](RESYNCED.md), [Anvil](ANVIL_DATA.md), [runtime](RUNTIME.md), [testing](TESTING.md) or [detailed ecosystem survey](../MODDING_ECOSYSTEM.md).
+**Last primary-source review: 2026-11-17.** **Machine-readable companion:** [research/modding_sources.json](../../research/modding_sources.json) (90 curated source URLs, scope, evidence grade and annotations; regenerate/update when the human index changes). This curated catalogue maps toolchains, official documentation, public code and mod-author **claims**. It is **not** a copy of external source, a license grant, a tested compatibility list or a claim to have indexed all internet content. For precise findings follow [original AC4](ORIGINAL_AC4.md), [Resynced](RESYNCED.md), [Anvil](ANVIL_DATA.md), [runtime](RUNTIME.md), [testing](TESTING.md) or [detailed ecosystem survey](../MODDING_ECOSYSTEM.md).
 
 **Grades:** **A** — public source/official author docs inspected; **B** — mod author's feature/version description; **C** — community/secondary; **U** — unresolved/404/contradictory. No empirical game-test grade E is asserted here. Source page review does **not** establish safe working support for arbitrary installed versions. Tags: **AC4** original x86, **BFR** Resynced x64, **Both** only when the source separately covers both.
 
@@ -78,6 +78,8 @@
 
 | Source / link | Scope / grade | Research lead |
 | --- | --- | --- |
+| [Classic Movement — Walk By Default Smooth Sprint #408](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/408) | BFR B | Author-described walk-first/RT-or-L3 sprint tuning; not AC4 high-/low-profile semantics or a tested 1.0.6 fix |
+| [Walk By Default for PlayStation Controllers #514](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/514) | BFR B | Author-described PlayStation walk-first controller remapping; unknown native precedence and 1.0.6 support |
 | [Easy Parry #617](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/617) | BFR B | Parry windows, dual counters; resource unknown |
 | [Unrestricted Combat Finishers #635](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/635) | BFR B | `Edward_Default.data` / MicroKill/SoftKill, 1.0.8 |
 | [Assassination Impact #587](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/587) | BFR B | Enemy cadence, double takedowns and camera shake |

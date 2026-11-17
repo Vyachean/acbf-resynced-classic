@@ -13,7 +13,8 @@ This collection is the **entry point** for project agents. The repository's orig
 | [Anvil / data resources](ANVIL_DATA.md) | `.forge`, `.data`, prefetch, override graph, compatible tools and safe data-patch research workflow |
 | [Runtime / native tooling](RUNTIME.md) | ASI, plugin ABIs, hooking patterns, game-state readback, safe frame-callback principles, diagnostics |
 | [Testing / automation](TESTING.md) | Automated bot feasibility, virtual input caveats, game-semantic oracle, single-session approach, reproducibility |
-| [Source register](SOURCES.md) / [machine index](../../research/modding_sources.json) | Curated annotated bibliography with 88 structured source records, URLs, game scope and evidence tier |
+| [Sanitized 2026-11-15 local static evidence](LOCAL_STATIC_EVIDENCE_2026-11-15.md) | Bounded original x86 input-to-command Ghidra path, v27/v50 Forge reader checkpoints, actor-template schema blockers; provenance from historical PR #27 | 
+| [Source register](SOURCES.md) / [machine index](../../research/modding_sources.json) | Curated annotated bibliography with 90 structured source records, URLs, game scope and evidence tier |
 | [Unknowns and research backlog](QUESTIONS.md) | Missing interfaces and bounded research questions, rather than assertions |
 | [Broader 2026 Resynced ecosystem survey](../MODDING_ECOSYSTEM.md) | Detailed dated survey of resource mods, patch-forge tool and mod manager behavior |
 | [Detailed runtime test harness investigation](../RUNTIME_TEST_HARNESS_RESEARCH.md) | Candidate automation stack, HapticsBridge / AC4Coop source findings, limits |

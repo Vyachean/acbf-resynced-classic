@@ -23,6 +23,8 @@
 | P2 | **Original AC4 high-FPS fixes and camera latency** | [PCGW](https://www.pcgamingwiki.com/wiki/Assassin%27s_Creed_IV:_Black_Flag) C; [AC4 Modular Patch #1031](https://www.nexusmods.com/assassinscreedivblackflag/mods/1031) B limited exact Steam hash | Verify modern driver/game build and isolated performance effect; unrelated to BFR combat |
 | P2 | **Legacy tools worth retaining** | ACViewer/Resorep/old Steam tutorials and missing REA URL | Mark historical/404/deprecated, verify only if a unique feature can't be supplied by a maintained tool |
 
+**Historical research consolidation:** [the sanitized static-checkpoint report](LOCAL_STATIC_EVIDENCE_2026-11-15.md) contains the material results of draft PR #27 and the limited input→candidate→typed-message evidence from original AC4. It establishes no BFR command seam; do not reopen broad v27/v50 index enumeration without a new decoder or runtime-owned actor path.
+
 ## Findings format for future researcher / Codex
 
 ```markdown
