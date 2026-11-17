@@ -80,6 +80,7 @@ Start from **[the dual-game modding knowledge base](docs/knowledge/README.md)** 
 - [Puppet Native ABI](docs/PUPPET_NATIVE.md) — public plugin API and CI-tested lifecycle bridge, not a gameplay hook
 - [Reference cases](research/reference_scenarios.json) — machine-readable design cases (**not tested in game**)
 - [C++ control core](include/acbf/classic_control.h) — pure, provisional action resolver (no game integration)
+- [Original AC4 staged-combat reference](docs/LEGACY_COMBAT_MODEL.md) — separately tested guard/counter follow-up policy, including [offline console sandbox](docs/COMBAT_ARENA.md); **not a playable game arena**
 - [Gated X action bridge](include/acbf/action_bridge.h) — single-shot native command contract, fully **offline** with a test fake, **no game hook**
 - [Diagnostic ASI](docs/DIAGNOSTICS.md) — experimental read-only Windows observer, built by Actions and tested only with a synthetic host
 - [Contributing](CONTRIBUTING.md) — issue reports and contribution rules
