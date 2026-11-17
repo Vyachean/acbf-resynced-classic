@@ -76,12 +76,10 @@
 
 ## Resynced gameplay / combat / environment author projects
 
-| [Classic Movement — Walk By Default Smooth Sprint #408](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/408) | BFR B | Author-described walk-first/RT-or-L3 sprint tuning; not AC4 high-/low-profile semantics or a tested 1.0.6 fix |
-| [Walk By Default for PlayStation Controllers #514](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/514) | BFR B | Author-described PlayStation walk-first controller remapping; unknown native precedence and 1.0.6 support |
-
-
 | Source / link | Scope / grade | Research lead |
 | --- | --- | --- |
+| [Classic Movement — Walk By Default Smooth Sprint #408](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/408) | BFR B | Author-described walk-first/RT-or-L3 sprint tuning; not AC4 high-/low-profile semantics or a tested 1.0.6 fix |
+| [Walk By Default for PlayStation Controllers #514](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/514) | BFR B | Author-described PlayStation walk-first controller remapping; unknown native precedence and 1.0.6 support |
 | [Easy Parry #617](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/617) | BFR B | Parry windows, dual counters; resource unknown |
 | [Unrestricted Combat Finishers #635](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/635) | BFR B | `Edward_Default.data` / MicroKill/SoftKill, 1.0.8 |
 | [Assassination Impact #587](https://www.nexusmods.com/assassinscreedblackflagresynced/mods/587) | BFR B | Enemy cadence, double takedowns and camera shake |
