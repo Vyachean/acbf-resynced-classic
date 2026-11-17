@@ -3,7 +3,7 @@
   "reviewed_on": "2026-11-17",
   "source": "docs/knowledge/SOURCES.md",
   "notes": "Research-grade source index. A confirms cited upstream content, not runtime compatibility; B is author claim; C secondary; U unverified. No in-game testing is asserted. Before use, re-check URL, license, game architecture and version.",
-  "count": 88,
+  "count": 90,
   "entries": [
     {
       "id": "S001",
@@ -502,6 +502,24 @@
     },
     {
       "id": "S056",
+      "title": "Classic Movement — Walk By Default Smooth Sprint #408",
+      "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/408",
+      "category": "Resynced gameplay / combat / environment author projects",
+      "game_scope": "BFR",
+      "evidence_grade": "B",
+      "annotation": "Author-described walk-first/RT-or-L3 sprint tuning; not AC4 high-/low-profile semantics or a tested 1.0.6 fix"
+    },
+    {
+      "id": "S057",
+      "title": "Walk By Default for PlayStation Controllers #514",
+      "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/514",
+      "category": "Resynced gameplay / combat / environment author projects",
+      "game_scope": "BFR",
+      "evidence_grade": "B",
+      "annotation": "Author-described PlayStation walk-first controller remapping; unknown native precedence and 1.0.6 support"
+    },
+    {
+      "id": "S058",
       "title": "Easy Parry #617",
       "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/617",
       "category": "Resynced gameplay / combat / environment author projects",
@@ -510,7 +528,7 @@
       "annotation": "Parry windows, dual counters; resource unknown"
     },
     {
-      "id": "S057",
+      "id": "S059",
       "title": "Unrestricted Combat Finishers #635",
       "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/635",
       "category": "Resynced gameplay / combat / environment author projects",
@@ -519,7 +537,7 @@
       "annotation": "`Edward_Default.data` / MicroKill/SoftKill, 1.0.8"
     },
     {
-      "id": "S058",
+      "id": "S060",
       "title": "Assassination Impact #587",
       "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/587",
       "category": "Resynced gameplay / combat / environment author projects",
@@ -528,7 +546,7 @@
       "annotation": "Enemy cadence, double takedowns and camera shake"
     },
     {
-      "id": "S059",
+      "id": "S061",
       "title": "The Padre Captain Style #602",
       "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/602",
       "category": "Resynced gameplay / combat / environment author projects",
@@ -537,7 +555,7 @@
       "annotation": "NPC combat archetype change"
     },
     {
-      "id": "S060",
+      "id": "S062",
       "title": "Heroes of the Jackdaw #569",
       "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/569",
       "category": "Resynced gameplay / combat / environment author projects",
@@ -546,7 +564,7 @@
       "annotation": "NPC boarding participation"
     },
     {
-      "id": "S061",
+      "id": "S063",
       "title": "City Under Siege #618",
       "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/618",
       "category": "Resynced gameplay / combat / environment author projects",
@@ -555,7 +573,7 @@
       "annotation": "Guard spawn/population density"
     },
     {
-      "id": "S062",
+      "id": "S064",
       "title": "Double Assassination Fix #597",
       "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/597",
       "category": "Resynced gameplay / combat / environment author projects",
@@ -564,7 +582,7 @@
       "annotation": "Contextual takedown change, mechanism unknown"
     },
     {
-      "id": "S063",
+      "id": "S065",
       "title": "Unarmed Combat #336",
       "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/336",
       "category": "Resynced gameplay / combat / environment author projects",
@@ -573,7 +591,7 @@
       "annotation": "Alternative weapon/action state"
     },
     {
-      "id": "S064",
+      "id": "S066",
       "title": "Lethal Combat #451",
       "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/451",
       "category": "Resynced gameplay / combat / environment author projects",
@@ -582,7 +600,7 @@
       "annotation": "Damage model / microdamage event caveat"
     },
     {
-      "id": "S065",
+      "id": "S067",
       "title": "Black Flag Overhauled #659",
       "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/659",
       "category": "Resynced gameplay / combat / environment author projects",
@@ -591,7 +609,7 @@
       "annotation": "1.0.8-only modular movement/water animation/UI"
     },
     {
-      "id": "S066",
+      "id": "S068",
       "title": "GoatedACBlackFlag #19",
       "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/19",
       "category": "Resynced gameplay / combat / environment author projects",
@@ -600,7 +618,7 @@
       "annotation": "Attack/execution/assassination animation speed runtime cfg"
     },
     {
-      "id": "S067",
+      "id": "S069",
       "title": "ACBlackFlagFix #7",
       "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/7",
       "category": "Resynced gameplay / combat / environment author projects",
@@ -609,7 +627,7 @@
       "annotation": "Camera/aim/control-adjacent hooks; coexistence hazard"
     },
     {
-      "id": "S068",
+      "id": "S070",
       "title": "QuickSaveF5 #536",
       "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/536",
       "category": "Resynced gameplay / combat / environment author projects",
@@ -618,7 +636,7 @@
       "annotation": "Native save routine, not replay/AI restore"
     },
     {
-      "id": "S069",
+      "id": "S071",
       "title": "ACBFRTools #661",
       "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/661",
       "category": "Resynced gameplay / combat / environment author projects",
@@ -627,7 +645,7 @@
       "annotation": "Trainer F4, timescale and free camera; no verified scripting RPC"
     },
     {
-      "id": "S070",
+      "id": "S072",
       "title": "Encrypted Ultimate Rewrite #64",
       "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/64",
       "category": "Resynced gameplay / combat / environment author projects",
@@ -636,7 +654,7 @@
       "annotation": "Cheat Engine manual exploration"
     },
     {
-      "id": "S071",
+      "id": "S073",
       "title": "Otis_Inf BFR camera page",
       "url": "https://opm.fransbouma.com/Cameras/acbfresynced.htm",
       "category": "Resynced gameplay / combat / environment author projects",
@@ -645,7 +663,7 @@
       "annotation": "Pause/frameskip/time scale/camera, not AI reset"
     },
     {
-      "id": "S072",
+      "id": "S074",
       "title": "Resynced Cheats Trainer #541",
       "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/541",
       "category": "Resynced gameplay / combat / environment author projects",
@@ -654,7 +672,7 @@
       "annotation": "Author support claims 1.0.6–1.0.8, not a trusted API"
     },
     {
-      "id": "S073",
+      "id": "S075",
       "title": "Resynced trainer #616",
       "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/616",
       "category": "Resynced gameplay / combat / environment author projects",
@@ -663,7 +681,7 @@
       "annotation": "Author support 1.0.6–1.0.7, potentially incompatible hooks"
     },
     {
-      "id": "S074",
+      "id": "S076",
       "title": "BFR inventory editor #631",
       "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/631",
       "category": "Resynced gameplay / combat / environment author projects",
@@ -672,7 +690,7 @@
       "annotation": "Alpha/AOB failures reported, not combat tool"
     },
     {
-      "id": "S075",
+      "id": "S077",
       "title": "More Frequent Double Counters #1029",
       "url": "https://www.nexusmods.com/assassinscreedivblackflag/mods/1029",
       "category": "Original AC4 gameplay, rendering and mod management author projects",
@@ -681,7 +699,7 @@
       "annotation": "Enemy cadence/double counter data"
     },
     {
-      "id": "S076",
+      "id": "S078",
       "title": "Combat Changes #765",
       "url": "https://www.nexusmods.com/assassinscreedivblackflag/mods/765",
       "category": "Original AC4 gameplay, rendering and mod management author projects",
@@ -690,7 +708,7 @@
       "annotation": "Enemy archetype/defenses"
     },
     {
-      "id": "S077",
+      "id": "S079",
       "title": "AC4 Combat Overhaul #302",
       "url": "https://www.nexusmods.com/assassinscreedivblackflag/mods/302",
       "category": "Original AC4 gameplay, rendering and mod management author projects",
@@ -699,7 +717,7 @@
       "annotation": "Damage/difficulty parameters"
     },
     {
-      "id": "S078",
+      "id": "S080",
       "title": "Yet another combat mod #494",
       "url": "https://www.nexusmods.com/assassinscreedivblackflag/mods/494",
       "category": "Original AC4 gameplay, rendering and mod management author projects",
@@ -708,7 +726,7 @@
       "annotation": "Parries/killstreak changes"
     },
     {
-      "id": "S079",
+      "id": "S081",
       "title": "AC3 Improved Combat System #138",
       "url": "https://www.nexusmods.com/assassinscreedivblackflag/mods/138",
       "category": "Original AC4 gameplay, rendering and mod management author projects",
@@ -717,7 +735,7 @@
       "annotation": "Alternate combat balance"
     },
     {
-      "id": "S080",
+      "id": "S082",
       "title": "No Counter Slow Motion #871",
       "url": "https://www.nexusmods.com/assassinscreedivblackflag/mods/871",
       "category": "Original AC4 gameplay, rendering and mod management author projects",
@@ -726,7 +744,7 @@
       "annotation": "Named `Game Bootstrap Settings.data` timing file"
     },
     {
-      "id": "S081",
+      "id": "S083",
       "title": "Adewale's Counters for Edward #1039",
       "url": "https://www.nexusmods.com/assassinscreedivblackflag/mods/1039",
       "category": "Original AC4 gameplay, rendering and mod management author projects",
@@ -735,7 +753,7 @@
       "annotation": "Single/double finisher animation replacement"
     },
     {
-      "id": "S082",
+      "id": "S084",
       "title": "Combat/Sprint Camera Tweaks #695",
       "url": "https://www.nexusmods.com/assassinscreedivblackflag/mods/695",
       "category": "Original AC4 gameplay, rendering and mod management author projects",
@@ -744,7 +762,7 @@
       "annotation": "Camera animations via data"
     },
     {
-      "id": "S083",
+      "id": "S085",
       "title": "AC4Tools Nexus #901",
       "url": "https://www.nexusmods.com/assassinscreedivblackflag/mods/901",
       "category": "Original AC4 gameplay, rendering and mod management author projects",
@@ -753,7 +771,7 @@
       "annotation": "GUI time/camera/noclip, source on GitHub"
     },
     {
-      "id": "S084",
+      "id": "S086",
       "title": "AC4 modular PhysX/high-FPS patch #1031",
       "url": "https://www.nexusmods.com/assassinscreedivblackflag/mods/1031",
       "category": "Original AC4 gameplay, rendering and mod management author projects",
@@ -762,7 +780,7 @@
       "annotation": "Very specific original Steam exe, alpha, DLL collisions"
     },
     {
-      "id": "S085",
+      "id": "S087",
       "title": "AC4 Vortex extension #971",
       "url": "https://www.nexusmods.com/site/mods/971",
       "category": "Original AC4 gameplay, rendering and mod management author projects",
@@ -771,7 +789,7 @@
       "annotation": "Resorep/full-forge installation automation"
     },
     {
-      "id": "S086",
+      "id": "S088",
       "title": "BFR Nexus Vortex extension #1977",
       "url": "https://www.nexusmods.com/site/mods/1977",
       "category": "Original AC4 gameplay, rendering and mod management author projects",
@@ -780,7 +798,7 @@
       "annotation": "Official Nexus general mod manager"
     },
     {
-      "id": "S087",
+      "id": "S089",
       "title": "BFR AC Mods Launcher source README",
       "url": "https://github.com/nickythesmithy/ac-mods-launcher",
       "category": "Original AC4 gameplay, rendering and mod management author projects",
@@ -789,7 +807,7 @@
       "annotation": "1.0.8-only proprietary launcher `.acmod`, not all mods"
     },
     {
-      "id": "S088",
+      "id": "S090",
       "title": "BFR AC Mods Launcher #658",
       "url": "https://www.nexusmods.com/assassinscreedblackflagresynced/mods/658",
       "category": "Original AC4 gameplay, rendering and mod management author projects",
